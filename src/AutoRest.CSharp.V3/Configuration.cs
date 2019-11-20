@@ -4,12 +4,12 @@ namespace AutoRest.CSharp.V3
 {
     internal class Configuration
     {
-        public string OutputPath { get; private set; }
-        public string Namespace { get; private set; }
-        public string Title { get; private set; }
+        public string OutputPath { get; set; }
+        public string Namespace { get; set; }
+        public string Title { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        private Configuration() { }
+        public Configuration() { }
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         // Creates and populates a configuration

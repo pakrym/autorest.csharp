@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -55,6 +56,21 @@ namespace AutoRest.CSharp.V3
                 await autoRest.Message(new Message { Channel = Channel.Fatal, Text = e.ToString() });
                 return false;
             }
+        }
+
+        public static async Task Start(string pluginName, string model)
+        {
+            var codeModelYaml = File.ReadAllText(model);
+            var codeModel = Serialization.DeserializeCodeModel(codeModelYaml);
+            var configuration = new Configuration()
+            {
+                Namespace = "Yay",
+                OutputPath = ".",
+                Title = "Test"
+            };
+
+            var plugin = Plugins[pluginName]();
+            await plugin.Execute(null!, codeModel, configuration);
         }
     }
 }

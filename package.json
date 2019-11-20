@@ -4,7 +4,7 @@
   "name": "@autorest/csharp-v3",
   "description": "See readme.md for instructions",
   "scripts": {
-    "start": "dotnet ./bin/AutoRest.CSharp.V3.dll --server",
-    "debug": "dotnet ./bin/AutoRest.CSharp.V3.dll --server --launch-debugger"
+    "start": "dotnet ./src/AutoRest.CSharp.V3/bin/Debug/netcoreapp3.0/AutoRest.CSharp.V3.dll --server",
+    "debug": "dotnet ./src/AutoRest.CSharp.V3/bin/Debug/netcoreapp3.0/AutoRest.CSharp.V3.dll --server --launch-debugger"
   }
 }

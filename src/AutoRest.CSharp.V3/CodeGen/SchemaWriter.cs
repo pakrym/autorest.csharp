@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using AutoRest.CSharp.V3.Pipeline.Generated;
 using AutoRest.CSharp.V3.Utilities;
 
 namespace AutoRest.CSharp.V3.CodeGen
 {
+
     internal class SchemaWriter : StringWriter
     {
         public bool WriteSchema(Schema schema) =>
@@ -80,7 +83,7 @@ namespace AutoRest.CSharp.V3.CodeGen
             Header();
             using var _ = UsingStatements();
             var cs = schema.Language.CSharp;
-            using (Namespace(cs?.Type?.Namespace))
+            using (Namespace(cs?.Type?.Namespace))  
             {
                 using (Enum(null, null, cs?.Name))
                 {

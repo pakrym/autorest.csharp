@@ -14,6 +14,12 @@ namespace AutoRest.CSharp.V3
 
         public static int Main(string[] args)
         {
+            if (args[0] == "--run-plugin")
+            {
+                PluginProcessor.Start(args[1], args[2]).GetAwaiter().GetResult();
+                return 0;
+            }
+
             if (args.Contains("--launch-debugger") && !Debugger.IsAttached)
             {
                 Debugger.Launch();

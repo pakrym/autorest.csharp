@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoRest.CSharp.V3.CodeGen;
 using AutoRest.CSharp.V3.JsonRpc;
@@ -19,21 +21,41 @@ namespace AutoRest.CSharp.V3.Plugins
             //    writer.WriteSchema(schema);
             //    await autoRest.WriteFile($"All/{schema.Language.CSharp?.Name}.cs", writer.ToFormattedCode(), "source-file-csharp");
             //}
+            
+            var modelBuilder = new ModelBuilder();
+            var module = modelBuilder.Build(codeModel);
 
-            var schemas = (codeModel.Schemas.Choices ?? Enumerable.Empty<ChoiceSchema>()).Cast<Schema>()
-                .Concat(codeModel.Schemas.SealedChoices ?? Enumerable.Empty<SealedChoiceSchema>())
-                .Concat(codeModel.Schemas.Objects ?? Enumerable.Empty<ObjectSchema>());
-            foreach (var schema in schemas)
-            {
-                var writer = new SchemaWriter();
-                writer.WriteSchema(schema);
-                await autoRest.WriteFile($"Generated/Models/{schema.Language.CSharp?.Name}.cs", writer.ToFormattedCode(), "source-file-csharp");
-            }
+
+            var writers = GetWriters();
+            var writer = new CodeWriter();
+
+            var writerContext = new WriterContext(writer, writers);
+
+            writerContext.Write(module);
+
+            await autoRest.WriteFile($"generated.cs", writer.ToFormattedCode(), "source-file-csharp");
 
             // CodeModel for debugging
             await autoRest.WriteFile($"CodeModel-{configuration.Title}.yaml", codeModel.Serialize(), "source-file-csharp");
 
             return true;
+        }
+
+        private static Dictionary<Type, object> GetWriters()
+        {
+            Dictionary<Type, object> writers = new Dictionary<Type, object>();
+            foreach (var type in typeof(Modeler).Assembly.GetTypes().Where(t=>!t.IsAbstract))
+            {
+                foreach (var iface in type.GetInterfaces())
+                {
+                    if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IWriter<>))
+                    {
+                        writers[iface.GetGenericArguments().Single()] = Activator.CreateInstance(type)!;
+                    }
+                }
+            }
+
+            return writers;
         }
 
         public bool ReserializeCodeModel => false;
