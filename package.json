@@ -6,5 +6,8 @@
   "scripts": {
     "start": "dotnet ./src/AutoRest.CSharp.V3/bin/Debug/netcoreapp3.0/AutoRest.CSharp.V3.dll --server",
     "debug": "dotnet ./src/AutoRest.CSharp.V3/bin/Debug/netcoreapp3.0/AutoRest.CSharp.V3.dll --server --launch-debugger"
+  },
+  "devDependencies": {
+    "@autorest/test-server": "^3.0.26"
   }
 }
