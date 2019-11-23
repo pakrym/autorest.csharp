@@ -20,7 +20,7 @@ $repoRoot = "$PSScriptRoot\.."
 $testServerTestProject = Resolve-Path "$repoRoot\test\AutoRest.TestServer.Tests"
 $testConfiguration = Resolve-Path "$testServerTestProject\readme.md"
 $testServerSwagerPath = Resolve-Path "$repoRoot\node_modules\@autorest\test-server\__files\swagger"
-$paths = "body-string", "body-complex"
+$paths = "body-string", "body-complex", "url", "custom-baseUrl"
 
 foreach ($path in $paths)
 {
