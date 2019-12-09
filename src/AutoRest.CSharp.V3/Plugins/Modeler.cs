@@ -12,7 +12,9 @@ using AutoRest.CSharp.V3.JsonRpc.MessageModels;
 using AutoRest.CSharp.V3.Pipeline;
 using AutoRest.CSharp.V3.Pipeline.Generated;
 using Azure.Core;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Editing;
+using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Simplification;
 
 namespace AutoRest.CSharp.V3.Plugins
 {
@@ -25,6 +27,10 @@ namespace AutoRest.CSharp.V3.Plugins
                 .Concat(codeModel.Schemas.SealedChoices ?? Enumerable.Empty<SealedChoiceSchema>())
                 .Concat(codeModel.Schemas.Objects ?? Enumerable.Empty<ObjectSchema>());
 
+            var generatedCodeProject = WorkspaceFactory.CreateGeneratedCodeProject();
+            var compilation = await generatedCodeProject.GetCompilationAsync() ?? throw new InvalidOperationException("Compilation is not available");
+            var generator = SyntaxGenerator.GetGenerator(generatedCodeProject);
+
             var models = schemas.Select(BuildModel).ToArray();
             var clients = codeModel.OperationGroups.Select(BuildClient).ToArray();
 
@@ -34,13 +40,16 @@ namespace AutoRest.CSharp.V3.Plugins
             foreach (var model in models)
             {
                 var name = model.Name;
-                var writer = new ModelWriter(typeFactory);
-                writer.WriteModel(model);
+                var writer = new ModelWriter(typeFactory, generator, compilation);
+                var document = generatedCodeProject.AddDocument($"{name}.cs",
+                    writer.WriteModel(model));
+                document = await Simplifier.ReduceAsync(document);
+                document = await Formatter.FormatAsync(document);
 
                 var serializeWriter = new SerializationWriter(typeFactory);
                 serializeWriter.WriteSerialization(model);
 
-                await autoRest.WriteFile($"Generated/Models/{name}.cs", writer.ToFormattedCode(), "source-file-csharp");
+                await autoRest.WriteFile($"Generated/Models/{name}.cs", (await document.GetTextAsync()).ToString(), "source-file-csharp");
                 await autoRest.WriteFile($"Generated/Models/{name}.Serialization.cs", serializeWriter.ToFormattedCode(), "source-file-csharp");
             }
 

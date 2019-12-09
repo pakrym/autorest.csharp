@@ -1,13 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System.Collections.Generic;
-
 namespace body_complex.Models.V20160229
 {
     public partial class Cat
     {
-        public string? Color { get; set; }
-        public ICollection<Dog> Hates { get; } = new List<Dog>();
+        public System.String? Color { get; set; }
+        public System.Collections.Generic.ICollection<V20160229.Dog> Hates { get; } = new System.Collections.Generic.List<V20160229.Dog>();
     }
 }
