@@ -116,7 +116,7 @@ foreach ($file in Get-ChildItem $testSwaggerPath)
     }
 }
 # Sample configuration
-$projectNames = 'AppConfiguration', 'CognitiveServices.TextAnalytics'
+$projectNames = 'AppConfiguration', 'CognitiveServices.TextAnalytics', 'Azure.Storage.Blobs'
 
 foreach ($projectName in $projectNames)
 {

@@ -142,6 +142,8 @@ namespace AutoRest.CSharp.V3.Plugins
                 }
             }
 
+            // Binary schema is not supported for object schemas
+            types.Remove(KnownMediaType.Binary);
             // Order so JSON always goes first
             return types.OrderBy(t => t).ToArray();
         }

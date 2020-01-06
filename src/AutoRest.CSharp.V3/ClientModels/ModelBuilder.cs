@@ -26,7 +26,8 @@ namespace AutoRest.CSharp.V3.ClientModels
             sealedChoiceSchema,
             sealedChoiceSchema.CSharpName(),
             CreateDescription(sealedChoiceSchema),
-            sealedChoiceSchema.Choices.Select(c => new ClientEnumValue(
+            // TODO: https://github.com/Azure/autorest.modelerfour/issues/108
+            sealedChoiceSchema.Choices.Where(c=>c.Value != null).Select(c => new ClientEnumValue(
                 c.CSharpName(),
                 CreateDescription(c),
                 ClientModelBuilderHelpers.StringConstant(c.Value))));
@@ -35,7 +36,8 @@ namespace AutoRest.CSharp.V3.ClientModels
             choiceSchema,
             choiceSchema.CSharpName(),
             CreateDescription(choiceSchema),
-            choiceSchema.Choices.Select(c => new ClientEnumValue(
+            // TODO: https://github.com/Azure/autorest.modelerfour/issues/108
+            choiceSchema.Choices.Where(c=>c.Value != null).Select(c => new ClientEnumValue(
                 c.CSharpName(),
                 CreateDescription(c),
                 ClientModelBuilderHelpers.StringConstant(c.Value))),

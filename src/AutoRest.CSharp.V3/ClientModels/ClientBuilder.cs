@@ -271,6 +271,12 @@ namespace AutoRest.CSharp.V3.ClientModels
             List<PathSegment> host = new List<PathSegment>();
             foreach ((string text, bool isLiteral) in StringExtensions.GetPathParts(httpRequestUri))
             {
+                if (!parameters.TryGetValue(text, out _))
+                {
+                    // TODO: https://github.com/Azure/autorest.modelerfour/issues/109
+                    host.Add(TextSegment(text));
+                    continue;
+                }
                 host.Add(isLiteral ? TextSegment(text) : parameters[text]);
             }
 
