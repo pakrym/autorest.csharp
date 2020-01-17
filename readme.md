@@ -15,9 +15,12 @@
 
 ## Configuration
 ```yaml
-version: 3.0.6184
+version: 3.0.6185
 use-extension:
-  "@autorest/modelerfour": "4.3.121"
+  "@autorest/modelerfour": "4.3.124"
+modelerfour:
+  flatten-models: true
+  flatten-payloads: true
 pipeline:
   csharpgen:
     input: modelerfour/identity

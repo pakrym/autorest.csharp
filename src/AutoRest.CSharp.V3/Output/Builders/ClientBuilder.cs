@@ -154,10 +154,6 @@ namespace AutoRest.CSharp.V3.Output.Builders
                             body = new RequestBody(constantOrParameter, serialization);
                             break;
                         case ParameterLocation.Uri:
-                            if (defaultName == "$host")
-                            {
-                                skipEncoding = true;
-                            }
                             uriParameters[defaultName] = new PathSegment(constantOrParameter, !skipEncoding, serializationFormat);
                             break;
                     }
