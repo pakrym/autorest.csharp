@@ -18,7 +18,7 @@ schemas: !<!Schemas>
           language: !<!Languages> 
             default:
               name: string
-              description: MISSING·SCHEMA-DESCRIPTION-STRING
+              description: ''
           protocol: !<!Protocols> {}
         language: !<!Languages> 
           default:
@@ -31,11 +31,12 @@ schemas: !<!Schemas>
         default:
           name: tags
           description: A description about the set of tags.
+          originalName: tags
       protocol: !<!Protocols> {}
     language: !<!Languages> 
       default:
         name: AvailabilitySetUpdateParameters
-        description: MISSING·SCHEMA-DESCRIPTION-OBJECTSCHEMA
+        description: ''
         namespace: Api100
     protocol: !<!Protocols> {}
   dictionaries:
@@ -58,7 +59,7 @@ schemas: !<!Schemas>
     language: !<!Languages> 
       default:
         name: string
-        description: MISSING·SCHEMA-DESCRIPTION-STRING
+        description: ''
     protocol: !<!Protocols> {}
 globalParameters:
 - !<!Parameter> &ref_3
@@ -66,10 +67,13 @@ globalParameters:
   clientDefaultValue: 'http://localhost:3000'
   implementation: Client
   required: true
+  extensions:
+    x-ms-skip-url-encoding: true
   language: !<!Languages> 
     default:
       name: $host
       description: server parameter
+      serializedName: $host
   protocol: !<!Protocols> 
     http: !<!HttpParameter> 
       in: uri
@@ -87,7 +91,7 @@ operationGroups:
     request: !<!Request> 
       parameters:
       - *ref_3
-      - !<!Parameter> 
+      - !<!Parameter> &ref_6
         schema: *ref_1
         implementation: Method
         required: true
@@ -99,19 +103,19 @@ operationGroups:
         protocol: !<!Protocols> 
           http: !<!HttpParameter> 
             in: path
-      - !<!Parameter> 
+      - !<!Parameter> &ref_7
         schema: *ref_4
         implementation: Method
         required: true
         language: !<!Languages> 
           default:
-            name: availabilitySetName
+            name: avset
             description: The name of the storage availability set.
             serializedName: availabilitySetName
         protocol: !<!Protocols> 
           http: !<!HttpParameter> 
             in: path
-      - !<!Parameter> 
+      - !<!Parameter> &ref_8
         schema: *ref_5
         implementation: Method
         required: true
@@ -125,6 +129,10 @@ operationGroups:
           http: !<!HttpParameter> 
             in: body
             style: json
+      signatureParameters:
+      - *ref_6
+      - *ref_7
+      - *ref_8
       language: !<!Languages> 
         default:
           name: ''

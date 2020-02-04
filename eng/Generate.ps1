@@ -89,7 +89,7 @@ $testNames =
     #'lro',
     'model-flattening',
     'paging',
-    #'parameter-flattening',
+    'parameter-flattening',
     #'report',
     #'required-optional',
     #'storage',
