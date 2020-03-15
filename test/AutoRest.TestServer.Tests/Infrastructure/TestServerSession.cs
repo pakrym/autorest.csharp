@@ -35,11 +35,6 @@ namespace AutoRest.TestServer.Tests.Infrastructure
 
         public static TestServerSession Start(TestServerVersion version, bool allowUnmatched, params string[] expectedCoverage)
         {
-            if (version == TestServerVersion.V2)
-            {
-                // we only use v1 for coverage
-                expectedCoverage = Array.Empty<string>();
-            }
             var server = new TestServerSession(version, allowUnmatched, expectedCoverage);
             return server;
         }
@@ -103,7 +98,7 @@ namespace AutoRest.TestServer.Tests.Infrastructure
                     }
                 }
 
-                if (!ignoreChecks && _expectedCoverage != null)
+                if (!ignoreChecks && Server.SupportsCoverage && _expectedCoverage != null)
                 {
                     foreach (var expectedStub in _expectedCoverage)
                     {

@@ -18,11 +18,27 @@ namespace AutoRest.TestServer.Tests.Infrastructure
         private static readonly Regex _scenariosRegex = new Regex("(coverage|optionalCoverage|optCoverage)\\[(\"|')(?<name>\\w+)(\"|')\\]", RegexOptions.Compiled);
 
         private readonly Process _process;
+        private readonly bool _isShared = false;
         public HttpClient Client { get; }
         public string Host { get; }
 
+        public bool SupportsCoverage => !_isShared;
+
         public TestServerV1()
         {
+            var v1TestServerUrl = Environment.GetEnvironmentVariable("V1_TEST_SERVER");
+
+            if (!string.IsNullOrWhiteSpace(v1TestServerUrl))
+            {
+                Host = v1TestServerUrl;
+                Client = new HttpClient
+                {
+                    BaseAddress = new Uri(Host)
+                };
+                _isShared = true;
+                return;
+            }
+
             var portPhrase = "Server started at port ";
             var startup = Path.Combine(GetBaseDirectory(), "legacy", "startup", "www.js");
 
@@ -55,7 +71,6 @@ namespace AutoRest.TestServer.Tests.Infrastructure
             {
                 throw new InvalidOperationException($"Unable to detect server port {_process.StandardOutput.ReadToEnd()} {_process.StandardError.ReadToEnd()}");
             }
-
         }
 
         public static string[] GetScenariosForRoute(string name)
@@ -93,6 +108,11 @@ namespace AutoRest.TestServer.Tests.Infrastructure
 
         public async Task ResetAsync()
         {
+            if (_isShared)
+            {
+                return;
+            }
+
             ByteArrayContent emptyContent = new ByteArrayContent(Array.Empty<byte>());
 
             using var response = await Client.PostAsync("/coverage/clear", emptyContent);
@@ -101,6 +121,12 @@ namespace AutoRest.TestServer.Tests.Infrastructure
 
         public async Task<string[]> GetMatchedStubs()
         {
+            if (_isShared)
+            {
+                return Array.Empty<string>();
+            }
+
+            await Client.GetStringAsync($"/report?qualifier={Environment.TickCount64}");
             var coverageString = await Client.GetStringAsync("/coverage");
             var coverageDocument = JsonDocument.Parse(coverageString);
 
@@ -126,7 +152,10 @@ namespace AutoRest.TestServer.Tests.Infrastructure
 
         public void Stop()
         {
-            _process.Kill(true);
+            if (!_isShared)
+            {
+                _process.Kill(true);
+            }
         }
 
         public void Dispose()

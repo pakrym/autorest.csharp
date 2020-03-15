@@ -8,6 +8,7 @@ namespace AutoRest.TestServer.Tests.Infrastructure
     public class TestServerV1Test
     {
         [Test]
+        [Category("NonShared")]
         public async Task StartsAndReportsCoverage()
         {
             await using var session = TestServerSession.Start(TestServerVersion.V1);
@@ -21,6 +22,7 @@ namespace AutoRest.TestServer.Tests.Infrastructure
         }
 
         [Test]
+        [Category("NonShared")]
         public async Task VerifiesCoverage()
         {
             var session = TestServerSession.Start(TestServerVersion.V1, "string_empty");

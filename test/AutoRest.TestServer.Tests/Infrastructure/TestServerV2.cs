@@ -18,6 +18,7 @@ namespace AutoRest.TestServer.Tests.Infrastructure
 
         public HttpClient Client { get; }
         public string Host { get; }
+        public bool SupportsCoverage { get; } = false;
 
         public TestServerV2()
         {

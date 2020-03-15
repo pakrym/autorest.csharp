@@ -7,6 +7,7 @@ namespace AutoRest.TestServer.Tests.Infrastructure
     {
         HttpClient Client { get; }
         string Host { get; }
+        bool SupportsCoverage { get; }
         Task<string[]> GetRequests();
         Task<string[]> GetMatchedStubs();
         Task ResetAsync();
