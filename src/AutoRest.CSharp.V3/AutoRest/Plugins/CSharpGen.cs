@@ -2,37 +2,29 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoRest.CSharp.V3.AutoRest.Communication;
-using AutoRest.CSharp.V3.Generation.Types;
 using AutoRest.CSharp.V3.Generation.Writers;
 using AutoRest.CSharp.V3.Input;
 using AutoRest.CSharp.V3.Input.Source;
-using AutoRest.CSharp.V3.Output.Builders;
 using AutoRest.CSharp.V3.Output.Models.Responses;
 using AutoRest.CSharp.V3.Output.Models.Types;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Simplification;
-using Microsoft.CodeAnalysis.Text;
-using Diagnostic = Microsoft.CodeAnalysis.Diagnostic;
 
 namespace AutoRest.CSharp.V3.AutoRest.Plugins
 {
     [PluginName("csharpgen")]
     internal class CSharpGen : IPlugin
     {
-        public async Task<bool> Execute(IPluginCommunication autoRest, CodeModel codeModel, Configuration configuration)
+        public async Task<bool> Execute(IPluginCommunication autoRest, Configuration configuration)
         {
             Directory.CreateDirectory(configuration.OutputFolder);
+            var codeModelTask = Task.Run(() => LoadCodeModel(autoRest, configuration));
             var project = GeneratedCodeWorkspace.Create(configuration.OutputFolder, configuration.SharedSourceFolder);
             var sourceInputModel = SourceInputModelBuilder.Build(await project.GetCompilationAsync());
 
-            var context = new BuildContext(codeModel, configuration, sourceInputModel);
+            var context = new BuildContext(await codeModelTask, configuration, sourceInputModel);
 
             var modelWriter = new ModelWriter();
             var clientWriter = new ClientWriter();
@@ -84,6 +76,21 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
             }
 
             return true;
+        }
+
+        private async Task<CodeModel> LoadCodeModel(IPluginCommunication autoRest, Configuration configuration)
+        {
+            string codeModelFileName = (await autoRest.ListInputs()).FirstOrDefault();
+            if (string.IsNullOrEmpty(codeModelFileName)) throw new Exception("Generator did not receive the code model file.");
+
+            string codeModelYaml = await autoRest.ReadFile(codeModelFileName);
+
+            if (configuration.SaveCodeModel)
+            {
+                await autoRest.WriteFile("CodeModel.yaml", codeModelYaml, "source-file-csharp");
+            }
+
+            return CodeModelSerialization.DeserializeCodeModel(codeModelYaml);
         }
     }
 }

@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using AutoRest.CSharp.V3.AutoRest.Communication;
-using AutoRest.CSharp.V3.Input;
 
 namespace AutoRest.CSharp.V3.AutoRest.Plugins
 {
@@ -28,7 +27,7 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
 </Project>
 
 ";
-        public async Task<bool> Execute(IPluginCommunication autoRest, CodeModel codeModel, Configuration configuration)
+        public async Task<bool> Execute(IPluginCommunication autoRest, Configuration configuration)
         {
                 await autoRest.WriteFile($"{configuration.Title}.csproj", _csProjContent, "source-file-csharp");
 

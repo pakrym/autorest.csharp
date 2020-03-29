@@ -25,7 +25,7 @@ function Invoke-AutoRest($baseOutput, $title, $autoRestArguments)
     if ($fast)
     {
         $codeModel = Join-Path $baseOutput $title "CodeModel.yaml"
-        $command = "dotnet run --project $script:autorestPluginProject --no-build -- --plugin=csharpgen --title=$title --namespace=$namespace --standalone --input-file=$codeModel --output-folder=$outputPath --shared-source-folder=$script:sharedSource --save-code-model=true"
+        $command = "dotnet run --project $script:autorestPluginProject --no-build -- --plugin=csharpgen --title=$title --namespace=$namespace --standalone --input-file=$codeModel --output-folder=$outputPath --shared-source-folder=$script:sharedSource"
     }
 
     if ($clean)
@@ -146,7 +146,7 @@ if ($updateLaunchSettings)
 
         $settings.profiles[$key] = [ordered]@{
             'commandName'='Project';
-            'commandLineArgs'="--standalone --input-codemodel=$codeModel --plugin=csharpgen --output-folder=$outputPath --namespace=$namespace --shared-source-folder=$sharedSourceNormalized --save-code-model=true"
+            'commandLineArgs'="--standalone --input-codemodel=$codeModel --plugin=csharpgen --output-folder=$outputPath --namespace=$namespace --shared-source-folder=$sharedSourceNormalized"
         }
     }
 

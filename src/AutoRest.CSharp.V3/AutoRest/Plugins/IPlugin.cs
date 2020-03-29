@@ -4,14 +4,12 @@
 using System;
 using System.Threading.Tasks;
 using AutoRest.CSharp.V3.AutoRest.Communication;
-using AutoRest.CSharp.V3.Input;
 
 namespace AutoRest.CSharp.V3.AutoRest.Plugins
 {
     internal interface IPlugin
     {
-        Task<bool> Execute(IPluginCommunication autoRest, CodeModel codeModel, Configuration configuration);
-        bool DeserializeCodeModel => true;
+        Task<bool> Execute(IPluginCommunication autoRest, Configuration configuration);
     }
 
     [AttributeUsage(AttributeTargets.Class)]
