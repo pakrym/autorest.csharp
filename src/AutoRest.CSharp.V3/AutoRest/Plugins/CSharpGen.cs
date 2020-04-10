@@ -70,6 +70,10 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
                 }
             }
 
+            var modelFactoryWriter = new CodeWriter();
+            ModelFactoryWriter.WriteModelFactory(modelFactoryWriter, context);
+            project.AddGeneratedFile("Models/ModelFactory.cs", modelFactoryWriter.ToString());
+
             foreach (var client in context.Library.Clients)
             {
                 var codeWriter = new CodeWriter();

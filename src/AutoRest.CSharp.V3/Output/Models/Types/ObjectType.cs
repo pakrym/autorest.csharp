@@ -122,7 +122,7 @@ namespace AutoRest.CSharp.V3.Output.Models.Types
                 initializers.Add(new ObjectPropertyInitializer(property, deserializationParameter));
 
                 // Only required properties that are not discriminators go into default ctor
-                // For structs all properties become required
+                // For structs and output models all properties become required
                 if ((!IsStruct && property.SchemaProperty?.Required != true) ||
                     property == Discriminator?.Property)
                 {
