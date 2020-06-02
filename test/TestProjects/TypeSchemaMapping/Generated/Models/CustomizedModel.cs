@@ -23,5 +23,7 @@ namespace CustomNamespace
             CustomizedFancyField = customizedFancyField;
             DaysOfWeek = daysOfWeek;
         }
+        /// <summary> Fruit. </summary>
+        internal CustomFruitEnum CustomizedFancyField { get; set; }
     }
 }

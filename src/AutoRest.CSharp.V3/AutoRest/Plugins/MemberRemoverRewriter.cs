@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Azure.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -21,6 +22,7 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
 
         public MemberRemoverRewriter(Project project, SemanticModel semanticModel)
         {
+            object comparer = new MemberSignatureComparer();
             _project = project;
             _semanticModel = semanticModel;
             _suppressionCache = new Dictionary<INamedTypeSymbol, List<Supression>>();
@@ -84,6 +86,8 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
         {
             if (symbol != null)
             {
+                Console.WriteLine("ShouldRemove "+ symbol);
+
                 INamedTypeSymbol? containingType = symbol.ContainingType;
                 IMethodSymbol? methodSymbol = symbol as IMethodSymbol;
 
@@ -101,19 +105,16 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
 
                 while (containingType != null)
                 {
-                    var members = containingType.GetMembers(symbol.Name);
-                    foreach (var member in members)
-                    {
+                    foreach (var member in containingType.GetMembers())
+                    {if (symbol.ToString()?.Contains("CustomNamespace.CustomizedModel.CustomizedFancyField") == true)
+                        {
+
+                        }
+                        Console.WriteLine($"    {member} {MemberSignatureComparer.DuplicateSourceComparer.Equals(member, symbol)} {member.Equals(symbol)} {IsDeclaredInNonGeneratedCode(member)}");
                         if (!member.Equals(symbol) &&
+                            MemberSignatureComparer.DuplicateSourceComparer.Equals(member, symbol) &&
                             IsDeclaredInNonGeneratedCode(member))
                         {
-                            if (methodSymbol != null &&
-                                member is IMethodSymbol memberMethodSymbol &&
-                                !methodSymbol.Parameters.SequenceEqual(memberMethodSymbol.Parameters, (s1, s2) => s1.Type.Equals(s2.Type)))
-                            {
-                                continue;
-                            }
-
                             return true;
                         }
                     }

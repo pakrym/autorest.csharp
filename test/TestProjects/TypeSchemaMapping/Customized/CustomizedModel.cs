@@ -17,6 +17,9 @@ namespace CustomNamespace
         [CodeGenMember("ModelProperty")]
         internal int? PropertyRenamedAndTypeChanged { get; set; }
 
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer) {
+        }
+
         internal static CustomizedModel DeserializeCustomizedModel(JsonElement element)
         {
             int? propertyRenamedAndTypeChanged = default;

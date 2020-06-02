@@ -51,7 +51,8 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
                     continue;
                 }
 
-                documents.Add(Task.Run(() => ProcessDocument(document)));
+                var t = await Task.Run(() => ProcessDocument(document));
+                documents.Add(Task.FromResult(t));
             }
 
             foreach (var task in documents)
