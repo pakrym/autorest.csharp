@@ -70,7 +70,7 @@ namespace AutoRest.CSharp.V3.Output.Models.Types
                     return _additionalPropertiesProperty;
                 }
 
-                SourceMemberMapping? memberMapping = _sourceTypeMapping?.GetForMember("$AdditionalProperties");
+                ModelPropertyMapping? memberMapping = _sourceTypeMapping?.GetForMember("$AdditionalProperties");
 
                 _additionalPropertiesProperty = new ObjectTypeProperty(
                     BuilderHelpers.CreateMemberDeclaration("AdditionalProperties", ImplementsDictionaryType, "internal", memberMapping?.ExistingMember, _typeFactory),
@@ -389,7 +389,7 @@ namespace AutoRest.CSharp.V3.Output.Models.Types
                     }
 
                     var name = BuilderHelpers.DisambiguateName(Type, property.CSharpName());
-                    SourceMemberMapping? memberMapping = _sourceTypeMapping?.GetForMember(name);
+                    ModelPropertyMapping? memberMapping = _sourceTypeMapping?.GetForMember(name);
 
                     var accessibility = property.IsDiscriminator == true ? "internal" : "public";
 

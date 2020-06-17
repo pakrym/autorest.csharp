@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" Version="1.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.6.0-2.final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0-2.final" />
     <PackageReference Include="YamlDotNet" Version="8.0.0-emit-default-values0565" />
   </ItemGroup>
 

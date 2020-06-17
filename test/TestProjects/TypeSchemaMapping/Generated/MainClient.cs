@@ -44,7 +44,7 @@ namespace CustomNamespace
             scope.Start();
             try
             {
-                return await RestClient.OperationStructAsync(body, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DoWorkAsync(body, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace CustomNamespace
             scope.Start();
             try
             {
-                return RestClient.OperationStruct(body, cancellationToken);
+                return RestClient.DoWork(body, cancellationToken);
             }
             catch (Exception e)
             {

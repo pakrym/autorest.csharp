@@ -85,7 +85,7 @@ namespace TypeSchemaMapping
             }
         }
 
-        internal HttpMessage CreateOperationStructRequest(RenamedModelStruct? body)
+        internal HttpMessage CreateDoWorkRequest(RenamedModelStruct? body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -106,9 +106,9 @@ namespace TypeSchemaMapping
 
         /// <param name="body"> The ModelStruct to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RenamedModelStruct>> OperationStructAsync(RenamedModelStruct? body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenamedModelStruct>> DoWorkAsync(RenamedModelStruct? body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateOperationStructRequest(body);
+            using var message = CreateDoWorkRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -126,9 +126,9 @@ namespace TypeSchemaMapping
 
         /// <param name="body"> The ModelStruct to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RenamedModelStruct> OperationStruct(RenamedModelStruct? body = null, CancellationToken cancellationToken = default)
+        public Response<RenamedModelStruct> DoWork(RenamedModelStruct? body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateOperationStructRequest(body);
+            using var message = CreateDoWorkRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

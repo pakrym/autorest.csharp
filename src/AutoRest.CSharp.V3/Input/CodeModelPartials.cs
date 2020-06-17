@@ -110,6 +110,10 @@ namespace AutoRest.CSharp.V3.Input
     {
     }
 
+    internal partial class RequestParameter
+    {
+        public bool SkipUrlEncoding => Extensions!.TryGetValue("x-ms-skip-url-encoding", out var value) && Convert.ToBoolean(value);
+    }
 
     // Workaround https://github.com/Azure/autorest.modelerfour/issues/255
     internal partial class AnySchema : ComplexSchema

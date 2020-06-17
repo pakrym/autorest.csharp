@@ -42,6 +42,11 @@ namespace AutoRest.CSharp.V3.Input.Source
             return new ModelTypeMapping(_schemaMemberNameAttribute, symbol);
         }
 
+        public ClientTypeMapping CreateForClient(INamedTypeSymbol? symbol)
+        {
+            return new ClientTypeMapping(_schemaMemberNameAttribute, symbol);
+        }
+
         public INamedTypeSymbol? FindForType(string ns, string name)
         {
             var fullyQualifiedMetadataName = $"{ns}.{name}";

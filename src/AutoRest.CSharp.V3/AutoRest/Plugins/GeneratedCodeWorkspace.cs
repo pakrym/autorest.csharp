@@ -72,7 +72,7 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
             if (syntaxTree != null)
             {
                 var rewriter = new MemberRemoverRewriter(_project, compilation.GetSemanticModel(syntaxTree));
-                document = document.WithSyntaxRoot(rewriter.Visit(await syntaxTree.GetRootAsync()));
+                document = document.WithSyntaxRoot(rewriter.Visit(await syntaxTree.GetRootAsync())!);
             }
 
             document = await Simplifier.ReduceAsync(document);
@@ -98,6 +98,7 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
             }
 
             generatedCodeProject = generatedCodeProject
+                .WithParseOptions(new CSharpParseOptions(languageVersion: LanguageVersion.Preview, preprocessorSymbols: new[]{ "GENERATOR" }))
                 .AddMetadataReferences(references)
                 .WithCompilationOptions(new CSharpCompilationOptions(
                 OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: NullableContextOptions.Disable));

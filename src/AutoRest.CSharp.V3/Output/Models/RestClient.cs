@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using AutoRest.CSharp.V3.Generation.Types;
 using AutoRest.CSharp.V3.Input;
+using AutoRest.CSharp.V3.Input.Source;
 using AutoRest.CSharp.V3.Output.Builders;
 using AutoRest.CSharp.V3.Output.Models.Requests;
 using AutoRest.CSharp.V3.Output.Models.Responses;
@@ -31,6 +32,7 @@ namespace AutoRest.CSharp.V3.Output.Models
         private Dictionary<ServiceRequest, RestClientMethod>? _requestMethods;
         private Dictionary<ServiceRequest, RestClientMethod>? _nextPageMethods;
         private RestClientMethod[]? _allMethods;
+        private ClientTypeMapping _clientMapping;
 
         public RestClient(OperationGroup operationGroup, BuildContext context) : base(context)
         {
@@ -48,9 +50,12 @@ namespace AutoRest.CSharp.V3.Output.Models
             var mainClient = context.Library.FindClient(operationGroup);
 
             ClientPrefix = GetClientPrefix(mainClient?.Declaration.Name ?? operationGroup.Language.Default.Name);
+
             RestClientSuffix = "Rest" + ClientSuffix;
             DefaultName = ClientPrefix + RestClientSuffix;
             Description = "";
+
+            _clientMapping = context.SourceInputModel.CreateForClient(ExistingType);
         }
 
         public Parameter[] Parameters { get; }
@@ -214,7 +219,7 @@ namespace AutoRest.CSharp.V3.Output.Models
                 if (requestParameter.Protocol.Http is HttpParameter httpParameter)
                 {
                     SerializationFormat serializationFormat = BuilderHelpers.GetSerializationFormat(valueSchema);
-                    bool skipEncoding = requestParameter.Extensions!.TryGetValue("x-ms-skip-url-encoding", out var value) && Convert.ToBoolean(value);
+                    bool skipEncoding = requestParameter.SkipUrlEncoding;
                     switch (httpParameter.In)
                     {
                         case ParameterLocation.Header:
@@ -290,8 +295,6 @@ namespace AutoRest.CSharp.V3.Output.Models
                 body
             );
 
-            string operationName = operation.CSharpName();
-
             List<Response> clientResponse = new List<Response>();
 
             foreach (var response in operation.Responses)
@@ -304,8 +307,11 @@ namespace AutoRest.CSharp.V3.Output.Models
 
             var responseType = ReduceResponses(clientResponse);
 
+            var operationName = operation.CSharpName();
+            var existingMember = _clientMapping.GetForMember(operationName);
+
             return new RestClientMethod(
-                operationName,
+                existingMember?.ExistingMember.Name ?? operation.CSharpName(),
                 BuilderHelpers.EscapeXmlDescription(operation.Language.Default.Description),
                 responseType,
                 request,

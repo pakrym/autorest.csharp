@@ -107,11 +107,20 @@ namespace AutoRest.CSharp.V3.AutoRest.Plugins
                         if (!member.Equals(symbol) &&
                             IsDeclaredInNonGeneratedCode(member))
                         {
-                            if (methodSymbol != null &&
-                                member is IMethodSymbol memberMethodSymbol &&
-                                !methodSymbol.Parameters.SequenceEqual(memberMethodSymbol.Parameters, (s1, s2) => s1.Type.Equals(s2.Type)))
+                            if (methodSymbol != null && member is IMethodSymbol memberMethodSymbol)
                             {
-                                continue;
+                                var sameArguments = !methodSymbol.Parameters.SequenceEqual(memberMethodSymbol.Parameters, (s1, s2) => s1.Type.Equals(s2.Type));
+                                var isPartialImplementation = false;
+                                if (member.DeclaringSyntaxReferences.First().GetSyntax() is MethodDeclarationSyntax methodDeclarationSyntax)
+                                {
+                                    isPartialImplementation = methodDeclarationSyntax.Modifiers.Any(SyntaxKind.PartialKeyword) &&
+                                                              methodDeclarationSyntax.Body == null &&
+                                                              methodDeclarationSyntax.ExpressionBody == null;
+                                }
+                                if (sameArguments || isPartialImplementation)
+                                {
+                                    continue;
+                                }
                             }
 
                             return true;

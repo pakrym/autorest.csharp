@@ -6,9 +6,9 @@ using Microsoft.CodeAnalysis;
 
 namespace AutoRest.CSharp.V3.Input.Source
 {
-    public class SourceMemberMapping
+    public class ModelPropertyMapping: MemberMapping
     {
-        public SourceMemberMapping(string originalName, ISymbol existingMember)
+        public ModelPropertyMapping(string originalName, ISymbol existingMember): base(originalName, existingMember)
         {
             var attributeType = existingMember.ContainingAssembly.GetTypeByMetadataName(typeof(CodeGenMemberAttribute).FullName!);
 
@@ -30,13 +30,8 @@ namespace AutoRest.CSharp.V3.Input.Source
                     }
                 }
             }
-
-            OriginalName = originalName;
-            ExistingMember = existingMember;
         }
 
-        public string OriginalName { get; }
-        public ISymbol ExistingMember { get; }
         public bool Initialize { get; }
         public bool EmptyAsUndefined { get; }
     }
