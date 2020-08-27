@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,6 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text"> Text content of the cell. </param>
         /// <param name="boundingBox"> Bounding box of the cell. </param>
         /// <param name="confidence"> Confidence value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         internal DataTableCell(int rowIndex, int columnIndex, string text, IEnumerable<float> boundingBox, float confidence)
         {
             if (text == null)
@@ -34,8 +36,9 @@ namespace Azure.AI.FormRecognizer.Models
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
             Text = text;
-            BoundingBox = boundingBox.ToArray();
+            BoundingBox = boundingBox.ToList();
             Confidence = confidence;
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataTableCell. </summary>
@@ -56,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Models
             RowSpan = rowSpan;
             ColumnSpan = columnSpan;
             Text = text;
-            BoundingBox = boundingBox ?? new List<float>();
+            BoundingBox = boundingBox;
             Confidence = confidence;
             Elements = elements;
             IsHeader = isHeader;

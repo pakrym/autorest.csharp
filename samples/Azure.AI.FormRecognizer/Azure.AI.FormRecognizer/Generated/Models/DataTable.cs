@@ -18,6 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cells"/> is null. </exception>
         internal DataTable(int rows, int columns, IEnumerable<DataTableCell> cells)
         {
             if (cells == null)
@@ -27,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             Rows = rows;
             Columns = columns;
-            Cells = cells.ToArray();
+            Cells = cells.ToList();
         }
 
         /// <summary> Initializes a new instance of DataTable. </summary>
@@ -38,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Rows = rows;
             Columns = columns;
-            Cells = cells ?? new List<DataTableCell>();
+            Cells = cells;
         }
 
         /// <summary> Number of rows. </summary>

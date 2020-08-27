@@ -44,12 +44,14 @@ namespace header
             uri.AppendPath("/header/param/existingkey", false);
             request.Uri = uri;
             request.Headers.Add("User-Agent", userAgent);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Send a post request with header value &quot;User-Agent&quot;: &quot;overwrite&quot;. </summary>
         /// <param name="userAgent"> Send a post request with header value &quot;User-Agent&quot;: &quot;overwrite&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userAgent"/> is null. </exception>
         public async Task<Response> ParamExistingKeyAsync(string userAgent, CancellationToken cancellationToken = default)
         {
             if (userAgent == null)
@@ -71,6 +73,7 @@ namespace header
         /// <summary> Send a post request with header value &quot;User-Agent&quot;: &quot;overwrite&quot;. </summary>
         /// <param name="userAgent"> Send a post request with header value &quot;User-Agent&quot;: &quot;overwrite&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userAgent"/> is null. </exception>
         public Response ParamExistingKey(string userAgent, CancellationToken cancellationToken = default)
         {
             if (userAgent == null)
@@ -98,6 +101,7 @@ namespace header
             uri.Reset(endpoint);
             uri.AppendPath("/header/response/existingkey", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,12 +147,14 @@ namespace header
             uri.AppendPath("/header/param/protectedkey", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Send a post request with header value &quot;Content-Type&quot;: &quot;text/html&quot;. </summary>
         /// <param name="contentType"> Send a post request with header value &quot;Content-Type&quot;: &quot;text/html&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public async Task<Response> ParamProtectedKeyAsync(string contentType, CancellationToken cancellationToken = default)
         {
             if (contentType == null)
@@ -170,6 +176,7 @@ namespace header
         /// <summary> Send a post request with header value &quot;Content-Type&quot;: &quot;text/html&quot;. </summary>
         /// <param name="contentType"> Send a post request with header value &quot;Content-Type&quot;: &quot;text/html&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public Response ParamProtectedKey(string contentType, CancellationToken cancellationToken = default)
         {
             if (contentType == null)
@@ -197,6 +204,7 @@ namespace header
             uri.Reset(endpoint);
             uri.AppendPath("/header/response/protectedkey", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -243,6 +251,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -250,6 +259,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 1 or -2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamIntegerAsync(string scenario, int value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -272,6 +282,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 1 or -2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamInteger(string scenario, int value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -300,12 +311,14 @@ namespace header
             uri.AppendPath("/header/response/prim/integer", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header value &quot;value&quot;: 1 or -2. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseIntegerHeaders>> ResponseIntegerAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -328,6 +341,7 @@ namespace header
         /// <summary> Get a response with header value &quot;value&quot;: 1 or -2. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseIntegerHeaders> ResponseInteger(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -358,6 +372,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -365,6 +380,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 105 or -2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamLongAsync(string scenario, long value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -387,6 +403,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 105 or -2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamLong(string scenario, long value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -415,12 +432,14 @@ namespace header
             uri.AppendPath("/header/response/prim/long", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header value &quot;value&quot;: 105 or -2. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseLongHeaders>> ResponseLongAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -443,6 +462,7 @@ namespace header
         /// <summary> Get a response with header value &quot;value&quot;: 105 or -2. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseLongHeaders> ResponseLong(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -473,6 +493,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -480,6 +501,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 0.07 or -3.0. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamFloatAsync(string scenario, float value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -502,6 +524,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 0.07 or -3.0. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamFloat(string scenario, float value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -530,12 +553,14 @@ namespace header
             uri.AppendPath("/header/response/prim/float", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header value &quot;value&quot;: 0.07 or -3.0. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseFloatHeaders>> ResponseFloatAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -558,6 +583,7 @@ namespace header
         /// <summary> Get a response with header value &quot;value&quot;: 0.07 or -3.0. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseFloatHeaders> ResponseFloat(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -588,6 +614,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -595,6 +622,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 7e120 or -3.0. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamDoubleAsync(string scenario, double value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -617,6 +645,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="value"> Send a post request with header values 7e120 or -3.0. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamDouble(string scenario, double value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -645,12 +674,14 @@ namespace header
             uri.AppendPath("/header/response/prim/double", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header value &quot;value&quot;: 7e120 or -3.0. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseDoubleHeaders>> ResponseDoubleAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -673,6 +704,7 @@ namespace header
         /// <summary> Get a response with header value &quot;value&quot;: 7e120 or -3.0. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;positive&quot; or &quot;negative&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseDoubleHeaders> ResponseDouble(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -703,6 +735,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -710,6 +743,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;true&quot; or &quot;false&quot;. </param>
         /// <param name="value"> Send a post request with header values true or false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamBoolAsync(string scenario, bool value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -732,6 +766,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;true&quot; or &quot;false&quot;. </param>
         /// <param name="value"> Send a post request with header values true or false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamBool(string scenario, bool value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -760,12 +795,14 @@ namespace header
             uri.AppendPath("/header/response/prim/bool", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header value &quot;value&quot;: true or false. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;true&quot; or &quot;false&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseBoolHeaders>> ResponseBoolAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -788,6 +825,7 @@ namespace header
         /// <summary> Get a response with header value &quot;value&quot;: true or false. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;true&quot; or &quot;false&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseBoolHeaders> ResponseBool(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -821,6 +859,7 @@ namespace header
             {
                 request.Headers.Add("value", value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -828,6 +867,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;The quick brown fox jumps over the lazy dog&quot; or null or &quot;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamStringAsync(string scenario, string value = null, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -850,6 +890,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;The quick brown fox jumps over the lazy dog&quot; or null or &quot;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamString(string scenario, string value = null, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -878,12 +919,14 @@ namespace header
             uri.AppendPath("/header/response/prim/string", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;The quick brown fox jumps over the lazy dog&quot; or null or &quot;&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseStringHeaders>> ResponseStringAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -906,6 +949,7 @@ namespace header
         /// <summary> Get a response with header values &quot;The quick brown fox jumps over the lazy dog&quot; or null or &quot;&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseStringHeaders> ResponseString(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -936,6 +980,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value, "D");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -943,6 +988,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;2010-01-01&quot; or &quot;0001-01-01&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamDateAsync(string scenario, DateTimeOffset value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -965,6 +1011,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;2010-01-01&quot; or &quot;0001-01-01&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamDate(string scenario, DateTimeOffset value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -993,12 +1040,14 @@ namespace header
             uri.AppendPath("/header/response/prim/date", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;2010-01-01&quot; or &quot;0001-01-01&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseDateHeaders>> ResponseDateAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1021,6 +1070,7 @@ namespace header
         /// <summary> Get a response with header values &quot;2010-01-01&quot; or &quot;0001-01-01&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseDateHeaders> ResponseDate(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1051,6 +1101,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value, "O");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1058,6 +1109,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;2010-01-01T12:34:56Z&quot; or &quot;0001-01-01T00:00:00Z&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamDatetimeAsync(string scenario, DateTimeOffset value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1080,6 +1132,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;2010-01-01T12:34:56Z&quot; or &quot;0001-01-01T00:00:00Z&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamDatetime(string scenario, DateTimeOffset value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1108,12 +1161,14 @@ namespace header
             uri.AppendPath("/header/response/prim/datetime", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;2010-01-01T12:34:56Z&quot; or &quot;0001-01-01T00:00:00Z&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseDatetimeHeaders>> ResponseDatetimeAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1136,6 +1191,7 @@ namespace header
         /// <summary> Get a response with header values &quot;2010-01-01T12:34:56Z&quot; or &quot;0001-01-01T00:00:00Z&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseDatetimeHeaders> ResponseDatetime(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1169,6 +1225,7 @@ namespace header
             {
                 request.Headers.Add("value", value.Value, "R");
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1176,6 +1233,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;Wed, 01 Jan 2010 12:34:56 GMT&quot; or &quot;Mon, 01 Jan 0001 00:00:00 GMT&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamDatetimeRfc1123Async(string scenario, DateTimeOffset? value = null, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1198,6 +1256,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;Wed, 01 Jan 2010 12:34:56 GMT&quot; or &quot;Mon, 01 Jan 0001 00:00:00 GMT&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamDatetimeRfc1123(string scenario, DateTimeOffset? value = null, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1226,12 +1285,14 @@ namespace header
             uri.AppendPath("/header/response/prim/datetimerfc1123", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;Wed, 01 Jan 2010 12:34:56 GMT&quot; or &quot;Mon, 01 Jan 0001 00:00:00 GMT&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseDatetimeRfc1123Headers>> ResponseDatetimeRfc1123Async(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1254,6 +1315,7 @@ namespace header
         /// <summary> Get a response with header values &quot;Wed, 01 Jan 2010 12:34:56 GMT&quot; or &quot;Mon, 01 Jan 0001 00:00:00 GMT&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;min&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseDatetimeRfc1123Headers> ResponseDatetimeRfc1123(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1284,6 +1346,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value, "P");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1291,6 +1354,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;P123DT22H14M12.011S&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamDurationAsync(string scenario, TimeSpan value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1313,6 +1377,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;P123DT22H14M12.011S&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamDuration(string scenario, TimeSpan value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1341,12 +1406,14 @@ namespace header
             uri.AppendPath("/header/response/prim/duration", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;P123DT22H14M12.011S&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseDurationHeaders>> ResponseDurationAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1369,6 +1436,7 @@ namespace header
         /// <summary> Get a response with header values &quot;P123DT22H14M12.011S&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseDurationHeaders> ResponseDuration(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1399,6 +1467,7 @@ namespace header
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
             request.Headers.Add("value", value);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1406,6 +1475,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;啊齄丂狛狜隣郎隣兀﨩&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> or <paramref name="value"/> is null. </exception>
         public async Task<Response> ParamByteAsync(string scenario, byte[] value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1432,6 +1502,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="value"> Send a post request with header values &quot;啊齄丂狛狜隣郎隣兀﨩&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> or <paramref name="value"/> is null. </exception>
         public Response ParamByte(string scenario, byte[] value, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1464,12 +1535,14 @@ namespace header
             uri.AppendPath("/header/response/prim/byte", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;啊齄丂狛狜隣郎隣兀﨩&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseByteHeaders>> ResponseByteAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1492,6 +1565,7 @@ namespace header
         /// <summary> Get a response with header values &quot;啊齄丂狛狜隣郎隣兀﨩&quot;. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseByteHeaders> ResponseByte(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1525,6 +1599,7 @@ namespace header
             {
                 request.Headers.Add("value", value.Value.ToSerialString());
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1532,6 +1607,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="value"> Send a post request with header values &apos;GREY&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<Response> ParamEnumAsync(string scenario, GreyscaleColors? value = null, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1554,6 +1630,7 @@ namespace header
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="value"> Send a post request with header values &apos;GREY&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public Response ParamEnum(string scenario, GreyscaleColors? value = null, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1582,12 +1659,14 @@ namespace header
             uri.AppendPath("/header/response/prim/enum", false);
             request.Uri = uri;
             request.Headers.Add("scenario", scenario);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a response with header values &quot;GREY&quot; or null. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public async Task<ResponseWithHeaders<HeaderResponseEnumHeaders>> ResponseEnumAsync(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1610,6 +1689,7 @@ namespace header
         /// <summary> Get a response with header values &quot;GREY&quot; or null. </summary>
         /// <param name="scenario"> Send a post request with header values &quot;scenario&quot;: &quot;valid&quot; or &quot;null&quot; or &quot;empty&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scenario"/> is null. </exception>
         public ResponseWithHeaders<HeaderResponseEnumHeaders> ResponseEnum(string scenario, CancellationToken cancellationToken = default)
         {
             if (scenario == null)
@@ -1638,6 +1718,7 @@ namespace header
             uri.Reset(endpoint);
             uri.AppendPath("/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

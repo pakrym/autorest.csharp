@@ -45,6 +45,7 @@ namespace non_string_enum
             uri.AppendPath("/nonStringEnums/float/put", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (input != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -67,14 +68,7 @@ namespace non_string_enum
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,14 +89,7 @@ namespace non_string_enum
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -119,6 +106,7 @@ namespace non_string_enum
             uri.Reset(endpoint);
             uri.AppendPath("/nonStringEnums/float/get", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

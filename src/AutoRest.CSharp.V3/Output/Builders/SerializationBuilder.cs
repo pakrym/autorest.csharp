@@ -83,7 +83,7 @@ namespace AutoRest.CSharp.V3.Output.Builders
             {
                 return new JsonValueSerialization(
                     type,
-                    BuilderHelpers.GetSerializationFormat(schema));
+                    BuilderHelpers.GetSerializationFormat(schema), type.IsNullable);
             }
 
             switch (schema)
@@ -93,15 +93,18 @@ namespace AutoRest.CSharp.V3.Output.Builders
                 case ArraySchema arraySchema:
                     return new JsonArraySerialization(
                         TypeFactory.GetImplementationType(type),
-                        BuildSerialization(arraySchema.ElementType, TypeFactory.GetElementType(type)));
+                        BuildSerialization(arraySchema.ElementType, TypeFactory.GetElementType(type)),
+                        type.IsNullable);
                 case DictionarySchema dictionarySchema:
                     return new JsonDictionarySerialization(
                         TypeFactory.GetImplementationType(type),
-                        BuildSerialization(dictionarySchema.ElementType, TypeFactory.GetElementType(type)));
+                        BuildSerialization(dictionarySchema.ElementType, TypeFactory.GetElementType(type)),
+                        type.IsNullable);
                 default:
                     return new JsonValueSerialization(
                         type,
-                        BuilderHelpers.GetSerializationFormat(schema));
+                        BuilderHelpers.GetSerializationFormat(schema),
+                        type.IsNullable);
             }
         }
 
@@ -110,6 +113,8 @@ namespace AutoRest.CSharp.V3.Output.Builders
             List<XmlObjectElementSerialization> elements = new List<XmlObjectElementSerialization>();
             List<XmlObjectAttributeSerialization> attributes = new List<XmlObjectAttributeSerialization>();
             List<XmlObjectArraySerialization> embeddedArrays = new List<XmlObjectArraySerialization>();
+            XmlObjectContentSerialization? contentSerialization = null;
+
             foreach (var objectTypeLevel in objectType.EnumerateHierarchy())
             {
                 foreach (ObjectTypeProperty objectProperty in objectTypeLevel.Properties)
@@ -122,8 +127,15 @@ namespace AutoRest.CSharp.V3.Output.Builders
 
                     var name = property.SerializedName;
                     var isAttribute = property.Schema.Serialization?.Xml?.Attribute == true;
+                    var isContent = property.Schema.Serialization?.Xml?.Text == true;
 
-                    if (isAttribute)
+                    if (isContent)
+                    {
+                        contentSerialization = new XmlObjectContentSerialization(
+                            objectProperty,
+                            BuildXmlValueSerialization(property.Schema, objectProperty.Declaration.Type));
+                    }
+                    else if (isAttribute)
                     {
                         attributes.Add(
                             new XmlObjectAttributeSerialization(
@@ -156,7 +168,8 @@ namespace AutoRest.CSharp.V3.Output.Builders
 
             return new XmlObjectSerialization(
                 objectSchema.Serialization?.Xml?.Name ?? objectSchema.Language.Default.Name,
-                objectType.Type, elements.ToArray(), attributes.ToArray(), embeddedArrays.ToArray()
+                objectType.Type, elements.ToArray(), attributes.ToArray(), embeddedArrays.ToArray(),
+                contentSerialization
                 );
         }
 
@@ -168,18 +181,18 @@ namespace AutoRest.CSharp.V3.Output.Builders
 
                 yield return new JsonPropertySerialization(
                     property.SerializedName,
-                    property.Required == true,
+                    property.IsRequired,
+                    property.IsReadOnly,
                     objectProperty,
-                    BuildSerialization(property.Schema, objectProperty.Declaration.Type)
+                    BuildSerialization(property.Schema, objectProperty.ValueType)
                     );
             }
 
             foreach ((string name, PropertyBag innerBag) in propertyBag.Bag)
             {
                 JsonPropertySerialization[] serializationProperties = GetPropertySerializationsFromBag(innerBag, objectType).ToArray();
-                JsonObjectSerialization objectSerialization = new JsonObjectSerialization(null, serializationProperties, null);
-                yield return new JsonPropertySerialization(
-                    name, false,null, objectSerialization);
+                JsonObjectSerialization objectSerialization = new JsonObjectSerialization(null, serializationProperties, null, false);
+                yield return new JsonPropertySerialization(name, false, false, null, objectSerialization);
             }
         }
 
@@ -202,7 +215,8 @@ namespace AutoRest.CSharp.V3.Output.Builders
             return new JsonObjectSerialization(
                 objectType.Type,
                 GetPropertySerializationsFromBag(propertyBag, objectType).ToArray(),
-                CreateAdditionalProperties(objectSchema, objectType));
+                CreateAdditionalProperties(objectSchema, objectType),
+                false);
         }
 
         private class PropertyBag

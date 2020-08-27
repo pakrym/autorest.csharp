@@ -16,9 +16,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal static PageResult DeserializePageResult(JsonElement element)
         {
             int page = default;
-            int? clusterId = default;
-            IReadOnlyList<KeyValuePair> keyValuePairs = default;
-            IReadOnlyList<DataTable> tables = default;
+            Optional<int> clusterId = default;
+            Optional<IReadOnlyList<KeyValuePair>> keyValuePairs = default;
+            Optional<IReadOnlyList<DataTable>> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -28,57 +28,31 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("clusterId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     clusterId = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("keyValuePairs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<KeyValuePair> array = new List<KeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(KeyValuePair.DeserializeKeyValuePair(item));
-                        }
+                        array.Add(KeyValuePair.DeserializeKeyValuePair(item));
                     }
                     keyValuePairs = array;
                     continue;
                 }
                 if (property.NameEquals("tables"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DataTable> array = new List<DataTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DataTable.DeserializeDataTable(item));
-                        }
+                        array.Add(DataTable.DeserializeDataTable(item));
                     }
                     tables = array;
                     continue;
                 }
             }
-            return new PageResult(page, clusterId, keyValuePairs, tables);
+            return new PageResult(page, Optional.ToNullable(clusterId), Optional.ToList(keyValuePairs), Optional.ToList(tables));
         }
     }
 }

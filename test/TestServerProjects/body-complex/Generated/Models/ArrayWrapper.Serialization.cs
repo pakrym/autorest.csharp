@@ -16,7 +16,7 @@ namespace body_complex.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Array != null)
+            if (Optional.IsCollectionDefined(Array))
             {
                 writer.WritePropertyName("array");
                 writer.WriteStartArray();
@@ -31,32 +31,21 @@ namespace body_complex.Models
 
         internal static ArrayWrapper DeserializeArrayWrapper(JsonElement element)
         {
-            IList<string> array = default;
+            Optional<IList<string>> array = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("array"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array0 = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array0.Add(null);
-                        }
-                        else
-                        {
-                            array0.Add(item.GetString());
-                        }
+                        array0.Add(item.GetString());
                     }
                     array = array0;
                     continue;
                 }
             }
-            return new ArrayWrapper(array);
+            return new ArrayWrapper(Optional.ToList(array));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace CognitiveSearch.Models
 {
@@ -16,6 +17,7 @@ namespace CognitiveSearch.Models
         /// <summary> Initializes a new instance of ImageAnalysisSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public ImageAnalysisSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
             if (inputs == null)
@@ -27,6 +29,8 @@ namespace CognitiveSearch.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
+            VisualFeatures = new ChangeTrackingList<VisualFeature>();
+            Details = new ChangeTrackingList<ImageDetail>();
             OdataType = "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 
@@ -51,8 +55,8 @@ namespace CognitiveSearch.Models
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public ImageAnalysisSkillLanguage? DefaultLanguageCode { get; set; }
         /// <summary> A list of visual features. </summary>
-        public IList<VisualFeature> VisualFeatures { get; set; }
+        public IList<VisualFeature> VisualFeatures { get; }
         /// <summary> A string indicating which domain-specific details to return. </summary>
-        public IList<ImageDetail> Details { get; set; }
+        public IList<ImageDetail> Details { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace CognitiveSearch.Models
 {
@@ -15,6 +16,7 @@ namespace CognitiveSearch.Models
     {
         /// <summary> Initializes a new instance of CjkBigramTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CjkBigramTokenFilter(string name) : base(name)
         {
             if (name == null)
@@ -22,6 +24,7 @@ namespace CognitiveSearch.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            IgnoreScripts = new ChangeTrackingList<CjkBigramTokenFilterScripts>();
             OdataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 
@@ -38,7 +41,7 @@ namespace CognitiveSearch.Models
         }
 
         /// <summary> The scripts to ignore. </summary>
-        public IList<CjkBigramTokenFilterScripts> IgnoreScripts { get; set; }
+        public IList<CjkBigramTokenFilterScripts> IgnoreScripts { get; }
         /// <summary> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </summary>
         public bool? OutputUnigrams { get; set; }
     }

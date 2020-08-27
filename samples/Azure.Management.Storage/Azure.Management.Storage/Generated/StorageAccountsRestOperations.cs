@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace Azure.Management.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public StorageAccountsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
@@ -52,7 +51,7 @@ namespace Azure.Management.Storage
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string name, string type)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +64,8 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var model = new StorageAccountCheckNameAvailabilityParameters(name, type);
+            request.Headers.Add("Accept", "application/json");
+            var model = new StorageAccountCheckNameAvailabilityParameters(name);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -74,20 +74,16 @@ namespace Azure.Management.Storage
 
         /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
         /// <param name="name"> The storage account name. </param>
-        /// <param name="type"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string name, string type = "Microsoft.Storage/storageAccounts", CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
 
-            using var message = CreateCheckNameAvailabilityRequest(name, type);
+            using var message = CreateCheckNameAvailabilityRequest(name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,14 +91,7 @@ namespace Azure.Management.Storage
                     {
                         CheckNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        }
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,20 +101,16 @@ namespace Azure.Management.Storage
 
         /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
         /// <param name="name"> The storage account name. </param>
-        /// <param name="type"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string name, string type = "Microsoft.Storage/storageAccounts", CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
 
-            using var message = CreateCheckNameAvailabilityRequest(name, type);
+            using var message = CreateCheckNameAvailabilityRequest(name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -133,14 +118,7 @@ namespace Azure.Management.Storage
                     {
                         CheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
-                        }
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -164,6 +142,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -175,6 +154,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateAsync(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -207,6 +187,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Create(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -256,6 +237,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -283,6 +265,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -325,6 +308,7 @@ namespace Azure.Management.Storage
                 uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -333,6 +317,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account&apos;s properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response<StorageAccount>> GetPropertiesAsync(string resourceGroupName, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -352,14 +337,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccount value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccount.DeserializeStorageAccount(document.RootElement);
-                        }
+                        value = StorageAccount.DeserializeStorageAccount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -372,6 +350,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account&apos;s properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response<StorageAccount> GetProperties(string resourceGroupName, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -391,14 +370,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccount value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccount.DeserializeStorageAccount(document.RootElement);
-                        }
+                        value = StorageAccount.DeserializeStorageAccount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -422,6 +394,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -433,6 +406,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<StorageAccount>> UpdateAsync(string resourceGroupName, string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -456,14 +430,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccount value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccount.DeserializeStorageAccount(document.RootElement);
-                        }
+                        value = StorageAccount.DeserializeStorageAccount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -476,6 +443,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<StorageAccount> Update(string resourceGroupName, string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -499,14 +467,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccount value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccount.DeserializeStorageAccount(document.RootElement);
-                        }
+                        value = StorageAccount.DeserializeStorageAccount(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -526,6 +487,7 @@ namespace Azure.Management.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -541,14 +503,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
-                        }
+                        value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,14 +523,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
-                        }
+                        value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,12 +545,14 @@ namespace Azure.Management.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<StorageAccountListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -618,14 +568,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
-                        }
+                        value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,6 +579,7 @@ namespace Azure.Management.Storage
         /// <summary> Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<StorageAccountListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -651,14 +595,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
-                        }
+                        value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -683,6 +620,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             uri.AppendQuery("$expand", "kerb", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -690,6 +628,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response<StorageAccountListKeysResult>> ListKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -709,14 +648,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
-                        }
+                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -728,6 +660,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response<StorageAccountListKeysResult> ListKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -747,14 +680,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
-                        }
+                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -779,6 +705,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var model = new StorageAccountRegenerateKeyParameters(keyName);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -791,6 +718,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="keyName"> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="keyName"/> is null. </exception>
         public async Task<Response<StorageAccountListKeysResult>> RegenerateKeyAsync(string resourceGroupName, string accountName, string keyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -814,14 +742,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
-                        }
+                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -834,6 +755,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="keyName"> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="keyName"/> is null. </exception>
         public Response<StorageAccountListKeysResult> RegenerateKey(string resourceGroupName, string accountName, string keyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -857,14 +779,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
-                        }
+                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -889,6 +804,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -900,6 +816,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ListAccountSasResponse>> ListAccountSASAsync(string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -923,14 +840,7 @@ namespace Azure.Management.Storage
                     {
                         ListAccountSasResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListAccountSasResponse.DeserializeListAccountSasResponse(document.RootElement);
-                        }
+                        value = ListAccountSasResponse.DeserializeListAccountSasResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -943,6 +853,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ListAccountSasResponse> ListAccountSAS(string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -966,14 +877,7 @@ namespace Azure.Management.Storage
                     {
                         ListAccountSasResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListAccountSasResponse.DeserializeListAccountSasResponse(document.RootElement);
-                        }
+                        value = ListAccountSasResponse.DeserializeListAccountSasResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -998,6 +902,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1009,6 +914,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ListServiceSasResponse>> ListServiceSASAsync(string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1032,14 +938,7 @@ namespace Azure.Management.Storage
                     {
                         ListServiceSasResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListServiceSasResponse.DeserializeListServiceSasResponse(document.RootElement);
-                        }
+                        value = ListServiceSasResponse.DeserializeListServiceSasResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1052,6 +951,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<ListServiceSasResponse> ListServiceSAS(string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1075,14 +975,7 @@ namespace Azure.Management.Storage
                     {
                         ListServiceSasResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListServiceSasResponse.DeserializeListServiceSasResponse(document.RootElement);
-                        }
+                        value = ListServiceSasResponse.DeserializeListServiceSasResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1113,6 +1006,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response> FailoverAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1140,6 +1034,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response Failover(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1180,7 +1075,8 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var model = new BlobRestoreParameters(timeToRestore, blobRanges.ToArray());
+            request.Headers.Add("Accept", "application/json");
+            var model = new BlobRestoreParameters(timeToRestore, blobRanges);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -1193,6 +1089,7 @@ namespace Azure.Management.Storage
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="blobRanges"/> is null. </exception>
         public async Task<Response> RestoreBlobRangesAsync(string resourceGroupName, string accountName, DateTimeOffset timeToRestore, IEnumerable<BlobRestoreRange> blobRanges, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1226,6 +1123,7 @@ namespace Azure.Management.Storage
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="blobRanges"/> is null. </exception>
         public Response RestoreBlobRanges(string resourceGroupName, string accountName, DateTimeOffset timeToRestore, IEnumerable<BlobRestoreRange> blobRanges, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1276,6 +1174,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response> RevokeUserDelegationKeysAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1302,6 +1201,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response RevokeUserDelegationKeys(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1333,12 +1233,14 @@ namespace Azure.Management.Storage
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<StorageAccountListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1354,14 +1256,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
-                        }
+                        value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1372,6 +1267,7 @@ namespace Azure.Management.Storage
         /// <summary> Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<StorageAccountListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1387,14 +1283,7 @@ namespace Azure.Management.Storage
                     {
                         StorageAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
-                        }
+                        value = StorageAccountListResult.DeserializeStorageAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

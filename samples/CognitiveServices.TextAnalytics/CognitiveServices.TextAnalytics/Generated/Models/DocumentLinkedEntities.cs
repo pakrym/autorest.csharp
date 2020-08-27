@@ -17,6 +17,7 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <summary> Initializes a new instance of DocumentLinkedEntities. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized well-known entities in the document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="entities"/> is null. </exception>
         internal DocumentLinkedEntities(string id, IEnumerable<LinkedEntity> entities)
         {
             if (id == null)
@@ -29,7 +30,7 @@ namespace CognitiveServices.TextAnalytics.Models
             }
 
             Id = id;
-            Entities = entities.ToArray();
+            Entities = entities.ToList();
         }
 
         /// <summary> Initializes a new instance of DocumentLinkedEntities. </summary>
@@ -39,7 +40,7 @@ namespace CognitiveServices.TextAnalytics.Models
         internal DocumentLinkedEntities(string id, IReadOnlyList<LinkedEntity> entities, DocumentStatistics statistics)
         {
             Id = id;
-            Entities = entities ?? new List<LinkedEntity>();
+            Entities = entities;
             Statistics = statistics;
         }
 

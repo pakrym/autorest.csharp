@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of TrainResult. </summary>
         /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingDocuments"/> is null. </exception>
         internal TrainResult(IEnumerable<TrainingDocumentInfo> trainingDocuments)
         {
             if (trainingDocuments == null)
@@ -23,7 +25,9 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new ArgumentNullException(nameof(trainingDocuments));
             }
 
-            TrainingDocuments = trainingDocuments.ToArray();
+            TrainingDocuments = trainingDocuments.ToList();
+            Fields = new ChangeTrackingList<FormFieldsReport>();
+            Errors = new ChangeTrackingList<ErrorInformation>();
         }
 
         /// <summary> Initializes a new instance of TrainResult. </summary>
@@ -33,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="errors"> Errors returned during the training operation. </param>
         internal TrainResult(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormFieldsReport> fields, float? averageModelAccuracy, IReadOnlyList<ErrorInformation> errors)
         {
-            TrainingDocuments = trainingDocuments ?? new List<TrainingDocumentInfo>();
+            TrainingDocuments = trainingDocuments;
             Fields = fields;
             AverageModelAccuracy = averageModelAccuracy;
             Errors = errors;

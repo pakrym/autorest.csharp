@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace CognitiveSearch.Models
 {
@@ -15,6 +16,7 @@ namespace CognitiveSearch.Models
     {
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScoringProfile(string name)
         {
             if (name == null)
@@ -23,6 +25,7 @@ namespace CognitiveSearch.Models
             }
 
             Name = name;
+            Functions = new ChangeTrackingList<ScoringFunction>();
         }
 
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
@@ -43,7 +46,7 @@ namespace CognitiveSearch.Models
         /// <summary> Parameters that boost scoring based on text matches in certain index fields. </summary>
         public TextWeights TextWeights { get; set; }
         /// <summary> The collection of functions that influence the scoring of documents. </summary>
-        public IList<ScoringFunction> Functions { get; set; }
+        public IList<ScoringFunction> Functions { get; }
         /// <summary> A value indicating how the results of individual scoring functions should be combined. Defaults to &quot;Sum&quot;. Ignored if there are no scoring functions. </summary>
         public ScoringFunctionAggregation? FunctionAggregation { get; set; }
     }

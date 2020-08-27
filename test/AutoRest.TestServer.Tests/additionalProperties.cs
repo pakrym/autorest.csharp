@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using additionalProperties;
 using additionalProperties.Models;
@@ -23,7 +24,7 @@ namespace AutoRest.TestServer.Tests
             var response = await new PetsClient(ClientDiagnostics, pipeline, host).CreateAPInPropertiesAsync(new PetAPInProperties(4)
             {
                 Name = "Bunny",
-                AdditionalProperties = new Dictionary<string, float>()
+                AdditionalProperties =
                 {
                     { "height", 5.61f },
                     { "weight", 599f },
@@ -46,7 +47,7 @@ namespace AutoRest.TestServer.Tests
             PetAPInPropertiesWithAPString parameter = new PetAPInPropertiesWithAPString(5, "westus")
             {
                 Name = "Funny",
-                AdditionalProperties = new Dictionary<string, float>()
+                AdditionalProperties =
                 {
                     { "height", 5.61f },
                     { "weight", 599f },
@@ -188,5 +189,12 @@ namespace AutoRest.TestServer.Tests
             Assert.AreEqual("10 kg", value["weight"]);
             Assert.AreEqual("Bombay", value["city"]);
         });
+
+        [Test]
+        public void InitializeAdditionalPropertiesDuringDeserialization()
+        {
+            PetAPObject model = PetAPObject.DeserializePetAPObject(JsonDocument.Parse("{}").RootElement);
+            Assert.AreEqual(new Dictionary<string, object>(), model.AdditionalProperties);
+        }
     }
 }

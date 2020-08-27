@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
         /// <param name="readResults"> Text extracted from the input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="readResults"/> is null. </exception>
         internal AnalyzeResult(string version, IEnumerable<ReadResult> readResults)
         {
             if (version == null)
@@ -29,7 +31,10 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Version = version;
-            ReadResults = readResults.ToArray();
+            ReadResults = readResults.ToList();
+            PageResults = new ChangeTrackingList<PageResult>();
+            DocumentResults = new ChangeTrackingList<DocumentResult>();
+            Errors = new ChangeTrackingList<ErrorInformation>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
@@ -41,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal AnalyzeResult(string version, IReadOnlyList<ReadResult> readResults, IReadOnlyList<PageResult> pageResults, IReadOnlyList<DocumentResult> documentResults, IReadOnlyList<ErrorInformation> errors)
         {
             Version = version;
-            ReadResults = readResults ?? new List<ReadResult>();
+            ReadResults = readResults;
             PageResults = pageResults;
             DocumentResults = documentResults;
             Errors = errors;

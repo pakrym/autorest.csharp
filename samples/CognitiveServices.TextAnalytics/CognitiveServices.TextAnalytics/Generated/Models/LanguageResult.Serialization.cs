@@ -17,7 +17,7 @@ namespace CognitiveServices.TextAnalytics.Models
         {
             IReadOnlyList<DocumentLanguage> documents = default;
             IReadOnlyList<DocumentError> errors = default;
-            RequestStatistics statistics = default;
+            Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,14 +26,7 @@ namespace CognitiveServices.TextAnalytics.Models
                     List<DocumentLanguage> array = new List<DocumentLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
-                        }
+                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
                     }
                     documents = array;
                     continue;
@@ -43,24 +36,13 @@ namespace CognitiveServices.TextAnalytics.Models
                     List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DocumentError.DeserializeDocumentError(item));
-                        }
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
                     continue;
                 }
@@ -70,7 +52,7 @@ namespace CognitiveServices.TextAnalytics.Models
                     continue;
                 }
             }
-            return new LanguageResult(documents, errors, statistics, modelVersion);
+            return new LanguageResult(documents, errors, statistics.Value, modelVersion);
         }
     }
 }

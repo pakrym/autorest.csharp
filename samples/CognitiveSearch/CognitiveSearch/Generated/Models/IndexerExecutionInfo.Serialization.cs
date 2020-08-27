@@ -16,7 +16,7 @@ namespace CognitiveSearch.Models
         internal static IndexerExecutionInfo DeserializeIndexerExecutionInfo(JsonElement element)
         {
             IndexerStatus status = default;
-            IndexerExecutionResult lastResult = default;
+            Optional<IndexerExecutionResult> lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             IndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,6 @@ namespace CognitiveSearch.Models
                 }
                 if (property.NameEquals("lastResult"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
                     continue;
                 }
@@ -40,14 +36,7 @@ namespace CognitiveSearch.Models
                     List<IndexerExecutionResult> array = new List<IndexerExecutionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
-                        }
+                        array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
                     }
                     executionHistory = array;
                     continue;
@@ -58,7 +47,7 @@ namespace CognitiveSearch.Models
                     continue;
                 }
             }
-            return new IndexerExecutionInfo(status, lastResult, executionHistory, limits);
+            return new IndexerExecutionInfo(status, lastResult.Value, executionHistory, limits);
         }
     }
 }

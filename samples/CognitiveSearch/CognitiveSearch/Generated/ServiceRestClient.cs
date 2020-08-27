@@ -28,7 +28,7 @@ namespace CognitiveSearch
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
@@ -60,6 +60,7 @@ namespace CognitiveSearch
             {
                 request.Headers.Add("x-ms-client-request-id", requestOptions.XMsClientRequestId.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -76,14 +77,7 @@ namespace CognitiveSearch
                     {
                         ServiceStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
-                        }
+                        value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,14 +98,7 @@ namespace CognitiveSearch
                     {
                         ServiceStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
-                        }
+                        value = ServiceStatistics.DeserializeServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

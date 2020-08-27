@@ -45,6 +45,7 @@ namespace AdditionalPropertiesEx
             uri.AppendPath("/ap_operation", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createParameters);
             request.Content = content;
@@ -54,6 +55,7 @@ namespace AdditionalPropertiesEx
         /// <summary> Create a Pet which contains more properties than what is defined. </summary>
         /// <param name="createParameters"> The InputAdditionalPropertiesModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createParameters"/> is null. </exception>
         public async Task<Response> WriteOnlyAsync(InputAdditionalPropertiesModel createParameters, CancellationToken cancellationToken = default)
         {
             if (createParameters == null)
@@ -75,6 +77,7 @@ namespace AdditionalPropertiesEx
         /// <summary> Create a Pet which contains more properties than what is defined. </summary>
         /// <param name="createParameters"> The InputAdditionalPropertiesModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createParameters"/> is null. </exception>
         public Response WriteOnly(InputAdditionalPropertiesModel createParameters, CancellationToken cancellationToken = default)
         {
             if (createParameters == null)
@@ -102,6 +105,7 @@ namespace AdditionalPropertiesEx
             uri.Reset(endpoint);
             uri.AppendPath("/ap_operation", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -117,14 +121,7 @@ namespace AdditionalPropertiesEx
                     {
                         OutputAdditionalPropertiesModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OutputAdditionalPropertiesModel.DeserializeOutputAdditionalPropertiesModel(document.RootElement);
-                        }
+                        value = OutputAdditionalPropertiesModel.DeserializeOutputAdditionalPropertiesModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -144,14 +141,7 @@ namespace AdditionalPropertiesEx
                     {
                         OutputAdditionalPropertiesModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OutputAdditionalPropertiesModel.DeserializeOutputAdditionalPropertiesModel(document.RootElement);
-                        }
+                        value = OutputAdditionalPropertiesModel.DeserializeOutputAdditionalPropertiesModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -169,6 +159,7 @@ namespace AdditionalPropertiesEx
             uri.AppendPath("/ap_struct_operation", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createParameters);
             request.Content = content;
@@ -216,6 +207,7 @@ namespace AdditionalPropertiesEx
             uri.Reset(endpoint);
             uri.AppendPath("/ap_struct_operation", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

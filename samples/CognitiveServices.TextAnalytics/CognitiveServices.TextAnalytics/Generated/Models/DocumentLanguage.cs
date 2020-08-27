@@ -17,6 +17,7 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="detectedLanguages"> A list of extracted languages. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="detectedLanguages"/> is null. </exception>
         internal DocumentLanguage(string id, IEnumerable<DetectedLanguage> detectedLanguages)
         {
             if (id == null)
@@ -29,7 +30,7 @@ namespace CognitiveServices.TextAnalytics.Models
             }
 
             Id = id;
-            DetectedLanguages = detectedLanguages.ToArray();
+            DetectedLanguages = detectedLanguages.ToList();
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
@@ -39,7 +40,7 @@ namespace CognitiveServices.TextAnalytics.Models
         internal DocumentLanguage(string id, IReadOnlyList<DetectedLanguage> detectedLanguages, DocumentStatistics statistics)
         {
             Id = id;
-            DetectedLanguages = detectedLanguages ?? new List<DetectedLanguage>();
+            DetectedLanguages = detectedLanguages;
             Statistics = statistics;
         }
 

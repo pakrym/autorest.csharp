@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace ModelShapes.Models
 {
@@ -23,6 +24,7 @@ namespace ModelShapes.Models
         /// <param name="requiredNullableInt"> . </param>
         /// <param name="requiredNullableStringList"> . </param>
         /// <param name="requiredNullableIntList"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/>, <paramref name="requiredStringList"/>, or <paramref name="requiredIntList"/> is null. </exception>
         public InputModel(string requiredString, int requiredInt, IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList, string requiredNullableString, int? requiredNullableInt, IEnumerable<string> requiredNullableStringList, IEnumerable<int> requiredNullableIntList)
         {
             if (requiredString == null)
@@ -40,41 +42,16 @@ namespace ModelShapes.Models
 
             RequiredString = requiredString;
             RequiredInt = requiredInt;
-            RequiredStringList = requiredStringList.ToArray();
-            RequiredIntList = requiredIntList.ToArray();
+            RequiredStringList = requiredStringList.ToList();
+            RequiredIntList = requiredIntList.ToList();
+            NonRequiredStringList = new ChangeTrackingList<string>();
+            NonRequiredIntList = new ChangeTrackingList<int>();
             RequiredNullableString = requiredNullableString;
             RequiredNullableInt = requiredNullableInt;
-            RequiredNullableStringList = requiredNullableStringList?.ToArray();
-            RequiredNullableIntList = requiredNullableIntList?.ToArray();
-        }
-
-        /// <summary> Initializes a new instance of InputModel. </summary>
-        /// <param name="requiredString"> . </param>
-        /// <param name="requiredInt"> . </param>
-        /// <param name="requiredStringList"> . </param>
-        /// <param name="requiredIntList"> . </param>
-        /// <param name="nonRequiredString"> . </param>
-        /// <param name="nonRequiredInt"> . </param>
-        /// <param name="nonRequiredStringList"> . </param>
-        /// <param name="nonRequiredIntList"> . </param>
-        /// <param name="requiredNullableString"> . </param>
-        /// <param name="requiredNullableInt"> . </param>
-        /// <param name="requiredNullableStringList"> . </param>
-        /// <param name="requiredNullableIntList"> . </param>
-        internal InputModel(string requiredString, int requiredInt, IList<string> requiredStringList, IList<int> requiredIntList, string nonRequiredString, int? nonRequiredInt, IList<string> nonRequiredStringList, IList<int> nonRequiredIntList, string requiredNullableString, int? requiredNullableInt, IList<string> requiredNullableStringList, IList<int> requiredNullableIntList)
-        {
-            RequiredString = requiredString;
-            RequiredInt = requiredInt;
-            RequiredStringList = requiredStringList ?? new List<string>();
-            RequiredIntList = requiredIntList ?? new List<int>();
-            NonRequiredString = nonRequiredString;
-            NonRequiredInt = nonRequiredInt;
-            NonRequiredStringList = nonRequiredStringList;
-            NonRequiredIntList = nonRequiredIntList;
-            RequiredNullableString = requiredNullableString;
-            RequiredNullableInt = requiredNullableInt;
-            RequiredNullableStringList = requiredNullableStringList;
-            RequiredNullableIntList = requiredNullableIntList;
+            RequiredNullableStringList = requiredNullableStringList?.ToList();
+            RequiredNullableIntList = requiredNullableIntList?.ToList();
+            NonRequiredNullableStringList = new ChangeTrackingList<string>();
+            NonRequiredNullableIntList = new ChangeTrackingList<int>();
         }
 
         public string RequiredString { get; }
@@ -83,11 +60,15 @@ namespace ModelShapes.Models
         public IList<int> RequiredIntList { get; }
         public string NonRequiredString { get; set; }
         public int? NonRequiredInt { get; set; }
-        public IList<string> NonRequiredStringList { get; set; }
-        public IList<int> NonRequiredIntList { get; set; }
+        public IList<string> NonRequiredStringList { get; }
+        public IList<int> NonRequiredIntList { get; }
         public string RequiredNullableString { get; }
         public int? RequiredNullableInt { get; }
-        public IList<string> RequiredNullableStringList { get; }
-        public IList<int> RequiredNullableIntList { get; }
+        public IList<string> RequiredNullableStringList { get; set; }
+        public IList<int> RequiredNullableIntList { get; set; }
+        public string NonRequiredNullableString { get; set; }
+        public int? NonRequiredNullableInt { get; set; }
+        public IList<string> NonRequiredNullableStringList { get; set; }
+        public IList<int> NonRequiredNullableIntList { get; set; }
     }
 }

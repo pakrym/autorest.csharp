@@ -28,7 +28,7 @@ namespace CognitiveSearch
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SynonymMapsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
@@ -72,6 +72,7 @@ namespace CognitiveSearch
             }
             request.Headers.Add("Prefer", "return=representation");
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(synonymMap);
             request.Content = content;
@@ -84,6 +85,7 @@ namespace CognitiveSearch
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> or <paramref name="synonymMap"/> is null. </exception>
         public async Task<Response<SynonymMap>> CreateOrUpdateAsync(string synonymMapName, SynonymMap synonymMap, RequestOptions requestOptions = null, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -104,14 +106,7 @@ namespace CognitiveSearch
                     {
                         SynonymMap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -125,6 +120,7 @@ namespace CognitiveSearch
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> or <paramref name="synonymMap"/> is null. </exception>
         public Response<SynonymMap> CreateOrUpdate(string synonymMapName, SynonymMap synonymMap, RequestOptions requestOptions = null, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -145,14 +141,7 @@ namespace CognitiveSearch
                     {
                         SynonymMap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,6 +173,7 @@ namespace CognitiveSearch
             {
                 request.Headers.Add("If-None-Match", accessCondition.IfNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -192,6 +182,7 @@ namespace CognitiveSearch
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string synonymMapName, RequestOptions requestOptions = null, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -216,6 +207,7 @@ namespace CognitiveSearch
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public Response Delete(string synonymMapName, RequestOptions requestOptions = null, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -251,6 +243,7 @@ namespace CognitiveSearch
             {
                 request.Headers.Add("x-ms-client-request-id", requestOptions.XMsClientRequestId.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -258,6 +251,7 @@ namespace CognitiveSearch
         /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public async Task<Response<SynonymMap>> GetAsync(string synonymMapName, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -273,14 +267,7 @@ namespace CognitiveSearch
                     {
                         SynonymMap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -292,6 +279,7 @@ namespace CognitiveSearch
         /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public Response<SynonymMap> Get(string synonymMapName, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -307,14 +295,7 @@ namespace CognitiveSearch
                     {
                         SynonymMap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,6 +321,7 @@ namespace CognitiveSearch
             {
                 request.Headers.Add("x-ms-client-request-id", requestOptions.XMsClientRequestId.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -357,14 +339,7 @@ namespace CognitiveSearch
                     {
                         ListSynonymMapsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
-                        }
+                        value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -386,14 +361,7 @@ namespace CognitiveSearch
                     {
                         ListSynonymMapsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
-                        }
+                        value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -416,6 +384,7 @@ namespace CognitiveSearch
                 request.Headers.Add("x-ms-client-request-id", requestOptions.XMsClientRequestId.Value);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(synonymMap);
             request.Content = content;
@@ -426,6 +395,7 @@ namespace CognitiveSearch
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
         public async Task<Response<SynonymMap>> CreateAsync(SynonymMap synonymMap, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
         {
             if (synonymMap == null)
@@ -441,14 +411,7 @@ namespace CognitiveSearch
                     {
                         SynonymMap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -460,6 +423,7 @@ namespace CognitiveSearch
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="requestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
         public Response<SynonymMap> Create(SynonymMap synonymMap, RequestOptions requestOptions = null, CancellationToken cancellationToken = default)
         {
             if (synonymMap == null)
@@ -475,14 +439,7 @@ namespace CognitiveSearch
                     {
                         SynonymMap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

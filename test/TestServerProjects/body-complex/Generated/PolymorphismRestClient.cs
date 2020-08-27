@@ -44,6 +44,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/polymorphism/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -59,14 +60,7 @@ namespace body_complex
                     {
                         Fish value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Fish.DeserializeFish(document.RootElement);
-                        }
+                        value = Fish.DeserializeFish(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,14 +80,7 @@ namespace body_complex
                     {
                         Fish value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Fish.DeserializeFish(document.RootElement);
-                        }
+                        value = Fish.DeserializeFish(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +98,7 @@ namespace body_complex
             uri.AppendPath("/complex/polymorphism/valid", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -154,6 +142,7 @@ namespace body_complex
         ///       };.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response> PutValidAsync(Fish complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -209,6 +198,7 @@ namespace body_complex
         ///       };.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response PutValid(Fish complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -236,6 +226,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/polymorphism/dotsyntax", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -251,14 +242,7 @@ namespace body_complex
                     {
                         DotFish value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DotFish.DeserializeDotFish(document.RootElement);
-                        }
+                        value = DotFish.DeserializeDotFish(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,14 +262,7 @@ namespace body_complex
                     {
                         DotFish value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DotFish.DeserializeDotFish(document.RootElement);
-                        }
+                        value = DotFish.DeserializeDotFish(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -302,6 +279,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/polymorphism/composedWithDiscriminator", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -317,14 +295,7 @@ namespace body_complex
                     {
                         DotFishMarket value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
-                        }
+                        value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -344,14 +315,7 @@ namespace body_complex
                     {
                         DotFishMarket value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
-                        }
+                        value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,6 +332,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/polymorphism/composedWithoutDiscriminator", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -383,14 +348,7 @@ namespace body_complex
                     {
                         DotFishMarket value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
-                        }
+                        value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -410,14 +368,7 @@ namespace body_complex
                     {
                         DotFishMarket value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
-                        }
+                        value = DotFishMarket.DeserializeDotFishMarket(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,6 +385,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/polymorphism/complicated", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -449,14 +401,7 @@ namespace body_complex
                     {
                         Salmon value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Salmon.DeserializeSalmon(document.RootElement);
-                        }
+                        value = Salmon.DeserializeSalmon(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -476,14 +421,7 @@ namespace body_complex
                     {
                         Salmon value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Salmon.DeserializeSalmon(document.RootElement);
-                        }
+                        value = Salmon.DeserializeSalmon(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -501,6 +439,7 @@ namespace body_complex
             uri.AppendPath("/complex/polymorphism/complicated", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -510,6 +449,7 @@ namespace body_complex
         /// <summary> Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties. </summary>
         /// <param name="complexBody"> The Salmon to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response> PutComplicatedAsync(Salmon complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -531,6 +471,7 @@ namespace body_complex
         /// <summary> Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties. </summary>
         /// <param name="complexBody"> The Salmon to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response PutComplicated(Salmon complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -559,6 +500,7 @@ namespace body_complex
             uri.AppendPath("/complex/polymorphism/missingdiscriminator", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -568,6 +510,7 @@ namespace body_complex
         /// <summary> Put complex types that are polymorphic, omitting the discriminator. </summary>
         /// <param name="complexBody"> The Salmon to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response<Salmon>> PutMissingDiscriminatorAsync(Salmon complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -583,14 +526,7 @@ namespace body_complex
                     {
                         Salmon value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Salmon.DeserializeSalmon(document.RootElement);
-                        }
+                        value = Salmon.DeserializeSalmon(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -601,6 +537,7 @@ namespace body_complex
         /// <summary> Put complex types that are polymorphic, omitting the discriminator. </summary>
         /// <param name="complexBody"> The Salmon to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response<Salmon> PutMissingDiscriminator(Salmon complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -616,14 +553,7 @@ namespace body_complex
                     {
                         Salmon value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Salmon.DeserializeSalmon(document.RootElement);
-                        }
+                        value = Salmon.DeserializeSalmon(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -641,6 +571,7 @@ namespace body_complex
             uri.AppendPath("/complex/polymorphism/missingrequired/invalid", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -677,6 +608,7 @@ namespace body_complex
         /// }.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response> PutValidMissingRequiredAsync(Fish complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -725,6 +657,7 @@ namespace body_complex
         /// }.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response PutValidMissingRequired(Fish complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)

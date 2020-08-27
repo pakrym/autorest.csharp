@@ -83,6 +83,28 @@
         }
       }
     },
+    "/OperationThirdModel": {
+      "patch": {
+        "operationId": "OperationThirdModel",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ThirdModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ThirdModel"
+            }
+          }
+        }
+      }
+    },
     "/OperationModelWithArrayOfEnum": {
       "patch": {
         "operationId": "OperationModelWithArrayOfEnum",
@@ -138,6 +160,19 @@
             "modelAsString": true
           }
         }
+      }
+    },
+    "ThirdModel": {
+      "type": "object",
+      "properties": {
+        "ETag": {
+          "type": "string",
+          "description": "ETag property"
+        },
+        "CreatedAt": {
+          "type": "string",
+          "description": "Creation date"
+         }
       }
     },
     "Model": {
@@ -246,6 +281,39 @@
             }
           }
         }
+      }
+    },
+    "ModelWithCustomUsage": {
+      "type": "object",
+      "properties": {
+        "ModelProperty": {
+          "type": "string",
+          "description": "."
+        }
+      },
+      "x-csharp-usage": "model,input,output",
+      "x-csharp-formats": "xml, json, json"
+    },
+    "ModelWithCustomUsageViaAttribute": {
+      "type": "object",
+      "properties": {
+        "ModelProperty": {
+          "type": "string",
+          "description": "."
+        }
+      }
+    },
+    "NonExtensibleEnum": {
+      "description": "More Letters",
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ],
+      "x-ms-enum":{
+        "name": "NonExtensibleEnum",
+        "modelAsString": false
       }
     }
   }

@@ -16,7 +16,7 @@ namespace ExtensionClientName.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RenamedProperty != null)
+            if (Optional.IsCollectionDefined(RenamedProperty))
             {
                 writer.WritePropertyName("originalProperty");
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace ExtensionClientName.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RenamedPropertyString != null)
+            if (Optional.IsDefined(RenamedPropertyString))
             {
                 writer.WritePropertyName("originalPropertyString");
                 writer.WriteStringValue(RenamedPropertyString);
@@ -37,42 +37,27 @@ namespace ExtensionClientName.Models
 
         internal static RenamedSchema DeserializeRenamedSchema(JsonElement element)
         {
-            IDictionary<string, string> originalProperty = default;
-            string originalPropertyString = default;
+            Optional<IDictionary<string, string>> originalProperty = default;
+            Optional<string> originalPropertyString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("originalProperty"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     originalProperty = dictionary;
                     continue;
                 }
                 if (property.NameEquals("originalPropertyString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     originalPropertyString = property.Value.GetString();
                     continue;
                 }
             }
-            return new RenamedSchema(originalProperty, originalPropertyString);
+            return new RenamedSchema(Optional.ToDictionary(originalProperty), originalPropertyString.Value);
         }
     }
 }

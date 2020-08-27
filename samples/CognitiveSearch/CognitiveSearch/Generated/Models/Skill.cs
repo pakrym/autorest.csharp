@@ -17,6 +17,7 @@ namespace CognitiveSearch.Models
         /// <summary> Initializes a new instance of Skill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public Skill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs)
         {
             if (inputs == null)
@@ -28,9 +29,8 @@ namespace CognitiveSearch.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
-            Inputs = inputs.ToArray();
-            Outputs = outputs.ToArray();
-            OdataType = null;
+            Inputs = inputs.ToList();
+            Outputs = outputs.ToList();
         }
 
         /// <summary> Initializes a new instance of Skill. </summary>
@@ -46,8 +46,8 @@ namespace CognitiveSearch.Models
             Name = name;
             Description = description;
             Context = context;
-            Inputs = inputs ?? new List<InputFieldMappingEntry>();
-            Outputs = outputs ?? new List<OutputFieldMappingEntry>();
+            Inputs = inputs;
+            Outputs = outputs;
         }
 
         /// <summary> Identifies the concrete type of the skill. </summary>

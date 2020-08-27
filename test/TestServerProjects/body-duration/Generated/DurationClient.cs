@@ -36,7 +36,7 @@ namespace body_duration
 
         /// <summary> Get null duration value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TimeSpan>> GetNullAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TimeSpan?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DurationClient.GetNull");
             scope.Start();
@@ -53,7 +53,7 @@ namespace body_duration
 
         /// <summary> Get null duration value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TimeSpan> GetNull(CancellationToken cancellationToken = default)
+        public virtual Response<TimeSpan?> GetNull(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DurationClient.GetNull");
             scope.Start();
@@ -69,7 +69,7 @@ namespace body_duration
         }
 
         /// <summary> Put a positive duration value. </summary>
-        /// <param name="durationBody"> The Duration to use. </param>
+        /// <param name="durationBody"> duration body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> PutPositiveDurationAsync(TimeSpan durationBody, CancellationToken cancellationToken = default)
         {
@@ -87,7 +87,7 @@ namespace body_duration
         }
 
         /// <summary> Put a positive duration value. </summary>
-        /// <param name="durationBody"> The Duration to use. </param>
+        /// <param name="durationBody"> duration body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PutPositiveDuration(TimeSpan durationBody, CancellationToken cancellationToken = default)
         {

@@ -15,30 +15,12 @@ namespace model_flattening.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
-        }
-
-        internal static WrappedProduct DeserializeWrappedProduct(JsonElement element)
-        {
-            string value = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("value"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new WrappedProduct(value);
         }
     }
 }

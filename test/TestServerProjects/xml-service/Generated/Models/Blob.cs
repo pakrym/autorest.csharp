@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace xml_service.Models
 {
@@ -18,6 +19,7 @@ namespace xml_service.Models
         /// <param name="deleted"> . </param>
         /// <param name="snapshot"> . </param>
         /// <param name="properties"> Properties of a blob. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/>, or <paramref name="properties"/> is null. </exception>
         internal Blob(string name, bool deleted, string snapshot, BlobProperties properties)
         {
             if (name == null)
@@ -37,6 +39,7 @@ namespace xml_service.Models
             Deleted = deleted;
             Snapshot = snapshot;
             Properties = properties;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Blob. </summary>

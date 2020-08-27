@@ -18,12 +18,12 @@ namespace CognitiveSearch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (TextWeights != null)
+            if (Optional.IsDefined(TextWeights))
             {
                 writer.WritePropertyName("text");
                 writer.WriteObjectValue(TextWeights);
             }
-            if (Functions != null)
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions");
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace CognitiveSearch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionAggregation != null)
+            if (Optional.IsDefined(FunctionAggregation))
             {
                 writer.WritePropertyName("functionAggregation");
                 writer.WriteStringValue(FunctionAggregation.Value.ToSerialString());
@@ -44,9 +44,9 @@ namespace CognitiveSearch.Models
         internal static ScoringProfile DeserializeScoringProfile(JsonElement element)
         {
             string name = default;
-            TextWeights text = default;
-            IList<ScoringFunction> functions = default;
-            ScoringFunctionAggregation? functionAggregation = default;
+            Optional<TextWeights> text = default;
+            Optional<IList<ScoringFunction>> functions = default;
+            Optional<ScoringFunctionAggregation> functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -56,45 +56,26 @@ namespace CognitiveSearch.Models
                 }
                 if (property.NameEquals("text"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     text = TextWeights.DeserializeTextWeights(property.Value);
                     continue;
                 }
                 if (property.NameEquals("functions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ScoringFunction.DeserializeScoringFunction(item));
-                        }
+                        array.Add(ScoringFunction.DeserializeScoringFunction(item));
                     }
                     functions = array;
                     continue;
                 }
                 if (property.NameEquals("functionAggregation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     functionAggregation = property.Value.GetString().ToScoringFunctionAggregation();
                     continue;
                 }
             }
-            return new ScoringProfile(name, text, functions, functionAggregation);
+            return new ScoringProfile(name, text.Value, Optional.ToList(functions), Optional.ToNullable(functionAggregation));
         }
     }
 }

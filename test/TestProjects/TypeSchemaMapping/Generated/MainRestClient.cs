@@ -46,6 +46,7 @@ namespace TypeSchemaMapping
             uri.AppendPath("/Operation/", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -95,6 +96,7 @@ namespace TypeSchemaMapping
             uri.AppendPath("/OperationStruct/", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -154,6 +156,7 @@ namespace TypeSchemaMapping
             uri.AppendPath("/OperationSecondModel", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -175,14 +178,7 @@ namespace TypeSchemaMapping
                     {
                         SecondModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecondModel.DeserializeSecondModel(document.RootElement);
-                        }
+                        value = SecondModel.DeserializeSecondModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,14 +198,67 @@ namespace TypeSchemaMapping
                     {
                         SecondModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecondModel.DeserializeSecondModel(document.RootElement);
-                        }
+                        value = SecondModel.DeserializeSecondModel(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateOperationThirdModelRequest(RenamedThirdModel body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/OperationThirdModel", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            if (body != null)
+            {
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <param name="body"> The ThirdModel to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<RenamedThirdModel>> OperationThirdModelAsync(RenamedThirdModel body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateOperationThirdModelRequest(body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RenamedThirdModel value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RenamedThirdModel.DeserializeRenamedThirdModel(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="body"> The ThirdModel to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<RenamedThirdModel> OperationThirdModel(RenamedThirdModel body = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateOperationThirdModelRequest(body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RenamedThirdModel value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RenamedThirdModel.DeserializeRenamedThirdModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,6 +276,7 @@ namespace TypeSchemaMapping
             uri.AppendPath("/OperationModelWithArrayOfEnum", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -248,14 +298,7 @@ namespace TypeSchemaMapping
                     {
                         ModelWithArrayOfEnum value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModelWithArrayOfEnum.DeserializeModelWithArrayOfEnum(document.RootElement);
-                        }
+                        value = ModelWithArrayOfEnum.DeserializeModelWithArrayOfEnum(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,14 +318,7 @@ namespace TypeSchemaMapping
                     {
                         ModelWithArrayOfEnum value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ModelWithArrayOfEnum.DeserializeModelWithArrayOfEnum(document.RootElement);
-                        }
+                        value = ModelWithArrayOfEnum.DeserializeModelWithArrayOfEnum(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

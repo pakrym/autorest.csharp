@@ -52,6 +52,7 @@ namespace NameConflicts
             uri0.AppendQuery("clientDiagnostics", clientDiagnostics, true);
             request0.Uri = uri0;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(@class);
             request0.Content = content;
@@ -66,6 +67,7 @@ namespace NameConflicts
         /// <param name="clientDiagnostics"> The String to use. </param>
         /// <param name="class"> The Class to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/>, <paramref name="message"/>, <paramref name="scope"/>, <paramref name="uri"/>, <paramref name="pipeline"/>, <paramref name="clientDiagnostics"/>, or <paramref name="class"/> is null. </exception>
         public async Task<Response<Struct>> OperationAsync(string request, string message, string scope, string uri, string pipeline, string clientDiagnostics, Class @class, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -105,14 +107,7 @@ namespace NameConflicts
                     {
                         Struct value = default;
                         using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Struct.DeserializeStruct(document.RootElement);
-                        }
+                        value = Struct.DeserializeStruct(document.RootElement);
                         return Azure.Response.FromValue(value, message0.Response);
                     }
                 default:
@@ -128,6 +123,7 @@ namespace NameConflicts
         /// <param name="clientDiagnostics"> The String to use. </param>
         /// <param name="class"> The Class to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/>, <paramref name="message"/>, <paramref name="scope"/>, <paramref name="uri"/>, <paramref name="pipeline"/>, <paramref name="clientDiagnostics"/>, or <paramref name="class"/> is null. </exception>
         public Response<Struct> Operation(string request, string message, string scope, string uri, string pipeline, string clientDiagnostics, Class @class, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -167,14 +163,7 @@ namespace NameConflicts
                     {
                         Struct value = default;
                         using var document = JsonDocument.Parse(message0.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Struct.DeserializeStruct(document.RootElement);
-                        }
+                        value = Struct.DeserializeStruct(document.RootElement);
                         return Azure.Response.FromValue(value, message0.Response);
                     }
                 default:
@@ -199,6 +188,7 @@ namespace NameConflicts
         /// <summary> Analyze body, that could be different media types. </summary>
         /// <param name="stringBody"> The binary to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stringBody"/> is null. </exception>
         public async Task<Azure.Response> AnalyzeBodyAsync(Stream stringBody, CancellationToken cancellationToken = default)
         {
             if (stringBody == null)
@@ -220,6 +210,7 @@ namespace NameConflicts
         /// <summary> Analyze body, that could be different media types. </summary>
         /// <param name="stringBody"> The binary to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stringBody"/> is null. </exception>
         public Azure.Response AnalyzeBody(Stream stringBody, CancellationToken cancellationToken = default)
         {
             if (stringBody == null)
@@ -299,6 +290,7 @@ namespace NameConflicts
             uri.AppendPath("/HttpMessage", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (httpMessage != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -320,14 +312,7 @@ namespace NameConflicts
                     {
                         Models.HttpMessage value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.HttpMessage.DeserializeHttpMessage(document.RootElement);
-                        }
+                        value = Models.HttpMessage.DeserializeHttpMessage(document.RootElement);
                         return Azure.Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,14 +332,7 @@ namespace NameConflicts
                     {
                         Models.HttpMessage value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.HttpMessage.DeserializeHttpMessage(document.RootElement);
-                        }
+                        value = Models.HttpMessage.DeserializeHttpMessage(document.RootElement);
                         return Azure.Response.FromValue(value, message.Response);
                     }
                 default:
@@ -372,6 +350,7 @@ namespace NameConflicts
             uri.AppendPath("/Request", false);
             request0.Uri = uri;
             request0.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Accept", "application/json");
             if (request != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -393,14 +372,7 @@ namespace NameConflicts
                     {
                         Models.Request value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Request.DeserializeRequest(document.RootElement);
-                        }
+                        value = Models.Request.DeserializeRequest(document.RootElement);
                         return Azure.Response.FromValue(value, message.Response);
                     }
                 default:
@@ -420,14 +392,7 @@ namespace NameConflicts
                     {
                         Models.Request value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Request.DeserializeRequest(document.RootElement);
-                        }
+                        value = Models.Request.DeserializeRequest(document.RootElement);
                         return Azure.Response.FromValue(value, message.Response);
                     }
                 default:
@@ -445,6 +410,7 @@ namespace NameConflicts
             uri.AppendPath("/Response", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (response != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -466,14 +432,7 @@ namespace NameConflicts
                     {
                         Models.Response value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Response.DeserializeResponse(document.RootElement);
-                        }
+                        value = Models.Response.DeserializeResponse(document.RootElement);
                         return Azure.Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,14 +452,7 @@ namespace NameConflicts
                     {
                         Models.Response value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Response.DeserializeResponse(document.RootElement);
-                        }
+                        value = Models.Response.DeserializeResponse(document.RootElement);
                         return Azure.Response.FromValue(value, message.Response);
                     }
                 default:

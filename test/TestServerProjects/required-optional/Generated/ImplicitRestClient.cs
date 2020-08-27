@@ -30,7 +30,7 @@ namespace required_optional
         /// <param name="requiredGlobalQuery"> number of items to skip. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="optionalGlobalQuery"> number of items to skip. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredGlobalPath"/> or <paramref name="requiredGlobalQuery"/> is null. </exception>
         public ImplicitRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string requiredGlobalPath, string requiredGlobalQuery, Uri endpoint = null, int? optionalGlobalQuery = null)
         {
             if (requiredGlobalPath == null)
@@ -61,12 +61,14 @@ namespace required_optional
             uri.AppendPath("/reqopt/implicit/required/path/", false);
             uri.AppendPath(pathParameter, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Test implicitly required path parameter. </summary>
         /// <param name="pathParameter"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pathParameter"/> is null. </exception>
         public async Task<Response> GetRequiredPathAsync(string pathParameter, CancellationToken cancellationToken = default)
         {
             if (pathParameter == null)
@@ -88,6 +90,7 @@ namespace required_optional
         /// <summary> Test implicitly required path parameter. </summary>
         /// <param name="pathParameter"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pathParameter"/> is null. </exception>
         public Response GetRequiredPath(string pathParameter, CancellationToken cancellationToken = default)
         {
             if (pathParameter == null)
@@ -119,6 +122,7 @@ namespace required_optional
                 uri.AppendQuery("queryParameter", queryParameter, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -167,6 +171,7 @@ namespace required_optional
             {
                 request.Headers.Add("queryParameter", queryParameter);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -212,6 +217,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/implicit/optional/body", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -263,6 +269,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/global/required/path/", false);
             uri.AppendPath(requiredGlobalPath, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -306,6 +313,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/global/required/query", false);
             uri.AppendQuery("required-global-query", requiredGlobalQuery, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -352,6 +360,7 @@ namespace required_optional
                 uri.AppendQuery("optional-global-query", optionalGlobalQuery.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -43,12 +43,13 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null datetime value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DateTimeOffset>> GetNullAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DateTimeOffset?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -56,9 +57,16 @@ namespace body_datetime
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetDateTimeOffset("O");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("O");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -68,7 +76,7 @@ namespace body_datetime
 
         /// <summary> Get null datetime value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DateTimeOffset> GetNull(CancellationToken cancellationToken = default)
+        public Response<DateTimeOffset?> GetNull(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             _pipeline.Send(message, cancellationToken);
@@ -76,9 +84,16 @@ namespace body_datetime
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetDateTimeOffset("O");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("O");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,6 +110,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -147,6 +163,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/overflow", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,6 +216,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/underflow", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -252,6 +270,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/max/utc", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -259,7 +278,7 @@ namespace body_datetime
         }
 
         /// <summary> Put max datetime value 9999-12-31T23:59:59.999Z. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutUtcMaxDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -275,7 +294,7 @@ namespace body_datetime
         }
 
         /// <summary> Put max datetime value 9999-12-31T23:59:59.999Z. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutUtcMaxDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -300,6 +319,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/max/utc7ms", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -307,7 +327,7 @@ namespace body_datetime
         }
 
         /// <summary> This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutUtcMaxDateTime7DigitsAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -323,7 +343,7 @@ namespace body_datetime
         }
 
         /// <summary> This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutUtcMaxDateTime7Digits(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -347,6 +367,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/utc/lowercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -399,6 +420,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/utc/uppercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -451,6 +473,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/utc7ms/uppercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -504,6 +527,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/max/localpositiveoffset", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -511,7 +535,7 @@ namespace body_datetime
         }
 
         /// <summary> Put max datetime value with positive numoffset 9999-12-31t23:59:59.999+14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutLocalPositiveOffsetMaxDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -527,7 +551,7 @@ namespace body_datetime
         }
 
         /// <summary> Put max datetime value with positive numoffset 9999-12-31t23:59:59.999+14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutLocalPositiveOffsetMaxDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -551,6 +575,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/localpositiveoffset/lowercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -603,6 +628,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/localpositiveoffset/uppercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -656,6 +682,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/max/localnegativeoffset", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -663,7 +690,7 @@ namespace body_datetime
         }
 
         /// <summary> Put max datetime value with positive numoffset 9999-12-31t23:59:59.999-14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutLocalNegativeOffsetMaxDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -679,7 +706,7 @@ namespace body_datetime
         }
 
         /// <summary> Put max datetime value with positive numoffset 9999-12-31t23:59:59.999-14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutLocalNegativeOffsetMaxDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -703,6 +730,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/localnegativeoffset/uppercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -755,6 +783,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/max/localnegativeoffset/lowercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -808,6 +837,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/min/utc", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -815,7 +845,7 @@ namespace body_datetime
         }
 
         /// <summary> Put min datetime value 0001-01-01T00:00:00Z. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutUtcMinDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -831,7 +861,7 @@ namespace body_datetime
         }
 
         /// <summary> Put min datetime value 0001-01-01T00:00:00Z. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutUtcMinDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -855,6 +885,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/min/utc", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -908,6 +939,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/min/localpositiveoffset", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -915,7 +947,7 @@ namespace body_datetime
         }
 
         /// <summary> Put min datetime value 0001-01-01T00:00:00+14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutLocalPositiveOffsetMinDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -931,7 +963,7 @@ namespace body_datetime
         }
 
         /// <summary> Put min datetime value 0001-01-01T00:00:00+14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutLocalPositiveOffsetMinDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -955,6 +987,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/min/localpositiveoffset", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1008,6 +1041,7 @@ namespace body_datetime
             uri.AppendPath("/datetime/min/localnegativeoffset", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "O");
             request.Content = content;
@@ -1015,7 +1049,7 @@ namespace body_datetime
         }
 
         /// <summary> Put min datetime value 0001-01-01T00:00:00-14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutLocalNegativeOffsetMinDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -1031,7 +1065,7 @@ namespace body_datetime
         }
 
         /// <summary> Put min datetime value 0001-01-01T00:00:00-14:00. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutLocalNegativeOffsetMinDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -1055,6 +1089,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/min/localnegativeoffset", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1107,6 +1142,7 @@ namespace body_datetime
             uri.Reset(endpoint);
             uri.AppendPath("/datetime/min/localnooffset", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

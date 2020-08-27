@@ -160,7 +160,7 @@
           "$ref": "#/definitions/Language"
         },
         "csharp": {
-          "$ref": "#/definitions/CSharpLanguage"
+          "$ref": "#/definitions/Language"
         },
         "python": {
           "$ref": "#/definitions/Language"
@@ -430,12 +430,16 @@
         },
         "wrapped": {
           "type": "boolean"
+        },
+        "text": {
+          "type": "boolean"
         }
       },
       "defaultProperties": [],
       "additionalProperties": false,
       "required": [
         "attribute",
+        "text",
         "wrapped"
       ],
       "allOf": [
@@ -2013,6 +2017,10 @@
         "schema": {
           "$ref": "#/definitions/Schema",
           "description": "the content returned by the service for a given operaiton"
+        },
+        "nullable": {
+          "description": "indicates whether the response can be 'null'",
+          "type": "boolean"
         }
       },
       "defaultProperties": [],
@@ -2683,6 +2691,10 @@
           "$ref": "#/definitions/SerializationStyle",
           "description": "the Serialization Style used for the parameter."
         },
+        "explode": {
+          "description": "when set, 'form' style parameters generate separate parameters for each value of an array.",
+          "type": "boolean"
+        },
         "skipUriEncoding": {
           "description": "when set, this indicates that the content of the parameter should not be subject to URI encoding rules.",
           "type": "boolean"
@@ -2867,6 +2879,9 @@
         "schema": {
           "$ref": "#/definitions/Schema"
         },
+        "language": {
+          "$ref": "#/definitions/Languages"
+        },
         "extensions": {
           "$ref": "#/definitions/Dictionary<any>",
           "description": "additional metadata extensions dictionary"
@@ -2876,6 +2891,7 @@
       "additionalProperties": false,
       "required": [
         "header",
+        "language",
         "schema"
       ]
     },

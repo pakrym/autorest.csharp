@@ -15,42 +15,27 @@ namespace paging.Models
     {
         internal static ProductResultValueWithXMSClientName DeserializeProductResultValueWithXMSClientName(JsonElement element)
         {
-            IReadOnlyList<Product> values = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Product>> values = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Product> array = new List<Product>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Product.DeserializeProduct(item));
-                        }
+                        array.Add(Product.DeserializeProduct(item));
                     }
                     values = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ProductResultValueWithXMSClientName(values, nextLink);
+            return new ProductResultValueWithXMSClientName(Optional.ToList(values), nextLink.Value);
         }
     }
 }

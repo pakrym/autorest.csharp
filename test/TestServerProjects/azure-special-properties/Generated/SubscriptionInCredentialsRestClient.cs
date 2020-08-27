@@ -28,7 +28,7 @@ namespace azure_special_properties
         /// <param name="subscriptionId"> The subscription id, which appears in the path, always modeled in credentials. The value is always &apos;1234-5678-9012-3456&apos;. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public SubscriptionInCredentialsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2015-07-01-preview")
         {
             if (subscriptionId == null)
@@ -58,6 +58,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/", false);
             uri.AppendPath(subscriptionId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -101,6 +102,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/subscriptionId/method/string/none/path/global/null/", false);
             uri.AppendPath(subscriptionId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -145,6 +147,7 @@ namespace azure_special_properties
             uri.AppendPath(subscriptionId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -188,6 +191,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/", false);
             uri.AppendPath(subscriptionId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -231,6 +235,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/", false);
             uri.AppendPath(subscriptionId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

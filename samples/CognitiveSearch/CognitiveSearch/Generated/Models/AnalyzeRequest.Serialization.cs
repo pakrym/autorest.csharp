@@ -17,17 +17,17 @@ namespace CognitiveSearch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             writer.WriteStringValue(Text);
-            if (Analyzer != null)
+            if (Optional.IsDefined(Analyzer))
             {
                 writer.WritePropertyName("analyzer");
                 writer.WriteStringValue(Analyzer.Value.ToString());
             }
-            if (Tokenizer != null)
+            if (Optional.IsDefined(Tokenizer))
             {
                 writer.WritePropertyName("tokenizer");
                 writer.WriteStringValue(Tokenizer.Value.ToString());
             }
-            if (TokenFilters != null)
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
@@ -37,13 +37,13 @@ namespace CognitiveSearch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CharFilters != null)
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

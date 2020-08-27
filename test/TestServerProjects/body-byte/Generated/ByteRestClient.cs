@@ -43,6 +43,7 @@ namespace body_byte
             uri.Reset(endpoint);
             uri.AppendPath("/byte/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -58,14 +59,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -85,14 +79,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,6 +96,7 @@ namespace body_byte
             uri.Reset(endpoint);
             uri.AppendPath("/byte/empty", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -124,14 +112,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,14 +132,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -175,6 +149,7 @@ namespace body_byte
             uri.Reset(endpoint);
             uri.AppendPath("/byte/nonAscii", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -190,14 +165,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,14 +185,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -242,6 +203,7 @@ namespace body_byte
             uri.AppendPath("/byte/nonAscii", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBase64StringValue(byteBody);
             request.Content = content;
@@ -251,6 +213,7 @@ namespace body_byte
         /// <summary> Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6). </summary>
         /// <param name="byteBody"> Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="byteBody"/> is null. </exception>
         public async Task<Response> PutNonAsciiAsync(byte[] byteBody, CancellationToken cancellationToken = default)
         {
             if (byteBody == null)
@@ -272,6 +235,7 @@ namespace body_byte
         /// <summary> Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6). </summary>
         /// <param name="byteBody"> Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="byteBody"/> is null. </exception>
         public Response PutNonAscii(byte[] byteBody, CancellationToken cancellationToken = default)
         {
             if (byteBody == null)
@@ -299,6 +263,7 @@ namespace body_byte
             uri.Reset(endpoint);
             uri.AppendPath("/byte/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -314,14 +279,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -341,14 +299,7 @@ namespace body_byte
                     {
                         byte[] value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:

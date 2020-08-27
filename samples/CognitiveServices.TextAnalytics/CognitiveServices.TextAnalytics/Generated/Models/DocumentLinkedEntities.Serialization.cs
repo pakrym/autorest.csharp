@@ -17,7 +17,7 @@ namespace CognitiveServices.TextAnalytics.Models
         {
             string id = default;
             IReadOnlyList<LinkedEntity> entities = default;
-            DocumentStatistics statistics = default;
+            Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -30,29 +30,18 @@ namespace CognitiveServices.TextAnalytics.Models
                     List<LinkedEntity> array = new List<LinkedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LinkedEntity.DeserializeLinkedEntity(item));
-                        }
+                        array.Add(LinkedEntity.DeserializeLinkedEntity(item));
                     }
                     entities = array;
                     continue;
                 }
                 if (property.NameEquals("statistics"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new DocumentLinkedEntities(id, entities, statistics);
+            return new DocumentLinkedEntities(id, entities, statistics.Value);
         }
     }
 }

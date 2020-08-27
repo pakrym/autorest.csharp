@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of TextWord. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         internal TextWord(string text, IEnumerable<float> boundingBox)
         {
             if (text == null)
@@ -29,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Text = text;
-            BoundingBox = boundingBox.ToArray();
+            BoundingBox = boundingBox.ToList();
         }
 
         /// <summary> Initializes a new instance of TextWord. </summary>
@@ -39,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal TextWord(string text, IReadOnlyList<float> boundingBox, float? confidence)
         {
             Text = text;
-            BoundingBox = boundingBox ?? new List<float>();
+            BoundingBox = boundingBox;
             Confidence = confidence;
         }
 

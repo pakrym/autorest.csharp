@@ -43,6 +43,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -110,6 +111,7 @@ namespace body_string
             uri.AppendPath("/string/null", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (stringBody != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -160,6 +162,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/empty", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -175,14 +178,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,14 +198,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,6 +216,7 @@ namespace body_string
             uri.AppendPath("/string/empty", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue("");
             request.Content = content;
@@ -272,6 +262,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/mbcs", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -287,14 +278,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -314,14 +298,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,6 +316,7 @@ namespace body_string
             uri.AppendPath("/string/mbcs", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€");
             request.Content = content;
@@ -384,6 +362,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/whitespace", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -399,14 +378,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -426,14 +398,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,6 +416,7 @@ namespace body_string
             uri.AppendPath("/string/whitespace", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue("    Now is the time for all good men to come to the aid of their country    ");
             request.Content = content;
@@ -496,6 +462,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/notProvided", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -511,14 +478,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -538,14 +498,7 @@ namespace body_string
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -562,6 +515,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/base64Encoding", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -577,14 +531,7 @@ namespace body_string
                     {
                         byte[] value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -604,14 +551,7 @@ namespace body_string
                     {
                         byte[] value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64();
-                        }
+                        value = document.RootElement.GetBytesFromBase64();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,6 +568,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/base64UrlEncoding", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -643,14 +584,7 @@ namespace body_string
                     {
                         byte[] value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64("U");
-                        }
+                        value = document.RootElement.GetBytesFromBase64("U");
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -670,14 +604,7 @@ namespace body_string
                     {
                         byte[] value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetBytesFromBase64("U");
-                        }
+                        value = document.RootElement.GetBytesFromBase64("U");
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -695,6 +622,7 @@ namespace body_string
             uri.AppendPath("/string/base64UrlEncoding", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBase64StringValue(stringBody, "U");
             request.Content = content;
@@ -704,6 +632,7 @@ namespace body_string
         /// <summary> Put value that is base64url encoded. </summary>
         /// <param name="stringBody"> The ByteArray to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stringBody"/> is null. </exception>
         public async Task<Response> PutBase64UrlEncodedAsync(byte[] stringBody, CancellationToken cancellationToken = default)
         {
             if (stringBody == null)
@@ -725,6 +654,7 @@ namespace body_string
         /// <summary> Put value that is base64url encoded. </summary>
         /// <param name="stringBody"> The ByteArray to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stringBody"/> is null. </exception>
         public Response PutBase64UrlEncoded(byte[] stringBody, CancellationToken cancellationToken = default)
         {
             if (stringBody == null)
@@ -752,6 +682,7 @@ namespace body_string
             uri.Reset(endpoint);
             uri.AppendPath("/string/nullBase64UrlEncoding", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -43,12 +43,13 @@ namespace body_date
             uri.Reset(endpoint);
             uri.AppendPath("/date/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null date value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DateTimeOffset>> GetNullAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DateTimeOffset?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -56,9 +57,16 @@ namespace body_date
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetDateTimeOffset("D");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("D");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -68,7 +76,7 @@ namespace body_date
 
         /// <summary> Get null date value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DateTimeOffset> GetNull(CancellationToken cancellationToken = default)
+        public Response<DateTimeOffset?> GetNull(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             _pipeline.Send(message, cancellationToken);
@@ -76,9 +84,16 @@ namespace body_date
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetDateTimeOffset("D");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("D");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,6 +110,7 @@ namespace body_date
             uri.Reset(endpoint);
             uri.AppendPath("/date/invaliddate", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -147,6 +163,7 @@ namespace body_date
             uri.Reset(endpoint);
             uri.AppendPath("/date/overflowdate", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,6 +216,7 @@ namespace body_date
             uri.Reset(endpoint);
             uri.AppendPath("/date/underflowdate", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -252,6 +270,7 @@ namespace body_date
             uri.AppendPath("/date/max", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(dateBody, "D");
             request.Content = content;
@@ -259,7 +278,7 @@ namespace body_date
         }
 
         /// <summary> Put max date value 9999-12-31. </summary>
-        /// <param name="dateBody"> The Date to use. </param>
+        /// <param name="dateBody"> date body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutMaxDateAsync(DateTimeOffset dateBody, CancellationToken cancellationToken = default)
         {
@@ -275,7 +294,7 @@ namespace body_date
         }
 
         /// <summary> Put max date value 9999-12-31. </summary>
-        /// <param name="dateBody"> The Date to use. </param>
+        /// <param name="dateBody"> date body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutMaxDate(DateTimeOffset dateBody, CancellationToken cancellationToken = default)
         {
@@ -299,6 +318,7 @@ namespace body_date
             uri.Reset(endpoint);
             uri.AppendPath("/date/max", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -352,6 +372,7 @@ namespace body_date
             uri.AppendPath("/date/min", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(dateBody, "D");
             request.Content = content;
@@ -359,7 +380,7 @@ namespace body_date
         }
 
         /// <summary> Put min date value 0000-01-01. </summary>
-        /// <param name="dateBody"> The Date to use. </param>
+        /// <param name="dateBody"> date body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutMinDateAsync(DateTimeOffset dateBody, CancellationToken cancellationToken = default)
         {
@@ -375,7 +396,7 @@ namespace body_date
         }
 
         /// <summary> Put min date value 0000-01-01. </summary>
-        /// <param name="dateBody"> The Date to use. </param>
+        /// <param name="dateBody"> date body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutMinDate(DateTimeOffset dateBody, CancellationToken cancellationToken = default)
         {
@@ -399,6 +420,7 @@ namespace body_date
             uri.Reset(endpoint);
             uri.AppendPath("/date/min", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

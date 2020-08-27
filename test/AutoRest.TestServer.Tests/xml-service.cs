@@ -36,29 +36,39 @@ namespace AutoRest.TestServer.Tests
 
         [Test]
         [IgnoreOnTestServer(TestServerVersion.V2, "No match")]
+        public Task GetWithXMsText() => Test(async (host, pipeline) =>
+        {
+            var result = await new XmlClient(ClientDiagnostics, pipeline, host).GetXMsTextAsync();
+            Assert.AreEqual("I am text", result.Value.Content);
+            Assert.AreEqual("english", result.Value.Language);
+        });
+
+        [Test]
+        [IgnoreOnTestServer(TestServerVersion.V2, "No match")]
         public Task PutSimpleXML() => TestStatus(async (host, pipeline) =>
         {
-            var slideshow = new Slideshow();
-            slideshow.Author = "Yours Truly";
-            slideshow.Date = "Date of publication";
-            slideshow.Title = "Sample Slide Show";
-
-            slideshow.Slides = new List<Slide>()
+            var slideshow = new Slideshow
             {
-                new Slide()
+                Author = "Yours Truly",
+                Date = "Date of publication",
+                Title = "Sample Slide Show",
+                Slides =
                 {
-                    Title = "Wake up to WonderWidgets!",
-                    Type = "all"
-                },
-                new Slide()
-                {
-                    Title = "Overview",
-                    Type = "all",
-                    Items = new[]
+                    new Slide()
                     {
-                        "Why WonderWidgets are great",
-                        "",
-                        "Who buys WonderWidgets"
+                        Title = "Wake up to WonderWidgets!",
+                        Type = "all"
+                    },
+                    new Slide()
+                    {
+                        Title = "Overview",
+                        Type = "all",
+                        Items =
+                        {
+                            "Why WonderWidgets are great",
+                            "",
+                            "Who buys WonderWidgets"
+                        }
                     }
                 }
             };
@@ -207,7 +217,6 @@ namespace AutoRest.TestServer.Tests
         {
             var root = new Slideshow
             {
-                Slides = new List<Slide>()
             };
 
             return await new XmlClient(ClientDiagnostics, pipeline, host).PutEmptyListAsync(root);
@@ -256,8 +265,8 @@ namespace AutoRest.TestServer.Tests
         {
             var root = new AppleBarrel()
             {
-                BadApples = new[] {"Red Delicious"},
-                GoodApples = new[] {"Fuji", "Gala"}
+                BadApples = {"Red Delicious"},
+                GoodApples = {"Fuji", "Gala"}
             };
 
             return await new XmlClient(ClientDiagnostics, pipeline, host).PutWrappedListsAsync(root);
@@ -277,11 +286,9 @@ namespace AutoRest.TestServer.Tests
         [IgnoreOnTestServer(TestServerVersion.V2, "No match")]
         public Task PutEmptyWrappedXMLList() => TestStatus(async (host, pipeline) =>
         {
-            var root = new AppleBarrel()
-            {
-                BadApples = new string[] {},
-                GoodApples = new string[] {}
-            };
+            var root = new AppleBarrel();
+            root.GoodApples.Clear();
+            root.BadApples.Clear();
 
             return await new XmlClient(ClientDiagnostics, pipeline, host).PutEmptyWrappedListsAsync(root);
         });

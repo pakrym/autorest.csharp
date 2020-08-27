@@ -43,12 +43,13 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null Number value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<float>> GetNullAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<float?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -56,9 +57,16 @@ namespace body_number
             {
                 case 200:
                     {
-                        float value = default;
+                        float? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetSingle();
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetSingle();
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -68,7 +76,7 @@ namespace body_number
 
         /// <summary> Get null Number value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<float> GetNull(CancellationToken cancellationToken = default)
+        public Response<float?> GetNull(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             _pipeline.Send(message, cancellationToken);
@@ -76,9 +84,16 @@ namespace body_number
             {
                 case 200:
                     {
-                        float value = default;
+                        float? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetSingle();
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetSingle();
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,6 +110,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/invalidfloat", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -147,6 +163,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/invaliddouble", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,6 +216,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/invaliddecimal", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -252,6 +270,7 @@ namespace body_number
             uri.AppendPath("/number/big/float/3.402823e+20", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(numberBody);
             request.Content = content;
@@ -299,6 +318,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/float/3.402823e+20", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -352,6 +372,7 @@ namespace body_number
             uri.AppendPath("/number/big/double/2.5976931e+101", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(numberBody);
             request.Content = content;
@@ -399,6 +420,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/double/2.5976931e+101", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -452,6 +474,7 @@ namespace body_number
             uri.AppendPath("/number/big/double/99999999.99", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(99999999.99);
             request.Content = content;
@@ -497,6 +520,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/double/99999999.99", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -550,6 +574,7 @@ namespace body_number
             uri.AppendPath("/number/big/double/-99999999.99", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(-99999999.99);
             request.Content = content;
@@ -595,6 +620,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/double/-99999999.99", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -648,6 +674,7 @@ namespace body_number
             uri.AppendPath("/number/big/decimal/2.5976931e+101", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(numberBody);
             request.Content = content;
@@ -695,6 +722,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/decimal/2.5976931e+101", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -748,6 +776,7 @@ namespace body_number
             uri.AppendPath("/number/big/decimal/99999999.99", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(99999999.99M);
             request.Content = content;
@@ -793,6 +822,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/decimal/99999999.99", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -846,6 +876,7 @@ namespace body_number
             uri.AppendPath("/number/big/decimal/-99999999.99", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(-99999999.99M);
             request.Content = content;
@@ -891,6 +922,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/big/decimal/-99999999.99", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -944,6 +976,7 @@ namespace body_number
             uri.AppendPath("/number/small/float/3.402823e-20", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(numberBody);
             request.Content = content;
@@ -991,6 +1024,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/small/float/3.402823e-20", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1044,6 +1078,7 @@ namespace body_number
             uri.AppendPath("/number/small/double/2.5976931e-101", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(numberBody);
             request.Content = content;
@@ -1091,6 +1126,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/small/double/2.5976931e-101", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1144,6 +1180,7 @@ namespace body_number
             uri.AppendPath("/number/small/decimal/2.5976931e-101", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(numberBody);
             request.Content = content;
@@ -1191,6 +1228,7 @@ namespace body_number
             uri.Reset(endpoint);
             uri.AppendPath("/number/small/decimal/2.5976931e-101", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -43,6 +43,7 @@ namespace body_time
             uri.Reset(endpoint);
             uri.AppendPath("/time/get", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -96,6 +97,7 @@ namespace body_time
             uri.AppendPath("/time/put", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(timeBody, "T");
             request.Content = content;
@@ -115,14 +117,7 @@ namespace body_time
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -143,14 +138,7 @@ namespace body_time
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:

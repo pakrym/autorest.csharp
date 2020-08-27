@@ -16,6 +16,7 @@ namespace CognitiveSearch.Models
     {
         /// <summary> Initializes a new instance of ListIndexersResult. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexers"/> is null. </exception>
         internal ListIndexersResult(IEnumerable<Indexer> indexers)
         {
             if (indexers == null)
@@ -23,14 +24,14 @@ namespace CognitiveSearch.Models
                 throw new ArgumentNullException(nameof(indexers));
             }
 
-            Indexers = indexers.ToArray();
+            Indexers = indexers.ToList();
         }
 
         /// <summary> Initializes a new instance of ListIndexersResult. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
         internal ListIndexersResult(IReadOnlyList<Indexer> indexers)
         {
-            Indexers = indexers ?? new List<Indexer>();
+            Indexers = indexers;
         }
 
         /// <summary> The indexers in the Search service. </summary>

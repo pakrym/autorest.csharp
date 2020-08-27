@@ -15,52 +15,33 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static Models DeserializeModels(JsonElement element)
         {
-            ModelsSummary summary = default;
-            IReadOnlyList<ModelInfo> modelList = default;
-            string nextLink = default;
+            Optional<ModelsSummary> summary = default;
+            Optional<IReadOnlyList<ModelInfo>> modelList = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     summary = ModelsSummary.DeserializeModelsSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelList"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ModelInfo> array = new List<ModelInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelInfo.DeserializeModelInfo(item));
-                        }
+                        array.Add(ModelInfo.DeserializeModelInfo(item));
                     }
                     modelList = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new Models(summary, modelList, nextLink);
+            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value);
         }
     }
 }

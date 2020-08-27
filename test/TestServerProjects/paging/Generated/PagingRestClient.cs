@@ -44,6 +44,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/noitemname", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -59,14 +60,7 @@ namespace paging
                     {
                         ProductResultValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
-                        }
+                        value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,14 +80,7 @@ namespace paging
                     {
                         ProductResultValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
-                        }
+                        value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,6 +97,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/nullnextlink", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -125,14 +113,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,14 +133,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,6 +150,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/single", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -191,14 +166,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -218,14 +186,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,6 +215,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetMultiplePagesOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -271,14 +233,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,14 +255,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,6 +274,7 @@ namespace paging
             uri.AppendQuery("requiredQueryParameter", requiredQueryParameter, true);
             uri.AppendQuery("queryConstant", true, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -342,14 +291,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -370,14 +312,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,6 +330,7 @@ namespace paging
             uri.AppendPath("/paging/multiple/nextOperationWithQueryParams", false);
             uri.AppendQuery("queryConstant", true, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -410,14 +346,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -437,14 +366,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,6 +395,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetOdataMultiplePagesOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -490,14 +413,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,14 +435,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -556,6 +465,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetMultiplePagesWithOffsetOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -563,6 +473,7 @@ namespace paging
         /// <param name="pagingGetMultiplePagesWithOffsetOptions"> Parameter group. </param>
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pagingGetMultiplePagesWithOffsetOptions"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesWithOffsetAsync(PagingGetMultiplePagesWithOffsetOptions pagingGetMultiplePagesWithOffsetOptions, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (pagingGetMultiplePagesWithOffsetOptions == null)
@@ -578,14 +489,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,6 +501,7 @@ namespace paging
         /// <param name="pagingGetMultiplePagesWithOffsetOptions"> Parameter group. </param>
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pagingGetMultiplePagesWithOffsetOptions"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesWithOffset(PagingGetMultiplePagesWithOffsetOptions pagingGetMultiplePagesWithOffsetOptions, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (pagingGetMultiplePagesWithOffsetOptions == null)
@@ -612,14 +517,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,6 +534,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/multiple/retryfirst", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -651,14 +550,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -678,14 +570,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -702,6 +587,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/multiple/retrysecond", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -717,14 +603,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -744,14 +623,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -768,6 +640,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/single/failure", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -783,14 +656,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -810,14 +676,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -834,6 +693,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/multiple/failure", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -849,14 +709,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -876,14 +729,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -900,6 +746,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/multiple/failureuri", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -915,14 +762,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -942,14 +782,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -968,6 +801,7 @@ namespace paging
             uri.AppendPath(tenant, true);
             uri.AppendQuery("api_version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -975,6 +809,7 @@ namespace paging
         /// <param name="apiVersion"> Sets the api version to use. </param>
         /// <param name="tenant"> Sets the tenant to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> or <paramref name="tenant"/> is null. </exception>
         public async Task<Response<OdataProductResult>> GetMultiplePagesFragmentNextLinkAsync(string apiVersion, string tenant, CancellationToken cancellationToken = default)
         {
             if (apiVersion == null)
@@ -994,14 +829,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1013,6 +841,7 @@ namespace paging
         /// <param name="apiVersion"> Sets the api version to use. </param>
         /// <param name="tenant"> Sets the tenant to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> or <paramref name="tenant"/> is null. </exception>
         public Response<OdataProductResult> GetMultiplePagesFragmentNextLink(string apiVersion, string tenant, CancellationToken cancellationToken = default)
         {
             if (apiVersion == null)
@@ -1032,14 +861,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1058,12 +880,14 @@ namespace paging
             uri.AppendPath(customParameterGroup.Tenant, true);
             uri.AppendQuery("api_version", customParameterGroup.ApiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that doesn&apos;t return a full URL, just a fragment with parameters grouped. </summary>
         /// <param name="customParameterGroup"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customParameterGroup"/> is null. </exception>
         public async Task<Response<OdataProductResult>> GetMultiplePagesFragmentWithGroupingNextLinkAsync(CustomParameterGroup customParameterGroup, CancellationToken cancellationToken = default)
         {
             if (customParameterGroup == null)
@@ -1079,14 +903,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1097,6 +914,7 @@ namespace paging
         /// <summary> A paging operation that doesn&apos;t return a full URL, just a fragment with parameters grouped. </summary>
         /// <param name="customParameterGroup"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customParameterGroup"/> is null. </exception>
         public Response<OdataProductResult> GetMultiplePagesFragmentWithGroupingNextLink(CustomParameterGroup customParameterGroup, CancellationToken cancellationToken = default)
         {
             if (customParameterGroup == null)
@@ -1112,14 +930,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1148,6 +959,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetMultiplePagesLroOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1198,6 +1010,7 @@ namespace paging
             uri.AppendRaw(nextLink, false);
             uri.AppendQuery("api_version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1206,6 +1019,7 @@ namespace paging
         /// <param name="tenant"> Sets the tenant to use. </param>
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/>, <paramref name="tenant"/>, or <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OdataProductResult>> NextFragmentAsync(string apiVersion, string tenant, string nextLink, CancellationToken cancellationToken = default)
         {
             if (apiVersion == null)
@@ -1229,14 +1043,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1249,6 +1056,7 @@ namespace paging
         /// <param name="tenant"> Sets the tenant to use. </param>
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/>, <paramref name="tenant"/>, or <paramref name="nextLink"/> is null. </exception>
         public Response<OdataProductResult> NextFragment(string apiVersion, string tenant, string nextLink, CancellationToken cancellationToken = default)
         {
             if (apiVersion == null)
@@ -1272,14 +1080,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1300,6 +1101,7 @@ namespace paging
             uri.AppendRaw(nextLink, false);
             uri.AppendQuery("api_version", customParameterGroup.ApiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1307,6 +1109,7 @@ namespace paging
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="customParameterGroup"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="customParameterGroup"/> is null. </exception>
         public async Task<Response<OdataProductResult>> NextFragmentWithGroupingAsync(string nextLink, CustomParameterGroup customParameterGroup, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1326,14 +1129,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1345,6 +1141,7 @@ namespace paging
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="customParameterGroup"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="customParameterGroup"/> is null. </exception>
         public Response<OdataProductResult> NextFragmentWithGrouping(string nextLink, CustomParameterGroup customParameterGroup, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1364,14 +1161,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1388,6 +1178,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendPath("/paging/itemNameWithXMSClientName", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1403,14 +1194,7 @@ namespace paging
                     {
                         ProductResultValueWithXMSClientName value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
-                        }
+                        value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1430,14 +1214,7 @@ namespace paging
                     {
                         ProductResultValueWithXMSClientName value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
-                        }
+                        value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1454,12 +1231,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that must return result of the default &apos;value&apos; node. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResultValue>> GetNoItemNamePagesNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1475,14 +1254,7 @@ namespace paging
                     {
                         ProductResultValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
-                        }
+                        value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1493,6 +1265,7 @@ namespace paging
         /// <summary> A paging operation that must return result of the default &apos;value&apos; node. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResultValue> GetNoItemNamePagesNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1508,14 +1281,7 @@ namespace paging
                     {
                         ProductResultValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
-                        }
+                        value = ProductResultValue.DeserializeProductResultValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1532,12 +1298,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that finishes on the first call without a nextlink. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetSinglePagesNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1553,14 +1321,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1571,6 +1332,7 @@ namespace paging
         /// <summary> A paging operation that finishes on the first call without a nextlink. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetSinglePagesNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1586,14 +1348,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1622,6 +1377,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetMultiplePagesOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1630,6 +1386,7 @@ namespace paging
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="pagingGetMultiplePagesOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesNextPageAsync(string nextLink, string clientRequestId = null, PagingGetMultiplePagesOptions pagingGetMultiplePagesOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1645,14 +1402,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1665,6 +1415,7 @@ namespace paging
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="pagingGetMultiplePagesOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesNextPage(string nextLink, string clientRequestId = null, PagingGetMultiplePagesOptions pagingGetMultiplePagesOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1680,14 +1431,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1716,6 +1460,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetOdataMultiplePagesOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1724,6 +1469,7 @@ namespace paging
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="pagingGetOdataMultiplePagesOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<OdataProductResult>> GetOdataMultiplePagesNextPageAsync(string nextLink, string clientRequestId = null, PagingGetOdataMultiplePagesOptions pagingGetOdataMultiplePagesOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1739,14 +1485,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1759,6 +1498,7 @@ namespace paging
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="pagingGetOdataMultiplePagesOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<OdataProductResult> GetOdataMultiplePagesNextPage(string nextLink, string clientRequestId = null, PagingGetOdataMultiplePagesOptions pagingGetOdataMultiplePagesOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1774,14 +1514,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1810,6 +1543,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetMultiplePagesWithOffsetOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1818,6 +1552,7 @@ namespace paging
         /// <param name="pagingGetMultiplePagesWithOffsetOptions"> Parameter group. </param>
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="pagingGetMultiplePagesWithOffsetOptions"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesWithOffsetNextPageAsync(string nextLink, PagingGetMultiplePagesWithOffsetOptions pagingGetMultiplePagesWithOffsetOptions, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1837,14 +1572,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1857,6 +1585,7 @@ namespace paging
         /// <param name="pagingGetMultiplePagesWithOffsetOptions"> Parameter group. </param>
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="pagingGetMultiplePagesWithOffsetOptions"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesWithOffsetNextPage(string nextLink, PagingGetMultiplePagesWithOffsetOptions pagingGetMultiplePagesWithOffsetOptions, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1876,14 +1605,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1900,12 +1622,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesRetryFirstNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1921,14 +1645,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1939,6 +1656,7 @@ namespace paging
         /// <summary> A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesRetryFirstNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1954,14 +1672,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1978,12 +1689,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesRetrySecondNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1999,14 +1712,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2017,6 +1723,7 @@ namespace paging
         /// <summary> A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesRetrySecondNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2032,14 +1739,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2056,12 +1756,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that receives a 400 on the first call. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetSinglePagesFailureNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2077,14 +1779,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2095,6 +1790,7 @@ namespace paging
         /// <summary> A paging operation that receives a 400 on the first call. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetSinglePagesFailureNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2110,14 +1806,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2134,12 +1823,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that receives a 400 on the second call. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesFailureNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2155,14 +1846,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2173,6 +1857,7 @@ namespace paging
         /// <summary> A paging operation that receives a 400 on the second call. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesFailureNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2188,14 +1873,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2212,12 +1890,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that receives an invalid nextLink. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResult>> GetMultiplePagesFailureUriNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2233,14 +1913,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2251,6 +1924,7 @@ namespace paging
         /// <summary> A paging operation that receives an invalid nextLink. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResult> GetMultiplePagesFailureUriNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2266,14 +1940,7 @@ namespace paging
                     {
                         ProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResult.DeserializeProductResult(document.RootElement);
-                        }
+                        value = ProductResult.DeserializeProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2302,6 +1969,7 @@ namespace paging
             {
                 request.Headers.Add("timeout", pagingGetMultiplePagesLroOptions.Timeout.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2310,6 +1978,7 @@ namespace paging
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="pagingGetMultiplePagesLroOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response> GetMultiplePagesLRONextPageAsync(string nextLink, string clientRequestId = null, PagingGetMultiplePagesLroOptions pagingGetMultiplePagesLroOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2333,6 +2002,7 @@ namespace paging
         /// <param name="clientRequestId"> The String to use. </param>
         /// <param name="pagingGetMultiplePagesLroOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response GetMultiplePagesLRONextPage(string nextLink, string clientRequestId = null, PagingGetMultiplePagesLroOptions pagingGetMultiplePagesLroOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2360,6 +2030,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2368,6 +2039,7 @@ namespace paging
         /// <param name="apiVersion"> Sets the api version to use. </param>
         /// <param name="tenant"> Sets the tenant to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="apiVersion"/>, or <paramref name="tenant"/> is null. </exception>
         public async Task<Response<OdataProductResult>> NextFragmentNextPageAsync(string nextLink, string apiVersion, string tenant, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2391,14 +2063,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2411,6 +2076,7 @@ namespace paging
         /// <param name="apiVersion"> Sets the api version to use. </param>
         /// <param name="tenant"> Sets the tenant to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="apiVersion"/>, or <paramref name="tenant"/> is null. </exception>
         public Response<OdataProductResult> NextFragmentNextPage(string nextLink, string apiVersion, string tenant, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2434,14 +2100,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2458,6 +2117,7 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2465,6 +2125,7 @@ namespace paging
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="customParameterGroup"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="customParameterGroup"/> is null. </exception>
         public async Task<Response<OdataProductResult>> NextFragmentWithGroupingNextPageAsync(string nextLink, CustomParameterGroup customParameterGroup, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2484,14 +2145,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2503,6 +2157,7 @@ namespace paging
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="customParameterGroup"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="customParameterGroup"/> is null. </exception>
         public Response<OdataProductResult> NextFragmentWithGroupingNextPage(string nextLink, CustomParameterGroup customParameterGroup, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2522,14 +2177,7 @@ namespace paging
                     {
                         OdataProductResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
-                        }
+                        value = OdataProductResult.DeserializeOdataProductResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2546,12 +2194,14 @@ namespace paging
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name &apos;indexes&apos;. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ProductResultValueWithXMSClientName>> GetPagingModelWithItemNameWithXMSClientNameNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2567,14 +2217,7 @@ namespace paging
                     {
                         ProductResultValueWithXMSClientName value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
-                        }
+                        value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2585,6 +2228,7 @@ namespace paging
         /// <summary> A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name &apos;indexes&apos;. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ProductResultValueWithXMSClientName> GetPagingModelWithItemNameWithXMSClientNameNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2600,14 +2244,7 @@ namespace paging
                     {
                         ProductResultValueWithXMSClientName value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
-                        }
+                        value = ProductResultValueWithXMSClientName.DeserializeProductResultValueWithXMSClientName(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

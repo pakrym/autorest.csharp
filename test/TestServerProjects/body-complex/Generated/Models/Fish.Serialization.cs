@@ -18,14 +18,14 @@ namespace body_complex.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fishtype");
             writer.WriteStringValue(Fishtype);
-            if (Species != null)
+            if (Optional.IsDefined(Species))
             {
                 writer.WritePropertyName("species");
                 writer.WriteStringValue(Species);
             }
             writer.WritePropertyName("length");
             writer.WriteNumberValue(Length);
-            if (Siblings != null)
+            if (Optional.IsCollectionDefined(Siblings))
             {
                 writer.WritePropertyName("siblings");
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace body_complex.Models
                 }
             }
             string fishtype = default;
-            string species = default;
+            Optional<string> species = default;
             float length = default;
-            IList<Fish> siblings = default;
+            Optional<IList<Fish>> siblings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fishtype"))
@@ -65,10 +65,6 @@ namespace body_complex.Models
                 }
                 if (property.NameEquals("species"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     species = property.Value.GetString();
                     continue;
                 }
@@ -79,27 +75,16 @@ namespace body_complex.Models
                 }
                 if (property.NameEquals("siblings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Fish> array = new List<Fish>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeFish(item));
-                        }
+                        array.Add(DeserializeFish(item));
                     }
                     siblings = array;
                     continue;
                 }
             }
-            return new Fish(fishtype, species, length, siblings);
+            return new Fish(fishtype, species.Value, length, Optional.ToList(siblings));
         }
     }
 }

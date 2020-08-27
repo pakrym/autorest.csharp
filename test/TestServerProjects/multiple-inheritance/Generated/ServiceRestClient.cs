@@ -44,6 +44,7 @@ namespace multiple_inheritance
             uri.Reset(endpoint);
             uri.AppendPath("/multipleInheritance/horse", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -59,14 +60,7 @@ namespace multiple_inheritance
                     {
                         Horse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Horse.DeserializeHorse(document.RootElement);
-                        }
+                        value = Horse.DeserializeHorse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,14 +80,7 @@ namespace multiple_inheritance
                     {
                         Horse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Horse.DeserializeHorse(document.RootElement);
-                        }
+                        value = Horse.DeserializeHorse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +98,7 @@ namespace multiple_inheritance
             uri.AppendPath("/multipleInheritance/horse", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(horse);
             request.Content = content;
@@ -120,6 +108,7 @@ namespace multiple_inheritance
         /// <summary> Put a horse with name &apos;General&apos; and isAShowHorse false. </summary>
         /// <param name="horse"> Put a horse with name &apos;General&apos; and isAShowHorse false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="horse"/> is null. </exception>
         public async Task<Response<string>> PutHorseAsync(Horse horse, CancellationToken cancellationToken = default)
         {
             if (horse == null)
@@ -135,14 +124,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -153,6 +135,7 @@ namespace multiple_inheritance
         /// <summary> Put a horse with name &apos;General&apos; and isAShowHorse false. </summary>
         /// <param name="horse"> Put a horse with name &apos;General&apos; and isAShowHorse false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="horse"/> is null. </exception>
         public Response<string> PutHorse(Horse horse, CancellationToken cancellationToken = default)
         {
             if (horse == null)
@@ -168,14 +151,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,6 +168,7 @@ namespace multiple_inheritance
             uri.Reset(endpoint);
             uri.AppendPath("/multipleInheritance/pet", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -207,14 +184,7 @@ namespace multiple_inheritance
                     {
                         Pet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Pet.DeserializePet(document.RootElement);
-                        }
+                        value = Pet.DeserializePet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -234,14 +204,7 @@ namespace multiple_inheritance
                     {
                         Pet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Pet.DeserializePet(document.RootElement);
-                        }
+                        value = Pet.DeserializePet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,6 +222,7 @@ namespace multiple_inheritance
             uri.AppendPath("/multipleInheritance/pet", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pet);
             request.Content = content;
@@ -268,6 +232,7 @@ namespace multiple_inheritance
         /// <summary> Put a pet with name &apos;Butter&apos;. </summary>
         /// <param name="pet"> Put a pet with name &apos;Butter&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pet"/> is null. </exception>
         public async Task<Response<string>> PutPetAsync(Pet pet, CancellationToken cancellationToken = default)
         {
             if (pet == null)
@@ -283,14 +248,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,6 +259,7 @@ namespace multiple_inheritance
         /// <summary> Put a pet with name &apos;Butter&apos;. </summary>
         /// <param name="pet"> Put a pet with name &apos;Butter&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pet"/> is null. </exception>
         public Response<string> PutPet(Pet pet, CancellationToken cancellationToken = default)
         {
             if (pet == null)
@@ -316,14 +275,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,6 +292,7 @@ namespace multiple_inheritance
             uri.Reset(endpoint);
             uri.AppendPath("/multipleInheritance/feline", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -355,14 +308,7 @@ namespace multiple_inheritance
                     {
                         Feline value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Feline.DeserializeFeline(document.RootElement);
-                        }
+                        value = Feline.DeserializeFeline(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -382,14 +328,7 @@ namespace multiple_inheritance
                     {
                         Feline value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Feline.DeserializeFeline(document.RootElement);
-                        }
+                        value = Feline.DeserializeFeline(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,6 +346,7 @@ namespace multiple_inheritance
             uri.AppendPath("/multipleInheritance/feline", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(feline);
             request.Content = content;
@@ -416,6 +356,7 @@ namespace multiple_inheritance
         /// <summary> Put a feline who hisses and doesn&apos;t meow. </summary>
         /// <param name="feline"> Put a feline who hisses and doesn&apos;t meow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="feline"/> is null. </exception>
         public async Task<Response<string>> PutFelineAsync(Feline feline, CancellationToken cancellationToken = default)
         {
             if (feline == null)
@@ -431,14 +372,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -449,6 +383,7 @@ namespace multiple_inheritance
         /// <summary> Put a feline who hisses and doesn&apos;t meow. </summary>
         /// <param name="feline"> Put a feline who hisses and doesn&apos;t meow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="feline"/> is null. </exception>
         public Response<string> PutFeline(Feline feline, CancellationToken cancellationToken = default)
         {
             if (feline == null)
@@ -464,14 +399,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,6 +416,7 @@ namespace multiple_inheritance
             uri.Reset(endpoint);
             uri.AppendPath("/multipleInheritance/cat", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -503,14 +432,7 @@ namespace multiple_inheritance
                     {
                         Cat value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Cat.DeserializeCat(document.RootElement);
-                        }
+                        value = Cat.DeserializeCat(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -530,14 +452,7 @@ namespace multiple_inheritance
                     {
                         Cat value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Cat.DeserializeCat(document.RootElement);
-                        }
+                        value = Cat.DeserializeCat(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -555,6 +470,7 @@ namespace multiple_inheritance
             uri.AppendPath("/multipleInheritance/cat", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cat);
             request.Content = content;
@@ -564,6 +480,7 @@ namespace multiple_inheritance
         /// <summary> Put a cat with name &apos;Boots&apos; where likesMilk and hisses is false, meows is true. </summary>
         /// <param name="cat"> Put a cat with name &apos;Boots&apos; where likesMilk and hisses is false, meows is true. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cat"/> is null. </exception>
         public async Task<Response<string>> PutCatAsync(Cat cat, CancellationToken cancellationToken = default)
         {
             if (cat == null)
@@ -579,14 +496,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,6 +507,7 @@ namespace multiple_inheritance
         /// <summary> Put a cat with name &apos;Boots&apos; where likesMilk and hisses is false, meows is true. </summary>
         /// <param name="cat"> Put a cat with name &apos;Boots&apos; where likesMilk and hisses is false, meows is true. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cat"/> is null. </exception>
         public Response<string> PutCat(Cat cat, CancellationToken cancellationToken = default)
         {
             if (cat == null)
@@ -612,14 +523,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,6 +540,7 @@ namespace multiple_inheritance
             uri.Reset(endpoint);
             uri.AppendPath("/multipleInheritance/kitten", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -651,14 +556,7 @@ namespace multiple_inheritance
                     {
                         Kitten value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Kitten.DeserializeKitten(document.RootElement);
-                        }
+                        value = Kitten.DeserializeKitten(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -678,14 +576,7 @@ namespace multiple_inheritance
                     {
                         Kitten value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Kitten.DeserializeKitten(document.RootElement);
-                        }
+                        value = Kitten.DeserializeKitten(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -703,6 +594,7 @@ namespace multiple_inheritance
             uri.AppendPath("/multipleInheritance/kitten", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(kitten);
             request.Content = content;
@@ -712,6 +604,7 @@ namespace multiple_inheritance
         /// <summary> Put a kitten with name &apos;Kitty&apos; where likesMilk and hisses is false, meows and eatsMiceYet is true. </summary>
         /// <param name="kitten"> Put a kitten with name &apos;Kitty&apos; where likesMilk and hisses is false, meows and eatsMiceYet is true. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kitten"/> is null. </exception>
         public async Task<Response<string>> PutKittenAsync(Kitten kitten, CancellationToken cancellationToken = default)
         {
             if (kitten == null)
@@ -727,14 +620,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -745,6 +631,7 @@ namespace multiple_inheritance
         /// <summary> Put a kitten with name &apos;Kitty&apos; where likesMilk and hisses is false, meows and eatsMiceYet is true. </summary>
         /// <param name="kitten"> Put a kitten with name &apos;Kitty&apos; where likesMilk and hisses is false, meows and eatsMiceYet is true. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kitten"/> is null. </exception>
         public Response<string> PutKitten(Kitten kitten, CancellationToken cancellationToken = default)
         {
             if (kitten == null)
@@ -760,14 +647,7 @@ namespace multiple_inheritance
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -19,6 +19,7 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="documentScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
         /// <param name="sentences"> Sentence level sentiment analysis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="documentScores"/>, or <paramref name="sentences"/> is null. </exception>
         internal DocumentSentiment(string id, DocumentSentimentValue sentiment, SentimentConfidenceScorePerLabel documentScores, IEnumerable<SentenceSentiment> sentences)
         {
             if (id == null)
@@ -37,7 +38,7 @@ namespace CognitiveServices.TextAnalytics.Models
             Id = id;
             Sentiment = sentiment;
             DocumentScores = documentScores;
-            Sentences = sentences.ToArray();
+            Sentences = sentences.ToList();
         }
 
         /// <summary> Initializes a new instance of DocumentSentiment. </summary>
@@ -52,7 +53,7 @@ namespace CognitiveServices.TextAnalytics.Models
             Sentiment = sentiment;
             Statistics = statistics;
             DocumentScores = documentScores;
-            Sentences = sentences ?? new List<SentenceSentiment>();
+            Sentences = sentences;
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

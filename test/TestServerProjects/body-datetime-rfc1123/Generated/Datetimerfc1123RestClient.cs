@@ -43,12 +43,13 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null datetime value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DateTimeOffset>> GetNullAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DateTimeOffset?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -56,9 +57,16 @@ namespace body_datetime_rfc1123
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetDateTimeOffset("R");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("R");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -68,7 +76,7 @@ namespace body_datetime_rfc1123
 
         /// <summary> Get null datetime value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DateTimeOffset> GetNull(CancellationToken cancellationToken = default)
+        public Response<DateTimeOffset?> GetNull(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             _pipeline.Send(message, cancellationToken);
@@ -76,9 +84,16 @@ namespace body_datetime_rfc1123
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetDateTimeOffset("R");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("R");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,6 +110,7 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -147,6 +163,7 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/overflow", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,6 +216,7 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/underflow", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -252,6 +270,7 @@ namespace body_datetime_rfc1123
             uri.AppendPath("/datetimerfc1123/max", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "R");
             request.Content = content;
@@ -259,7 +278,7 @@ namespace body_datetime_rfc1123
         }
 
         /// <summary> Put max datetime value Fri, 31 Dec 9999 23:59:59 GMT. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutUtcMaxDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -275,7 +294,7 @@ namespace body_datetime_rfc1123
         }
 
         /// <summary> Put max datetime value Fri, 31 Dec 9999 23:59:59 GMT. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutUtcMaxDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -299,6 +318,7 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/max/lowercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -351,6 +371,7 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/max/uppercase", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -404,6 +425,7 @@ namespace body_datetime_rfc1123
             uri.AppendPath("/datetimerfc1123/min", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(datetimeBody, "R");
             request.Content = content;
@@ -411,7 +433,7 @@ namespace body_datetime_rfc1123
         }
 
         /// <summary> Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutUtcMinDateTimeAsync(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -427,7 +449,7 @@ namespace body_datetime_rfc1123
         }
 
         /// <summary> Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT. </summary>
-        /// <param name="datetimeBody"> The DateTime to use. </param>
+        /// <param name="datetimeBody"> datetime body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutUtcMinDateTime(DateTimeOffset datetimeBody, CancellationToken cancellationToken = default)
         {
@@ -451,6 +473,7 @@ namespace body_datetime_rfc1123
             uri.Reset(endpoint);
             uri.AppendPath("/datetimerfc1123/min", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

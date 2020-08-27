@@ -15,74 +15,44 @@ namespace body_complex.Models
     {
         internal static DotFishMarket DeserializeDotFishMarket(JsonElement element)
         {
-            DotSalmon sampleSalmon = default;
-            IReadOnlyList<DotSalmon> salmons = default;
-            DotFish sampleFish = default;
-            IReadOnlyList<DotFish> fishes = default;
+            Optional<DotSalmon> sampleSalmon = default;
+            Optional<IReadOnlyList<DotSalmon>> salmons = default;
+            Optional<DotFish> sampleFish = default;
+            Optional<IReadOnlyList<DotFish>> fishes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sampleSalmon"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sampleSalmon = DotSalmon.DeserializeDotSalmon(property.Value);
                     continue;
                 }
                 if (property.NameEquals("salmons"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DotSalmon> array = new List<DotSalmon>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DotSalmon.DeserializeDotSalmon(item));
-                        }
+                        array.Add(DotSalmon.DeserializeDotSalmon(item));
                     }
                     salmons = array;
                     continue;
                 }
                 if (property.NameEquals("sampleFish"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sampleFish = DotFish.DeserializeDotFish(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fishes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DotFish> array = new List<DotFish>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DotFish.DeserializeDotFish(item));
-                        }
+                        array.Add(DotFish.DeserializeDotFish(item));
                     }
                     fishes = array;
                     continue;
                 }
             }
-            return new DotFishMarket(sampleSalmon, salmons, sampleFish, fishes);
+            return new DotFishMarket(sampleSalmon.Value, Optional.ToList(salmons), sampleFish.Value, Optional.ToList(fishes));
         }
     }
 }

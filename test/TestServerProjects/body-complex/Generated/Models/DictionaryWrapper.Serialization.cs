@@ -16,48 +16,49 @@ namespace body_complex.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultProgram != null)
+            if (Optional.IsCollectionDefined(DefaultProgram))
             {
-                writer.WritePropertyName("defaultProgram");
-                writer.WriteStartObject();
-                foreach (var item in DefaultProgram)
+                if (DefaultProgram != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("defaultProgram");
+                    writer.WriteStartObject();
+                    foreach (var item in DefaultProgram)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("defaultProgram");
+                }
             }
             writer.WriteEndObject();
         }
 
         internal static DictionaryWrapper DeserializeDictionaryWrapper(JsonElement element)
         {
-            IDictionary<string, string> defaultProgram = default;
+            Optional<IDictionary<string, string>> defaultProgram = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultProgram"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        defaultProgram = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     defaultProgram = dictionary;
                     continue;
                 }
             }
-            return new DictionaryWrapper(defaultProgram);
+            return new DictionaryWrapper(Optional.ToDictionary(defaultProgram));
         }
     }
 }

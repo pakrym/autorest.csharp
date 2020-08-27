@@ -20,52 +20,52 @@ namespace CognitiveSearch.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key");
                 writer.WriteBooleanValue(Key.Value);
             }
-            if (Retrievable != null)
+            if (Optional.IsDefined(Retrievable))
             {
                 writer.WritePropertyName("retrievable");
                 writer.WriteBooleanValue(Retrievable.Value);
             }
-            if (Searchable != null)
+            if (Optional.IsDefined(Searchable))
             {
                 writer.WritePropertyName("searchable");
                 writer.WriteBooleanValue(Searchable.Value);
             }
-            if (Filterable != null)
+            if (Optional.IsDefined(Filterable))
             {
                 writer.WritePropertyName("filterable");
                 writer.WriteBooleanValue(Filterable.Value);
             }
-            if (Sortable != null)
+            if (Optional.IsDefined(Sortable))
             {
                 writer.WritePropertyName("sortable");
                 writer.WriteBooleanValue(Sortable.Value);
             }
-            if (Facetable != null)
+            if (Optional.IsDefined(Facetable))
             {
                 writer.WritePropertyName("facetable");
                 writer.WriteBooleanValue(Facetable.Value);
             }
-            if (Analyzer != null)
+            if (Optional.IsDefined(Analyzer))
             {
                 writer.WritePropertyName("analyzer");
                 writer.WriteStringValue(Analyzer.Value.ToString());
             }
-            if (SearchAnalyzer != null)
+            if (Optional.IsDefined(SearchAnalyzer))
             {
                 writer.WritePropertyName("searchAnalyzer");
                 writer.WriteStringValue(SearchAnalyzer.Value.ToString());
             }
-            if (IndexAnalyzer != null)
+            if (Optional.IsDefined(IndexAnalyzer))
             {
                 writer.WritePropertyName("indexAnalyzer");
                 writer.WriteStringValue(IndexAnalyzer.Value.ToString());
             }
-            if (SynonymMaps != null)
+            if (Optional.IsCollectionDefined(SynonymMaps))
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace CognitiveSearch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -92,17 +92,17 @@ namespace CognitiveSearch.Models
         {
             string name = default;
             DataType type = default;
-            bool? key = default;
-            bool? retrievable = default;
-            bool? searchable = default;
-            bool? filterable = default;
-            bool? sortable = default;
-            bool? facetable = default;
-            AnalyzerName? analyzer = default;
-            AnalyzerName? searchAnalyzer = default;
-            AnalyzerName? indexAnalyzer = default;
-            IList<string> synonymMaps = default;
-            IList<Field> fields = default;
+            Optional<bool> key = default;
+            Optional<bool> retrievable = default;
+            Optional<bool> searchable = default;
+            Optional<bool> filterable = default;
+            Optional<bool> sortable = default;
+            Optional<bool> facetable = default;
+            Optional<AnalyzerName> analyzer = default;
+            Optional<AnalyzerName> searchAnalyzer = default;
+            Optional<AnalyzerName> indexAnalyzer = default;
+            Optional<IList<string>> synonymMaps = default;
+            Optional<IList<Field>> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -117,129 +117,71 @@ namespace CognitiveSearch.Models
                 }
                 if (property.NameEquals("key"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     key = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("retrievable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     retrievable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("searchable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     searchable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("filterable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filterable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sortable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sortable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("facetable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     facetable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("analyzer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     analyzer = new AnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("searchAnalyzer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     searchAnalyzer = new AnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("indexAnalyzer"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     indexAnalyzer = new AnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     synonymMaps = array;
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Field> array = new List<Field>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeField(item));
-                        }
+                        array.Add(DeserializeField(item));
                     }
                     fields = array;
                     continue;
                 }
             }
-            return new Field(name, type, key, retrievable, searchable, filterable, sortable, facetable, analyzer, searchAnalyzer, indexAnalyzer, synonymMaps, fields);
+            return new Field(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToList(synonymMaps), Optional.ToList(fields));
         }
     }
 }

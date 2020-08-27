@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of KeyValueElement. </summary>
         /// <param name="text"> The text content of the key or value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal KeyValueElement(string text)
         {
             if (text == null)
@@ -23,6 +25,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Text = text;
+            BoundingBox = new ChangeTrackingList<float>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyValueElement. </summary>

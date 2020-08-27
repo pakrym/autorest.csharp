@@ -18,6 +18,7 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <param name="documents"> Sentiment analysis per document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, or <paramref name="modelVersion"/> is null. </exception>
         internal SentimentResponse(IEnumerable<DocumentSentiment> documents, IEnumerable<DocumentError> errors, string modelVersion)
         {
             if (documents == null)
@@ -33,8 +34,8 @@ namespace CognitiveServices.TextAnalytics.Models
                 throw new ArgumentNullException(nameof(modelVersion));
             }
 
-            Documents = documents.ToArray();
-            Errors = errors.ToArray();
+            Documents = documents.ToList();
+            Errors = errors.ToList();
             ModelVersion = modelVersion;
         }
 
@@ -45,8 +46,8 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         internal SentimentResponse(IReadOnlyList<DocumentSentiment> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion)
         {
-            Documents = documents ?? new List<DocumentSentiment>();
-            Errors = errors ?? new List<DocumentError>();
+            Documents = documents;
+            Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
         }

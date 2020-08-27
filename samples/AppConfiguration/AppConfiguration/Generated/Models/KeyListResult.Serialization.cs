@@ -15,42 +15,27 @@ namespace AppConfiguration.Models
     {
         internal static KeyListResult DeserializeKeyListResult(JsonElement element)
         {
-            IReadOnlyList<Key> items = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Key>> items = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("items"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Key> array = new List<Key>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Key.DeserializeKey(item));
-                        }
+                        array.Add(Key.DeserializeKey(item));
                     }
                     items = array;
                     continue;
                 }
                 if (property.NameEquals("@nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new KeyListResult(items, nextLink);
+            return new KeyListResult(Optional.ToList(items), nextLink.Value);
         }
     }
 }

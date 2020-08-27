@@ -46,6 +46,7 @@ namespace media_types
             uri.AppendPath("/mediatypes/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(input);
             return message;
         }
@@ -54,6 +55,7 @@ namespace media_types
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="input"> Input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public async Task<Response<string>> AnalyzeBodyAsync(ContentType contentType, Stream input, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -69,14 +71,7 @@ namespace media_types
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,6 +83,7 @@ namespace media_types
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="input"> Input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public Response<string> AnalyzeBody(ContentType contentType, Stream input, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -103,14 +99,7 @@ namespace media_types
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,6 +117,7 @@ namespace media_types
             uri.AppendPath("/mediatypes/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (input != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -150,14 +140,7 @@ namespace media_types
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -178,14 +161,7 @@ namespace media_types
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -203,6 +179,7 @@ namespace media_types
             uri.AppendPath("/mediatypes/contentTypeWithEncoding", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "text/plain");
+            request.Headers.Add("Accept", "application/json");
             request.Content = new StringRequestContent(input);
             return message;
         }
@@ -210,6 +187,7 @@ namespace media_types
         /// <summary> Pass in contentType &apos;text/plain; encoding=UTF-8&apos; to pass test. Value for input does not matter. </summary>
         /// <param name="input"> Input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public async Task<Response<string>> ContentTypeWithEncodingAsync(string input, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -225,14 +203,7 @@ namespace media_types
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -243,6 +214,7 @@ namespace media_types
         /// <summary> Pass in contentType &apos;text/plain; encoding=UTF-8&apos; to pass test. Value for input does not matter. </summary>
         /// <param name="input"> Input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public Response<string> ContentTypeWithEncoding(string input, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -258,14 +230,7 @@ namespace media_types
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = document.RootElement.GetString();
-                        }
+                        value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
                 default:

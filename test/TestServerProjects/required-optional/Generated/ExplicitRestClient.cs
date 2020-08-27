@@ -45,6 +45,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/integer/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(bodyParameter);
             request.Content = content;
@@ -93,6 +94,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/integer/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -144,6 +146,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/integer/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bodyParameter);
             request.Content = content;
@@ -153,6 +156,7 @@ namespace required_optional
         /// <summary> Test explicitly required integer. Please put a valid int-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The IntWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredIntegerPropertyAsync(IntWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -174,6 +178,7 @@ namespace required_optional
         /// <summary> Test explicitly required integer. Please put a valid int-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The IntWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredIntegerProperty(IntWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -202,6 +207,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/integer/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -253,6 +259,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/integer/header", false);
             request.Uri = uri;
             request.Headers.Add("headerParameter", headerParameter);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -301,6 +308,7 @@ namespace required_optional
             {
                 request.Headers.Add("headerParameter", headerParameter.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -346,6 +354,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/string/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStringValue(bodyParameter);
             request.Content = content;
@@ -355,6 +364,7 @@ namespace required_optional
         /// <summary> Test explicitly required string. Please put null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredStringParameterAsync(string bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -376,6 +386,7 @@ namespace required_optional
         /// <summary> Test explicitly required string. Please put null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredStringParameter(string bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -404,6 +415,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/string/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -455,6 +467,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/string/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bodyParameter);
             request.Content = content;
@@ -464,6 +477,7 @@ namespace required_optional
         /// <summary> Test explicitly required string. Please put a valid string-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The StringWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredStringPropertyAsync(StringWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -485,6 +499,7 @@ namespace required_optional
         /// <summary> Test explicitly required string. Please put a valid string-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The StringWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredStringProperty(StringWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -513,6 +528,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/string/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -564,12 +580,14 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/string/header", false);
             request.Uri = uri;
             request.Headers.Add("headerParameter", headerParameter);
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Test explicitly required string. Please put a header &apos;headerParameter&apos; =&gt; null and the client library should throw before the request is sent. </summary>
         /// <param name="headerParameter"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="headerParameter"/> is null. </exception>
         public async Task<Response> PostRequiredStringHeaderAsync(string headerParameter, CancellationToken cancellationToken = default)
         {
             if (headerParameter == null)
@@ -591,6 +609,7 @@ namespace required_optional
         /// <summary> Test explicitly required string. Please put a header &apos;headerParameter&apos; =&gt; null and the client library should throw before the request is sent. </summary>
         /// <param name="headerParameter"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="headerParameter"/> is null. </exception>
         public Response PostRequiredStringHeader(string headerParameter, CancellationToken cancellationToken = default)
         {
             if (headerParameter == null)
@@ -622,6 +641,7 @@ namespace required_optional
             {
                 request.Headers.Add("bodyParameter", bodyParameter);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -667,6 +687,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/class/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bodyParameter);
             request.Content = content;
@@ -676,6 +697,7 @@ namespace required_optional
         /// <summary> Test explicitly required complex object. Please put null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The Product to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredClassParameterAsync(Product bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -697,6 +719,7 @@ namespace required_optional
         /// <summary> Test explicitly required complex object. Please put null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The Product to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredClassParameter(Product bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -725,6 +748,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/class/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -776,6 +800,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/class/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bodyParameter);
             request.Content = content;
@@ -785,6 +810,7 @@ namespace required_optional
         /// <summary> Test explicitly required complex object. Please put a valid class-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The ClassWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredClassPropertyAsync(ClassWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -806,6 +832,7 @@ namespace required_optional
         /// <summary> Test explicitly required complex object. Please put a valid class-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The ClassWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredClassProperty(ClassWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -834,6 +861,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/class/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -885,6 +913,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/array/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in bodyParameter)
@@ -899,6 +928,7 @@ namespace required_optional
         /// <summary> Test explicitly required array. Please put null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The ArrayOfPostContentSchemaItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredArrayParameterAsync(IEnumerable<string> bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -920,6 +950,7 @@ namespace required_optional
         /// <summary> Test explicitly required array. Please put null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The ArrayOfPostContentSchemaItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredArrayParameter(IEnumerable<string> bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -948,6 +979,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/array/parameter", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -1004,6 +1036,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/array/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bodyParameter);
             request.Content = content;
@@ -1013,6 +1046,7 @@ namespace required_optional
         /// <summary> Test explicitly required array. Please put a valid array-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The ArrayWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public async Task<Response> PostRequiredArrayPropertyAsync(ArrayWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -1034,6 +1068,7 @@ namespace required_optional
         /// <summary> Test explicitly required array. Please put a valid array-wrapper with &apos;value&apos; = null and the client library should throw before the request is sent. </summary>
         /// <param name="bodyParameter"> The ArrayWrapper to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyParameter"/> is null. </exception>
         public Response PostRequiredArrayProperty(ArrayWrapper bodyParameter, CancellationToken cancellationToken = default)
         {
             if (bodyParameter == null)
@@ -1062,6 +1097,7 @@ namespace required_optional
             uri.AppendPath("/reqopt/optional/array/property", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (bodyParameter != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -1113,12 +1149,14 @@ namespace required_optional
             uri.AppendPath("/reqopt/requied/array/header", false);
             request.Uri = uri;
             request.Headers.AddDelimited("headerParameter", headerParameter, ",");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Test explicitly required array. Please put a header &apos;headerParameter&apos; =&gt; null and the client library should throw before the request is sent. </summary>
         /// <param name="headerParameter"> The ArrayOfPost0ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="headerParameter"/> is null. </exception>
         public async Task<Response> PostRequiredArrayHeaderAsync(IEnumerable<string> headerParameter, CancellationToken cancellationToken = default)
         {
             if (headerParameter == null)
@@ -1140,6 +1178,7 @@ namespace required_optional
         /// <summary> Test explicitly required array. Please put a header &apos;headerParameter&apos; =&gt; null and the client library should throw before the request is sent. </summary>
         /// <param name="headerParameter"> The ArrayOfPost0ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="headerParameter"/> is null. </exception>
         public Response PostRequiredArrayHeader(IEnumerable<string> headerParameter, CancellationToken cancellationToken = default)
         {
             if (headerParameter == null)
@@ -1171,6 +1210,7 @@ namespace required_optional
             {
                 request.Headers.AddDelimited("headerParameter", headerParameter, ",");
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

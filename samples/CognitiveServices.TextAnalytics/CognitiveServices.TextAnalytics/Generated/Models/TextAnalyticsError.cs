@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace CognitiveServices.TextAnalytics.Models
 {
@@ -16,6 +17,7 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <summary> Initializes a new instance of TextAnalyticsError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal TextAnalyticsError(ErrorCodeValue code, string message)
         {
             if (message == null)
@@ -25,6 +27,7 @@ namespace CognitiveServices.TextAnalytics.Models
 
             Code = code;
             Message = message;
+            Details = new ChangeTrackingList<TextAnalyticsError>();
         }
 
         /// <summary> Initializes a new instance of TextAnalyticsError. </summary>

@@ -16,26 +16,26 @@ namespace body_complex.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Iswild != null)
+            if (Optional.IsDefined(Iswild))
             {
                 writer.WritePropertyName("iswild");
                 writer.WriteBooleanValue(Iswild.Value);
             }
             writer.WritePropertyName("fishtype");
             writer.WriteStringValue(Fishtype);
-            if (Species != null)
+            if (Optional.IsDefined(Species))
             {
                 writer.WritePropertyName("species");
                 writer.WriteStringValue(Species);
             }
             writer.WritePropertyName("length");
             writer.WriteNumberValue(Length);
-            if (Siblings != null)
+            if (Optional.IsCollectionDefined(Siblings))
             {
                 writer.WritePropertyName("siblings");
                 writer.WriteStartArray();
@@ -57,29 +57,21 @@ namespace body_complex.Models
                     case "smart_salmon": return SmartSalmon.DeserializeSmartSalmon(element);
                 }
             }
-            string location = default;
-            bool? iswild = default;
+            Optional<string> location = default;
+            Optional<bool> iswild = default;
             string fishtype = default;
-            string species = default;
+            Optional<string> species = default;
             float length = default;
-            IList<Fish> siblings = default;
+            Optional<IList<Fish>> siblings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("iswild"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     iswild = property.Value.GetBoolean();
                     continue;
                 }
@@ -90,10 +82,6 @@ namespace body_complex.Models
                 }
                 if (property.NameEquals("species"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     species = property.Value.GetString();
                     continue;
                 }
@@ -104,27 +92,16 @@ namespace body_complex.Models
                 }
                 if (property.NameEquals("siblings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Fish> array = new List<Fish>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeFish(item));
-                        }
+                        array.Add(DeserializeFish(item));
                     }
                     siblings = array;
                     continue;
                 }
             }
-            return new Salmon(fishtype, species, length, siblings, location, iswild);
+            return new Salmon(fishtype, species.Value, length, Optional.ToList(siblings), location.Value, Optional.ToNullable(iswild));
         }
     }
 }

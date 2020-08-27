@@ -33,17 +33,17 @@ namespace ModelShapes.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (NonRequiredString != null)
+            if (Optional.IsDefined(NonRequiredString))
             {
                 writer.WritePropertyName("NonRequiredString");
                 writer.WriteStringValue(NonRequiredString);
             }
-            if (NonRequiredInt != null)
+            if (Optional.IsDefined(NonRequiredInt))
             {
                 writer.WritePropertyName("NonRequiredInt");
                 writer.WriteNumberValue(NonRequiredInt.Value);
             }
-            if (NonRequiredStringList != null)
+            if (Optional.IsCollectionDefined(NonRequiredStringList))
             {
                 writer.WritePropertyName("NonRequiredStringList");
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace ModelShapes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NonRequiredIntList != null)
+            if (Optional.IsCollectionDefined(NonRequiredIntList))
             {
                 writer.WritePropertyName("NonRequiredIntList");
                 writer.WriteStartArray();
@@ -108,6 +108,64 @@ namespace ModelShapes.Models
             else
             {
                 writer.WriteNull("RequiredNullableIntList");
+            }
+            if (Optional.IsDefined(NonRequiredNullableString))
+            {
+                if (NonRequiredNullableString != null)
+                {
+                    writer.WritePropertyName("NonRequiredNullableString");
+                    writer.WriteStringValue(NonRequiredNullableString);
+                }
+                else
+                {
+                    writer.WriteNull("NonRequiredNullableString");
+                }
+            }
+            if (Optional.IsDefined(NonRequiredNullableInt))
+            {
+                if (NonRequiredNullableInt != null)
+                {
+                    writer.WritePropertyName("NonRequiredNullableInt");
+                    writer.WriteNumberValue(NonRequiredNullableInt.Value);
+                }
+                else
+                {
+                    writer.WriteNull("NonRequiredNullableInt");
+                }
+            }
+            if (Optional.IsCollectionDefined(NonRequiredNullableStringList))
+            {
+                if (NonRequiredNullableStringList != null)
+                {
+                    writer.WritePropertyName("NonRequiredNullableStringList");
+                    writer.WriteStartArray();
+                    foreach (var item in NonRequiredNullableStringList)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("NonRequiredNullableStringList");
+                }
+            }
+            if (Optional.IsCollectionDefined(NonRequiredNullableIntList))
+            {
+                if (NonRequiredNullableIntList != null)
+                {
+                    writer.WritePropertyName("NonRequiredNullableIntList");
+                    writer.WriteStartArray();
+                    foreach (var item in NonRequiredNullableIntList)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("NonRequiredNullableIntList");
+                }
             }
             writer.WriteEndObject();
         }

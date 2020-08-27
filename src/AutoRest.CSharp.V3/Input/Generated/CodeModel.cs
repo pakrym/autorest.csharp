@@ -143,7 +143,7 @@ namespace AutoRest.CSharp.V3.Input
         public Language Default { get; set; } = new Language();
 
         [YamlDotNet.Serialization.YamlMember(Alias = "csharp")]
-        public CSharpLanguage? CSharp { get; set; }
+        public Language? CSharp { get; set; }
 
         [YamlDotNet.Serialization.YamlMember(Alias = "python")]
         public Language? Python { get; set; }
@@ -584,6 +584,9 @@ namespace AutoRest.CSharp.V3.Input
 
         [YamlDotNet.Serialization.YamlMember(Alias = "wrapped")]
         public bool? Wrapped { get; set; }
+
+        [YamlDotNet.Serialization.YamlMember(Alias = "text")]
+        public bool? Text { get; set; }
     }
 
     /// <summary>custom extensible metadata for individual serialization formats</summary>
@@ -1264,6 +1267,11 @@ namespace AutoRest.CSharp.V3.Input
     {
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.23.0 (Newtonsoft.Json v9.0.0.0)")]
+    internal partial class AnySchema : Schema
+    {
+    }
+
     /// <summary>the full set of schemas for a given service, categorized into convenient collections</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.23.0 (Newtonsoft.Json v9.0.0.0)")]
     internal partial class Schemas
@@ -1508,6 +1516,10 @@ namespace AutoRest.CSharp.V3.Input
         [YamlDotNet.Serialization.YamlMember(Alias = "schema")]
         [System.ComponentModel.DataAnnotations.Required]
         public Schema Schema { get; set; } = new Schema();
+
+        /// <summary>indicates whether the response can be 'null'</summary>
+        [YamlDotNet.Serialization.YamlMember(Alias = "nullable")]
+        public bool? Nullable { get; set; }
     }
 
     /// <summary>represents a single callable endpoint with a discrete set of inputs, and any number of output possibilities (responses or exceptions)</summary>
@@ -2228,6 +2240,10 @@ namespace AutoRest.CSharp.V3.Input
         [YamlDotNet.Serialization.YamlMember(Alias = "style")]
         public SerializationStyle? Style { get; set; }
 
+        /// <summary>when set, 'form' style parameters generate separate parameters for each value of an array.</summary>
+        [YamlDotNet.Serialization.YamlMember(Alias = "explode")]
+        public bool? Explode { get; set; }
+
         /// <summary>when set, this indicates that the content of the parameter should not be subject to URI encoding rules.</summary>
         [YamlDotNet.Serialization.YamlMember(Alias = "skipUriEncoding")]
         public bool? SkipUriEncoding { get; set; }
@@ -2341,6 +2357,10 @@ namespace AutoRest.CSharp.V3.Input
         [YamlDotNet.Serialization.YamlMember(Alias = "schema")]
         [System.ComponentModel.DataAnnotations.Required]
         public Schema Schema { get; set; } = new Schema();
+
+        [YamlDotNet.Serialization.YamlMember(Alias = "language")]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Languages Language { get; set; } = new Languages();
 
         /// <summary>additional metadata extensions dictionary</summary>
         [YamlDotNet.Serialization.YamlMember(Alias = "extensions")]

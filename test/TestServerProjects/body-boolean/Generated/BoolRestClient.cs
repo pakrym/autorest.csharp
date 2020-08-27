@@ -43,6 +43,7 @@ namespace body_boolean
             uri.Reset(endpoint);
             uri.AppendPath("/bool/true", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -96,6 +97,7 @@ namespace body_boolean
             uri.AppendPath("/bool/true", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -141,6 +143,7 @@ namespace body_boolean
             uri.Reset(endpoint);
             uri.AppendPath("/bool/false", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -194,6 +197,7 @@ namespace body_boolean
             uri.AppendPath("/bool/false", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(false);
             request.Content = content;
@@ -239,12 +243,13 @@ namespace body_boolean
             uri.Reset(endpoint);
             uri.AppendPath("/bool/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null Boolean value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<bool>> GetNullAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<bool?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -252,9 +257,16 @@ namespace body_boolean
             {
                 case 200:
                     {
-                        bool value = default;
+                        bool? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetBoolean();
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetBoolean();
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -264,7 +276,7 @@ namespace body_boolean
 
         /// <summary> Get null Boolean value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<bool> GetNull(CancellationToken cancellationToken = default)
+        public Response<bool?> GetNull(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             _pipeline.Send(message, cancellationToken);
@@ -272,9 +284,16 @@ namespace body_boolean
             {
                 case 200:
                     {
-                        bool value = default;
+                        bool? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetBoolean();
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetBoolean();
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -291,6 +310,7 @@ namespace body_boolean
             uri.Reset(endpoint);
             uri.AppendPath("/bool/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

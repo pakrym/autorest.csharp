@@ -53,6 +53,7 @@ namespace azure_parameter_grouping
                 request.Headers.Add("customHeader", parameterGroupingPostRequiredParameters.CustomHeader);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(parameterGroupingPostRequiredParameters.Body);
             request.Content = content;
@@ -62,6 +63,7 @@ namespace azure_parameter_grouping
         /// <summary> Post a bunch of required parameters grouped. </summary>
         /// <param name="parameterGroupingPostRequiredParameters"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupingPostRequiredParameters"/> is null. </exception>
         public async Task<Response> PostRequiredAsync(ParameterGroupingPostRequiredParameters parameterGroupingPostRequiredParameters, CancellationToken cancellationToken = default)
         {
             if (parameterGroupingPostRequiredParameters == null)
@@ -83,6 +85,7 @@ namespace azure_parameter_grouping
         /// <summary> Post a bunch of required parameters grouped. </summary>
         /// <param name="parameterGroupingPostRequiredParameters"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupingPostRequiredParameters"/> is null. </exception>
         public Response PostRequired(ParameterGroupingPostRequiredParameters parameterGroupingPostRequiredParameters, CancellationToken cancellationToken = default)
         {
             if (parameterGroupingPostRequiredParameters == null)
@@ -118,6 +121,7 @@ namespace azure_parameter_grouping
             {
                 request.Headers.Add("customHeader", parameterGroupingPostOptionalParameters.CustomHeader);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -178,6 +182,7 @@ namespace azure_parameter_grouping
             {
                 request.Headers.Add("header-two", parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -232,6 +237,7 @@ namespace azure_parameter_grouping
             {
                 request.Headers.Add("header-one", firstParameterGroup.HeaderOne);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

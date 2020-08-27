@@ -45,6 +45,7 @@ namespace url
             uri.AppendPath("/queries/bool/true", false);
             uri.AppendQuery("boolQuery", true, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -88,6 +89,7 @@ namespace url
             uri.AppendPath("/queries/bool/false", false);
             uri.AppendQuery("boolQuery", false, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -134,6 +136,7 @@ namespace url
                 uri.AppendQuery("boolQuery", boolQuery.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -179,6 +182,7 @@ namespace url
             uri.AppendPath("/queries/int/1000000", false);
             uri.AppendQuery("intQuery", 1000000, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -222,6 +226,7 @@ namespace url
             uri.AppendPath("/queries/int/-1000000", false);
             uri.AppendQuery("intQuery", -1000000, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -268,6 +273,7 @@ namespace url
                 uri.AppendQuery("intQuery", intQuery.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -313,6 +319,7 @@ namespace url
             uri.AppendPath("/queries/long/10000000000", false);
             uri.AppendQuery("longQuery", 10000000000L, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -356,6 +363,7 @@ namespace url
             uri.AppendPath("/queries/long/-10000000000", false);
             uri.AppendQuery("longQuery", -10000000000L, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -402,6 +410,7 @@ namespace url
                 uri.AppendQuery("longQuery", longQuery.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -447,6 +456,7 @@ namespace url
             uri.AppendPath("/queries/float/1.034E+20", false);
             uri.AppendQuery("floatQuery", 1.034E+20F, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -490,6 +500,7 @@ namespace url
             uri.AppendPath("/queries/float/-1.034E-20", false);
             uri.AppendQuery("floatQuery", -1.034E-20F, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -536,6 +547,7 @@ namespace url
                 uri.AppendQuery("floatQuery", floatQuery.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -581,6 +593,7 @@ namespace url
             uri.AppendPath("/queries/double/9999999.999", false);
             uri.AppendQuery("doubleQuery", 9999999.999, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -624,6 +637,7 @@ namespace url
             uri.AppendPath("/queries/double/-9999999.999", false);
             uri.AppendQuery("doubleQuery", -9999999.999, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -670,6 +684,7 @@ namespace url
                 uri.AppendQuery("doubleQuery", doubleQuery.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -715,6 +730,7 @@ namespace url
             uri.AppendPath("/queries/string/unicode/", false);
             uri.AppendQuery("stringQuery", "啊齄丂狛狜隣郎隣兀﨩", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -758,6 +774,7 @@ namespace url
             uri.AppendPath("/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend", false);
             uri.AppendQuery("stringQuery", "begin!*'();:@ &=+$,/?#[]end", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -801,6 +818,7 @@ namespace url
             uri.AppendPath("/queries/string/empty", false);
             uri.AppendQuery("stringQuery", "", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -847,6 +865,7 @@ namespace url
                 uri.AppendQuery("stringQuery", stringQuery, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -895,6 +914,7 @@ namespace url
                 uri.AppendQuery("enumQuery", enumQuery.Value.ToSerialString(), true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -943,6 +963,7 @@ namespace url
                 uri.AppendQuery("enumQuery", enumQuery.Value.ToSerialString(), true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -991,6 +1012,7 @@ namespace url
                 uri.AppendQuery("byteQuery", byteQuery, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1036,6 +1058,7 @@ namespace url
             uri.AppendPath("/queries/byte/empty", false);
             uri.AppendQuery("byteQuery", new byte[] { }, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1082,6 +1105,7 @@ namespace url
                 uri.AppendQuery("byteQuery", byteQuery, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1127,6 +1151,7 @@ namespace url
             uri.AppendPath("/queries/date/2012-01-01", false);
             uri.AppendQuery("dateQuery", new DateTimeOffset(2012, 1, 1, 0, 0, 0, 0, TimeSpan.Zero), "D", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1173,6 +1198,7 @@ namespace url
                 uri.AppendQuery("dateQuery", dateQuery.Value, "D", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1218,6 +1244,7 @@ namespace url
             uri.AppendPath("/queries/datetime/2012-01-01T01%3A01%3A01Z", false);
             uri.AppendQuery("dateTimeQuery", new DateTimeOffset(2012, 1, 1, 1, 1, 1, 0, TimeSpan.Zero), "O", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1264,6 +1291,7 @@ namespace url
                 uri.AppendQuery("dateTimeQuery", dateTimeQuery.Value, "O", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1312,6 +1340,7 @@ namespace url
                 uri.AppendQueryDelimited("arrayQuery", arrayQuery, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1360,6 +1389,7 @@ namespace url
                 uri.AppendQueryDelimited("arrayQuery", arrayQuery, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1408,6 +1438,7 @@ namespace url
                 uri.AppendQueryDelimited("arrayQuery", arrayQuery, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1443,6 +1474,55 @@ namespace url
             }
         }
 
+        internal HttpMessage CreateArrayStringNoCollectionFormatEmptyRequest(IEnumerable<string> arrayQuery)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/queries/array/none/string/empty", false);
+            if (arrayQuery != null)
+            {
+                uri.AppendQueryDelimited("arrayQuery", arrayQuery, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Array query has no defined collection format, should default to csv. Pass in [&apos;hello&apos;, &apos;nihao&apos;, &apos;bonjour&apos;] for the &apos;arrayQuery&apos; parameter to the service. </summary>
+        /// <param name="arrayQuery"> Array-typed query parameter. Pass in [&apos;hello&apos;, &apos;nihao&apos;, &apos;bonjour&apos;]. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> ArrayStringNoCollectionFormatEmptyAsync(IEnumerable<string> arrayQuery = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArrayStringNoCollectionFormatEmptyRequest(arrayQuery);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Array query has no defined collection format, should default to csv. Pass in [&apos;hello&apos;, &apos;nihao&apos;, &apos;bonjour&apos;] for the &apos;arrayQuery&apos; parameter to the service. </summary>
+        /// <param name="arrayQuery"> Array-typed query parameter. Pass in [&apos;hello&apos;, &apos;nihao&apos;, &apos;bonjour&apos;]. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response ArrayStringNoCollectionFormatEmpty(IEnumerable<string> arrayQuery = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateArrayStringNoCollectionFormatEmptyRequest(arrayQuery);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateArrayStringSsvValidRequest(IEnumerable<string> arrayQuery)
         {
             var message = _pipeline.CreateMessage();
@@ -1456,6 +1536,7 @@ namespace url
                 uri.AppendQueryDelimited("arrayQuery", arrayQuery, " ", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1504,6 +1585,7 @@ namespace url
                 uri.AppendQueryDelimited("arrayQuery", arrayQuery, "\t", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1552,6 +1634,7 @@ namespace url
                 uri.AppendQueryDelimited("arrayQuery", arrayQuery, "|", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

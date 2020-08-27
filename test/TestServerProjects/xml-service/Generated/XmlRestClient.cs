@@ -46,6 +46,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/complex-type-ref-no-meta", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -114,6 +115,7 @@ namespace xml_service
         /// <summary> Puts a complex type that has a ref to a complex type with no XML node. </summary>
         /// <param name="model"> The RootWithRefAndNoMeta to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public async Task<Response> PutComplexTypeRefNoMetaAsync(RootWithRefAndNoMeta model, CancellationToken cancellationToken = default)
         {
             if (model == null)
@@ -135,6 +137,7 @@ namespace xml_service
         /// <summary> Puts a complex type that has a ref to a complex type with no XML node. </summary>
         /// <param name="model"> The RootWithRefAndNoMeta to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public Response PutComplexTypeRefNoMeta(RootWithRefAndNoMeta model, CancellationToken cancellationToken = default)
         {
             if (model == null)
@@ -162,6 +165,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/complex-type-ref-with-meta", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -230,6 +234,7 @@ namespace xml_service
         /// <summary> Puts a complex type that has a ref to a complex type with XML node. </summary>
         /// <param name="model"> The RootWithRefAndMeta to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public async Task<Response> PutComplexTypeRefWithMetaAsync(RootWithRefAndMeta model, CancellationToken cancellationToken = default)
         {
             if (model == null)
@@ -251,6 +256,7 @@ namespace xml_service
         /// <summary> Puts a complex type that has a ref to a complex type with XML node. </summary>
         /// <param name="model"> The RootWithRefAndMeta to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public Response PutComplexTypeRefWithMeta(RootWithRefAndMeta model, CancellationToken cancellationToken = default)
         {
             if (model == null)
@@ -278,6 +284,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/simple", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -337,6 +344,7 @@ namespace xml_service
             uri.AppendPath("/xml/simple", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/xml");
+            request.Headers.Add("Accept", "application/xml");
             var content = new XmlWriterContent();
             content.XmlWriter.WriteObjectValue(slideshow, "slideshow");
             request.Content = content;
@@ -346,6 +354,7 @@ namespace xml_service
         /// <summary> Put a simple XML document. </summary>
         /// <param name="slideshow"> The Slideshow to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slideshow"/> is null. </exception>
         public async Task<Response> PutSimpleAsync(Slideshow slideshow, CancellationToken cancellationToken = default)
         {
             if (slideshow == null)
@@ -367,6 +376,7 @@ namespace xml_service
         /// <summary> Put a simple XML document. </summary>
         /// <param name="slideshow"> The Slideshow to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slideshow"/> is null. </exception>
         public Response PutSimple(Slideshow slideshow, CancellationToken cancellationToken = default)
         {
             if (slideshow == null)
@@ -394,6 +404,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/wrapped-lists", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -453,6 +464,7 @@ namespace xml_service
             uri.AppendPath("/xml/wrapped-lists", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/xml");
+            request.Headers.Add("Accept", "application/xml");
             var content = new XmlWriterContent();
             content.XmlWriter.WriteObjectValue(wrappedLists, "AppleBarrel");
             request.Content = content;
@@ -462,6 +474,7 @@ namespace xml_service
         /// <summary> Put an XML document with multiple wrapped lists. </summary>
         /// <param name="wrappedLists"> The AppleBarrel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wrappedLists"/> is null. </exception>
         public async Task<Response> PutWrappedListsAsync(AppleBarrel wrappedLists, CancellationToken cancellationToken = default)
         {
             if (wrappedLists == null)
@@ -483,6 +496,7 @@ namespace xml_service
         /// <summary> Put an XML document with multiple wrapped lists. </summary>
         /// <param name="wrappedLists"> The AppleBarrel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wrappedLists"/> is null. </exception>
         public Response PutWrappedLists(AppleBarrel wrappedLists, CancellationToken cancellationToken = default)
         {
             if (wrappedLists == null)
@@ -554,6 +568,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/empty-list", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -622,6 +637,7 @@ namespace xml_service
         /// <summary> Puts an empty list. </summary>
         /// <param name="slideshow"> The Slideshow to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slideshow"/> is null. </exception>
         public async Task<Response> PutEmptyListAsync(Slideshow slideshow, CancellationToken cancellationToken = default)
         {
             if (slideshow == null)
@@ -643,6 +659,7 @@ namespace xml_service
         /// <summary> Puts an empty list. </summary>
         /// <param name="slideshow"> The Slideshow to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slideshow"/> is null. </exception>
         public Response PutEmptyList(Slideshow slideshow, CancellationToken cancellationToken = default)
         {
             if (slideshow == null)
@@ -670,6 +687,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/empty-wrapped-lists", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -738,6 +756,7 @@ namespace xml_service
         /// <summary> Puts some empty wrapped lists. </summary>
         /// <param name="appleBarrel"> The AppleBarrel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="appleBarrel"/> is null. </exception>
         public async Task<Response> PutEmptyWrappedListsAsync(AppleBarrel appleBarrel, CancellationToken cancellationToken = default)
         {
             if (appleBarrel == null)
@@ -759,6 +778,7 @@ namespace xml_service
         /// <summary> Puts some empty wrapped lists. </summary>
         /// <param name="appleBarrel"> The AppleBarrel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="appleBarrel"/> is null. </exception>
         public Response PutEmptyWrappedLists(AppleBarrel appleBarrel, CancellationToken cancellationToken = default)
         {
             if (appleBarrel == null)
@@ -786,6 +806,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/root-list", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -869,6 +890,7 @@ namespace xml_service
         /// <summary> Puts a list as the root element. </summary>
         /// <param name="bananas"> The ArrayOfBanana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bananas"/> is null. </exception>
         public async Task<Response> PutRootListAsync(IEnumerable<Banana> bananas, CancellationToken cancellationToken = default)
         {
             if (bananas == null)
@@ -890,6 +912,7 @@ namespace xml_service
         /// <summary> Puts a list as the root element. </summary>
         /// <param name="bananas"> The ArrayOfBanana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bananas"/> is null. </exception>
         public Response PutRootList(IEnumerable<Banana> bananas, CancellationToken cancellationToken = default)
         {
             if (bananas == null)
@@ -917,6 +940,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/root-list-single-item", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1000,6 +1024,7 @@ namespace xml_service
         /// <summary> Puts a list with a single item. </summary>
         /// <param name="bananas"> The ArrayOfBanana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bananas"/> is null. </exception>
         public async Task<Response> PutRootListSingleItemAsync(IEnumerable<Banana> bananas, CancellationToken cancellationToken = default)
         {
             if (bananas == null)
@@ -1021,6 +1046,7 @@ namespace xml_service
         /// <summary> Puts a list with a single item. </summary>
         /// <param name="bananas"> The ArrayOfBanana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bananas"/> is null. </exception>
         public Response PutRootListSingleItem(IEnumerable<Banana> bananas, CancellationToken cancellationToken = default)
         {
             if (bananas == null)
@@ -1048,6 +1074,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/empty-root-list", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1131,6 +1158,7 @@ namespace xml_service
         /// <summary> Puts an empty list as the root element. </summary>
         /// <param name="bananas"> The ArrayOfBanana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bananas"/> is null. </exception>
         public async Task<Response> PutEmptyRootListAsync(IEnumerable<Banana> bananas, CancellationToken cancellationToken = default)
         {
             if (bananas == null)
@@ -1152,6 +1180,7 @@ namespace xml_service
         /// <summary> Puts an empty list as the root element. </summary>
         /// <param name="bananas"> The ArrayOfBanana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bananas"/> is null. </exception>
         public Response PutEmptyRootList(IEnumerable<Banana> bananas, CancellationToken cancellationToken = default)
         {
             if (bananas == null)
@@ -1179,6 +1208,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/empty-child-element", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1247,6 +1277,7 @@ namespace xml_service
         /// <summary> Puts a value with an empty child element. </summary>
         /// <param name="banana"> The Banana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="banana"/> is null. </exception>
         public async Task<Response> PutEmptyChildElementAsync(Banana banana, CancellationToken cancellationToken = default)
         {
             if (banana == null)
@@ -1268,6 +1299,7 @@ namespace xml_service
         /// <summary> Puts a value with an empty child element. </summary>
         /// <param name="banana"> The Banana to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="banana"/> is null. </exception>
         public Response PutEmptyChildElement(Banana banana, CancellationToken cancellationToken = default)
         {
             if (banana == null)
@@ -1296,6 +1328,7 @@ namespace xml_service
             uri.AppendPath("/xml/", false);
             uri.AppendQuery("comp", "list", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1356,6 +1389,7 @@ namespace xml_service
             uri.AppendQuery("comp", "properties", true);
             uri.AppendQuery("restype", "service", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1426,6 +1460,7 @@ namespace xml_service
         /// <summary> Puts storage service properties. </summary>
         /// <param name="properties"> The StorageServiceProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public async Task<Response> PutServicePropertiesAsync(StorageServiceProperties properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
@@ -1447,6 +1482,7 @@ namespace xml_service
         /// <summary> Puts storage service properties. </summary>
         /// <param name="properties"> The StorageServiceProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public Response PutServiceProperties(StorageServiceProperties properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
@@ -1476,6 +1512,7 @@ namespace xml_service
             uri.AppendQuery("comp", "acl", true);
             uri.AppendQuery("restype", "container", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1561,6 +1598,7 @@ namespace xml_service
         /// <summary> Puts storage ACLs for a container. </summary>
         /// <param name="properties"> The SignedIdentifiers to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public async Task<Response> PutAclsAsync(IEnumerable<SignedIdentifier> properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
@@ -1582,6 +1620,7 @@ namespace xml_service
         /// <summary> Puts storage ACLs for a container. </summary>
         /// <param name="properties"> The SignedIdentifiers to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public Response PutAcls(IEnumerable<SignedIdentifier> properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
@@ -1611,6 +1650,7 @@ namespace xml_service
             uri.AppendQuery("comp", "list", true);
             uri.AppendQuery("restype", "container", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1679,6 +1719,7 @@ namespace xml_service
         /// <summary> A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42. </summary>
         /// <param name="properties"> The JsonInput to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public async Task<Response> JsonInputAsync(JsonInput properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
@@ -1700,6 +1741,7 @@ namespace xml_service
         /// <summary> A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42. </summary>
         /// <param name="properties"> The JsonInput to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public Response JsonInput(JsonInput properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
@@ -1727,6 +1769,7 @@ namespace xml_service
             uri.Reset(endpoint);
             uri.AppendPath("/xml/jsonoutput", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1742,14 +1785,7 @@ namespace xml_service
                     {
                         JsonOutput value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.JsonOutput.DeserializeJsonOutput(document.RootElement);
-                        }
+                        value = Models.JsonOutput.DeserializeJsonOutput(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1769,13 +1805,65 @@ namespace xml_service
                     {
                         JsonOutput value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        value = Models.JsonOutput.DeserializeJsonOutput(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetXMsTextRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/xml/x-ms-text", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Get back an XML object with an x-ms-text property, which should translate to the returned object&apos;s &apos;language&apos; property being &apos;english&apos; and its &apos;content&apos; property being &apos;I am text&apos;. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ObjectWithXMsTextProperty>> GetXMsTextAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetXMsTextRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ObjectWithXMsTextProperty value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("Data") is XElement dataElement)
                         {
-                            value = null;
+                            value = ObjectWithXMsTextProperty.DeserializeObjectWithXMsTextProperty(dataElement);
                         }
-                        else
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get back an XML object with an x-ms-text property, which should translate to the returned object&apos;s &apos;language&apos; property being &apos;english&apos; and its &apos;content&apos; property being &apos;I am text&apos;. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ObjectWithXMsTextProperty> GetXMsText(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetXMsTextRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ObjectWithXMsTextProperty value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("Data") is XElement dataElement)
                         {
-                            value = Models.JsonOutput.DeserializeJsonOutput(document.RootElement);
+                            value = ObjectWithXMsTextProperty.DeserializeObjectWithXMsTextProperty(dataElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }

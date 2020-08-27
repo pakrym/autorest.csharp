@@ -44,6 +44,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/array/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -59,14 +60,7 @@ namespace body_complex
                     {
                         ArrayWrapper value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
-                        }
+                        value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,14 +80,7 @@ namespace body_complex
                     {
                         ArrayWrapper value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
-                        }
+                        value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +98,7 @@ namespace body_complex
             uri.AppendPath("/complex/array/valid", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -120,6 +108,7 @@ namespace body_complex
         /// <summary> Put complex types with array property. </summary>
         /// <param name="complexBody"> Please put an array with 4 items: &quot;1, 2, 3, 4&quot;, &quot;&quot;, null, &quot;&amp;S#$(*Y&quot;, &quot;The quick brown fox jumps over the lazy dog&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response> PutValidAsync(ArrayWrapper complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -141,6 +130,7 @@ namespace body_complex
         /// <summary> Put complex types with array property. </summary>
         /// <param name="complexBody"> Please put an array with 4 items: &quot;1, 2, 3, 4&quot;, &quot;&quot;, null, &quot;&amp;S#$(*Y&quot;, &quot;The quick brown fox jumps over the lazy dog&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response PutValid(ArrayWrapper complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -168,6 +158,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/array/empty", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -183,14 +174,7 @@ namespace body_complex
                     {
                         ArrayWrapper value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
-                        }
+                        value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,14 +194,7 @@ namespace body_complex
                     {
                         ArrayWrapper value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
-                        }
+                        value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,6 +212,7 @@ namespace body_complex
             uri.AppendPath("/complex/array/empty", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -244,6 +222,7 @@ namespace body_complex
         /// <summary> Put complex types with array property which is empty. </summary>
         /// <param name="complexBody"> Please put an empty array. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response> PutEmptyAsync(ArrayWrapper complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -265,6 +244,7 @@ namespace body_complex
         /// <summary> Put complex types with array property which is empty. </summary>
         /// <param name="complexBody"> Please put an empty array. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response PutEmpty(ArrayWrapper complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -292,6 +272,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/array/notprovided", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -307,14 +288,7 @@ namespace body_complex
                     {
                         ArrayWrapper value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
-                        }
+                        value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -334,14 +308,7 @@ namespace body_complex
                     {
                         ArrayWrapper value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
-                        }
+                        value = ArrayWrapper.DeserializeArrayWrapper(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

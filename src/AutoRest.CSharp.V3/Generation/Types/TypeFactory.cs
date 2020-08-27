@@ -3,12 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
 using AutoRest.CSharp.V3.Input;
+using AutoRest.CSharp.V3.Output.Models.Shared;
 using AutoRest.CSharp.V3.Output.Models.Types;
+using Azure.Core;
 using Microsoft.CodeAnalysis;
 
 namespace AutoRest.CSharp.V3.Generation.Types
@@ -30,11 +33,11 @@ namespace AutoRest.CSharp.V3.Generation.Types
             ArraySchema array => new CSharpType(
                 typeof(IList<>),
                 isNullable,
-                CreateType(array.ElementType, false)),
+                CreateType(array.ElementType, array.NullableItems ?? false)),
             DictionarySchema dictionary => new CSharpType(
                 typeof(IDictionary<,>),
                 isNullable,
-                new CSharpType(typeof(string)), CreateType(dictionary.ElementType, false)),
+                new CSharpType(typeof(string)), CreateType(dictionary.ElementType, dictionary.NullableItems ?? false)),
             CredentialSchema credentialSchema => new CSharpType(typeof(string), isNullable),
             NumberSchema number => new CSharpType(ToFrameworkNumericType(number), isNullable),
             _ when ToFrameworkType(schema.Type) is Type type => new CSharpType(type, isNullable),
@@ -57,6 +60,48 @@ namespace AutoRest.CSharp.V3.Generation.Types
             }
 
             return type;
+        }
+
+        public static CSharpType GetPropertyImplementationType(CSharpType type)
+        {
+            if (type.IsFrameworkType)
+            {
+                if (IsList(type))
+                {
+                    return new CSharpType(typeof(ChangeTrackingList<>), type.Arguments);
+                }
+
+                if (IsDictionary(type))
+                {
+                    return new CSharpType(typeof(ChangeTrackingDictionary<,>), type.Arguments);
+                }
+            }
+
+            return type;
+        }
+
+        public static bool CanBeInitializedInline(CSharpType type, Constant? defaultValue)
+        {
+             Debug.Assert(defaultValue.HasValue);
+
+            if (type.IsFrameworkType && type.FrameworkType == typeof(string))
+            {
+                return true;
+            }
+
+            if (TypeFactory.IsStruct(type) && defaultValue.Value.Value != null)
+            {
+                return false;
+            }
+
+            return type.IsValueType || defaultValue.Value.Value == null;
+        }
+
+        public static bool IsStruct(CSharpType type)
+        {
+            return !type.IsFrameworkType && type.IsValueType &&
+                type.Implementation is EnumType enumType &&
+                enumType.IsExtendable;
         }
 
         public static CSharpType GetElementType(CSharpType type)
@@ -84,7 +129,7 @@ namespace AutoRest.CSharp.V3.Generation.Types
                    type.FrameworkType == typeof(IReadOnlyDictionary<,>));
         }
 
-        public static bool IsList(CSharpType type)
+        internal static bool IsList(CSharpType type)
         {
             return type.IsFrameworkType &&
                    (type.FrameworkType == typeof(IEnumerable<>) ||
@@ -250,7 +295,7 @@ namespace AutoRest.CSharp.V3.Generation.Types
             builder.Append(symbol.MetadataName);
         }
 
-        public static bool IsAlwaysInitializeType(CSharpType type)
+        public static bool IsCollectionType(CSharpType type)
         {
             return type.IsFrameworkType && (IsDictionary(type) || IsList(type));
         }

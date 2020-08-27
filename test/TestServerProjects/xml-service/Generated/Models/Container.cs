@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace xml_service.Models
 {
@@ -16,6 +17,7 @@ namespace xml_service.Models
         /// <summary> Initializes a new instance of Container. </summary>
         /// <param name="name"> . </param>
         /// <param name="properties"> Properties of a container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal Container(string name, ContainerProperties properties)
         {
             if (name == null)
@@ -29,6 +31,7 @@ namespace xml_service.Models
 
             Name = name;
             Properties = properties;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Container. </summary>

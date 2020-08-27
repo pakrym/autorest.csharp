@@ -29,7 +29,7 @@ namespace Azure.Storage.Tables
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account or table that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public TableInternalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-10-10")
         {
             if (url == null)
@@ -78,6 +78,7 @@ namespace Azure.Storage.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             return message;
         }
 
@@ -96,14 +97,7 @@ namespace Azure.Storage.Tables
                     {
                         TableQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
-                        }
+                        value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -126,14 +120,7 @@ namespace Azure.Storage.Tables
                     {
                         TableQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
-                        }
+                        value = TableQueryResponse.DeserializeTableQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -161,6 +148,7 @@ namespace Azure.Storage.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
             request.Content = content;
@@ -172,6 +160,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableResponse, TableInternalCreateHeaders>> CreateAsync(TableProperties tableProperties, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
@@ -188,14 +177,7 @@ namespace Azure.Storage.Tables
                     {
                         TableResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        }
+                        value = TableResponse.DeserializeTableResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -210,6 +192,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
         public ResponseWithHeaders<TableResponse, TableInternalCreateHeaders> Create(TableProperties tableProperties, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
@@ -226,14 +209,7 @@ namespace Azure.Storage.Tables
                     {
                         TableResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        }
+                        value = TableResponse.DeserializeTableResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
@@ -259,6 +235,7 @@ namespace Azure.Storage.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             return message;
         }
 
@@ -266,6 +243,7 @@ namespace Azure.Storage.Tables
         /// <param name="table"> The name of the table. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableInternalDeleteHeaders>> DeleteAsync(string table, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -289,6 +267,7 @@ namespace Azure.Storage.Tables
         /// <param name="table"> The name of the table. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<TableInternalDeleteHeaders> Delete(string table, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -345,6 +324,7 @@ namespace Azure.Storage.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             return message;
         }
 
@@ -354,6 +334,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableInternalQueryEntitiesHeaders>> QueryEntitiesAsync(string table, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -370,14 +351,7 @@ namespace Azure.Storage.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -391,6 +365,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<TableEntityQueryResponse, TableInternalQueryEntitiesHeaders> QueryEntities(string table, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -407,14 +382,7 @@ namespace Azure.Storage.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -459,6 +427,7 @@ namespace Azure.Storage.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             return message;
         }
 
@@ -470,6 +439,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableInternalQueryEntitiesWithPartitionAndRowKeyHeaders>> QueryEntitiesWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -494,14 +464,7 @@ namespace Azure.Storage.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -517,6 +480,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableEntityQueryResponse, TableInternalQueryEntitiesWithPartitionAndRowKeyHeaders> QueryEntitiesWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -541,14 +505,7 @@ namespace Azure.Storage.Tables
                     {
                         TableEntityQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
-                        }
+                        value = TableEntityQueryResponse.DeserializeTableEntityQueryResponse(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -586,6 +543,7 @@ namespace Azure.Storage.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             if (tableEntityProperties != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -610,6 +568,7 @@ namespace Azure.Storage.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableInternalUpdateEntityHeaders>> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -646,6 +605,7 @@ namespace Azure.Storage.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableInternalUpdateEntityHeaders> UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -702,6 +662,7 @@ namespace Azure.Storage.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             return message;
         }
 
@@ -713,6 +674,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableInternalDeleteEntityHeaders>> DeleteEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -748,6 +710,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableInternalDeleteEntityHeaders> DeleteEntity(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -800,6 +763,7 @@ namespace Azure.Storage.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            request.Headers.Add("Accept", "application/json;odata=nometadata");
             if (tableEntityProperties != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -822,6 +786,7 @@ namespace Azure.Storage.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInternalInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -838,26 +803,12 @@ namespace Azure.Storage.Tables
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -872,6 +823,7 @@ namespace Azure.Storage.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInternalInsertEntityHeaders> InsertEntity(string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -888,26 +840,12 @@ namespace Azure.Storage.Tables
                     {
                         IReadOnlyDictionary<string, object> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            value = null;
+                            dictionary.Add(property.Name, property.Value.GetObject());
                         }
-                        else
-                        {
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
-                            {
-                                if (property.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property.Name, property.Value.GetObject());
-                                }
-                            }
-                            value = dictionary;
-                        }
+                        value = dictionary;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -935,6 +873,7 @@ namespace Azure.Storage.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -943,6 +882,7 @@ namespace Azure.Storage.Tables
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, TableInternalGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -980,6 +920,7 @@ namespace Azure.Storage.Tables
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, TableInternalGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -1033,6 +974,7 @@ namespace Azure.Storage.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("Content-Type", "application/xml");
+            request.Headers.Add("Accept", "application/xml");
             if (tableAcl != null)
             {
                 var content = new XmlWriterContent();
@@ -1053,6 +995,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="tableAcl"> the acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableInternalSetAccessPolicyHeaders>> SetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -1078,6 +1021,7 @@ namespace Azure.Storage.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="tableAcl"> the acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<TableInternalSetAccessPolicyHeaders> SetAccessPolicy(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)

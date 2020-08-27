@@ -30,14 +30,14 @@ namespace subscriptionId_apiVersion
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public GroupRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2014-04-01-preview")
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
-            endpoint ??= new Uri("https://management.azure.com");
+            endpoint ??= new Uri("http://localhost:3000");
             if (apiVersion == null)
             {
                 throw new ArgumentNullException(nameof(apiVersion));
@@ -63,12 +63,14 @@ namespace subscriptionId_apiVersion
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Provides a resouce group with name &apos;testgroup101&apos; and location &apos;West US&apos;. </summary>
         /// <param name="resourceGroupName"> Resource Group name &apos;testgroup101&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<SampleResourceGroup>> GetSampleResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -84,14 +86,7 @@ namespace subscriptionId_apiVersion
                     {
                         SampleResourceGroup value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SampleResourceGroup.DeserializeSampleResourceGroup(document.RootElement);
-                        }
+                        value = SampleResourceGroup.DeserializeSampleResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,6 +97,7 @@ namespace subscriptionId_apiVersion
         /// <summary> Provides a resouce group with name &apos;testgroup101&apos; and location &apos;West US&apos;. </summary>
         /// <param name="resourceGroupName"> Resource Group name &apos;testgroup101&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<SampleResourceGroup> GetSampleResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -117,14 +113,7 @@ namespace subscriptionId_apiVersion
                     {
                         SampleResourceGroup value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SampleResourceGroup.DeserializeSampleResourceGroup(document.RootElement);
-                        }
+                        value = SampleResourceGroup.DeserializeSampleResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

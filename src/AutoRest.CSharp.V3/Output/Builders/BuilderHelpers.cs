@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Security;
 using AutoRest.CSharp.V3.Generation.Types;
 using AutoRest.CSharp.V3.Input;
@@ -23,10 +24,24 @@ namespace AutoRest.CSharp.V3.Output.Builders
         {
             object? normalizedValue;
 
+            if (!type.IsFrameworkType && type.Implementation is EnumType enumType)
+            {
+                if (value == null)
+                {
+                    return Constant.Default(type);
+                }
+
+                var stringValue = Convert.ToString(value);
+                var enumTypeValue = enumType.Values.SingleOrDefault(v => (v.Value.Value as string) == stringValue);
+
+                // Fallback to the string value if we can't find an appropriate enum member (would work only for extensible enums)
+                return new Constant((object?)enumTypeValue ?? stringValue, type);
+            }
+
             Type? frameworkType = type.FrameworkType;
             if (frameworkType == null)
             {
-                throw new InvalidOperationException("Only constants of framework type are allowed");
+                throw new InvalidOperationException("Only constants of framework type and enums are allowed");
             }
 
             if (frameworkType == typeof(byte[]) && value is string base64String)
@@ -53,9 +68,6 @@ namespace AutoRest.CSharp.V3.Output.Builders
 
         public static string EscapeXmlDescription(string s) => SecurityElement.Escape(s) ?? s;
 
-        public static bool IsNullable(this RequestParameter parameter) => !(parameter.Required ?? false);
-        public static bool IsNullable(this Property parameter) => !(parameter.Required ?? false) || (parameter.Nullable ?? false);
-
         public static string CSharpName(this RequestParameter parameter) => parameter.Language.Default.Name.ToVariableName();
 
         public static string CSharpName(this ChoiceValue choice) => choice.Language.Default.Name.ToCleanName();
@@ -68,6 +80,8 @@ namespace AutoRest.CSharp.V3.Output.Builders
 
         public static string CSharpName(this Schema operation) =>
             operation.Language.Default.Name.ToCleanName();
+        public static string CSharpName(this HttpResponseHeader header) =>
+            header.Language!.Default.Name.ToCleanName();
 
         public static TypeDeclarationOptions CreateTypeAttributes(string defaultName, string defaultNamespace, string defaultAccessibility, INamedTypeSymbol? existingType = null, bool existingTypeOverrides = false)
         {

@@ -44,6 +44,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/204/none/default/Error/response/200/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -59,14 +60,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -88,14 +82,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -114,6 +101,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/204/none/default/Error/response/204/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -129,14 +117,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -158,14 +139,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -184,6 +158,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/204/none/default/Error/response/201/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,14 +174,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -228,14 +196,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -254,6 +215,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/204/none/default/Error/response/202/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -269,14 +231,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -298,14 +253,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -324,6 +272,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/204/none/default/Error/response/400/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -339,14 +288,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -368,14 +310,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
@@ -394,6 +329,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/B/default/Error/response/200/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -409,28 +345,14 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         B value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = B.DeserializeB(document.RootElement);
-                        }
+                        value = B.DeserializeB(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -450,28 +372,14 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         B value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = B.DeserializeB(document.RootElement);
-                        }
+                        value = B.DeserializeB(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -488,6 +396,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/B/default/Error/response/201/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -503,28 +412,14 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         B value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = B.DeserializeB(document.RootElement);
-                        }
+                        value = B.DeserializeB(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -544,28 +439,14 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         B value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = B.DeserializeB(document.RootElement);
-                        }
+                        value = B.DeserializeB(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -582,6 +463,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/B/default/Error/response/400/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -597,28 +479,14 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         B value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = B.DeserializeB(document.RootElement);
-                        }
+                        value = B.DeserializeB(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -638,28 +506,14 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         B value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = B.DeserializeB(document.RootElement);
-                        }
+                        value = B.DeserializeB(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -676,6 +530,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/C/404/D/default/Error/response/200/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -691,42 +546,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -746,42 +580,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -798,6 +611,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/C/404/D/default/Error/response/201/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -813,42 +627,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -868,42 +661,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -920,6 +692,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/C/404/D/default/Error/response/404/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -935,42 +708,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -990,42 +742,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -1042,6 +773,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/201/C/404/D/default/Error/response/400/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1057,42 +789,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -1112,42 +823,21 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 201:
                     {
                         C value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = C.DeserializeC(document.RootElement);
-                        }
+                        value = C.DeserializeC(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 case 404:
                     {
                         D value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = D.DeserializeD(document.RootElement);
-                        }
+                        value = D.DeserializeD(document.RootElement);
                         return Response.FromValue<object>(value, message.Response);
                     }
                 default:
@@ -1164,6 +854,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/202/none/204/none/default/Error/response/202/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1208,6 +899,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/202/none/204/none/default/Error/response/204/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1252,6 +944,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/202/none/204/none/default/Error/response/400/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1472,6 +1165,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/default/A/response/200/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1487,14 +1181,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1514,14 +1201,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1538,6 +1218,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/default/A/response/200/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1553,14 +1234,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1580,14 +1254,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1604,6 +1271,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/default/A/response/400/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1646,6 +1314,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/default/A/response/400/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1856,6 +1525,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/200/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1871,14 +1541,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1898,14 +1561,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1922,6 +1578,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/200/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1937,14 +1594,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1964,14 +1614,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1988,6 +1631,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/200/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2003,14 +1647,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2030,14 +1667,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2054,6 +1684,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/400/none", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2069,14 +1700,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2096,14 +1720,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2120,6 +1737,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/400/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2135,14 +1753,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2162,14 +1773,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2186,6 +1790,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/400/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2201,14 +1806,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2228,14 +1826,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2252,6 +1843,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/payloads/200/A/response/202/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2267,14 +1859,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2294,14 +1879,7 @@ namespace httpInfrastructure
                     {
                         MyException value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyException.DeserializeMyException(document.RootElement);
-                        }
+                        value = MyException.DeserializeMyException(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

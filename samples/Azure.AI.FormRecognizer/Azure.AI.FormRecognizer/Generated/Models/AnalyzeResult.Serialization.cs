@@ -17,9 +17,9 @@ namespace Azure.AI.FormRecognizer.Models
         {
             string version = default;
             IReadOnlyList<ReadResult> readResults = default;
-            IReadOnlyList<PageResult> pageResults = default;
-            IReadOnlyList<DocumentResult> documentResults = default;
-            IReadOnlyList<ErrorInformation> errors = default;
+            Optional<IReadOnlyList<PageResult>> pageResults = default;
+            Optional<IReadOnlyList<DocumentResult>> documentResults = default;
+            Optional<IReadOnlyList<ErrorInformation>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"))
@@ -32,83 +32,43 @@ namespace Azure.AI.FormRecognizer.Models
                     List<ReadResult> array = new List<ReadResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ReadResult.DeserializeReadResult(item));
-                        }
+                        array.Add(ReadResult.DeserializeReadResult(item));
                     }
                     readResults = array;
                     continue;
                 }
                 if (property.NameEquals("pageResults"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PageResult> array = new List<PageResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PageResult.DeserializePageResult(item));
-                        }
+                        array.Add(PageResult.DeserializePageResult(item));
                     }
                     pageResults = array;
                     continue;
                 }
                 if (property.NameEquals("documentResults"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DocumentResult> array = new List<DocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DocumentResult.DeserializeDocumentResult(item));
-                        }
+                        array.Add(DocumentResult.DeserializeDocumentResult(item));
                     }
                     documentResults = array;
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorInformation> array = new List<ErrorInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ErrorInformation.DeserializeErrorInformation(item));
-                        }
+                        array.Add(ErrorInformation.DeserializeErrorInformation(item));
                     }
                     errors = array;
                     continue;
                 }
             }
-            return new AnalyzeResult(version, readResults, pageResults, documentResults, errors);
+            return new AnalyzeResult(version, readResults, Optional.ToList(pageResults), Optional.ToList(documentResults), Optional.ToList(errors));
         }
     }
 }

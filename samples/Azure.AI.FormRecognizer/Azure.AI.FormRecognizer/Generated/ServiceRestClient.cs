@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
@@ -51,6 +51,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trainRequest);
             request.Content = content;
@@ -60,6 +61,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainRequest"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
@@ -82,6 +84,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainRequest"/> is null. </exception>
         public ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> TrainCustomModelAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
@@ -116,6 +119,7 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeKeys", includeKeys.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -133,14 +137,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Model value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Model.DeserializeModel(document.RootElement);
-                        }
+                        value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -162,14 +159,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Model value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Model.DeserializeModel(document.RootElement);
-                        }
+                        value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -188,6 +178,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -240,6 +231,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -250,6 +242,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
@@ -275,6 +268,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
         public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
@@ -311,6 +305,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -371,6 +366,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -388,14 +384,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         AnalyzeOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        }
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,14 +406,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         AnalyzeOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        }
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -445,6 +427,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/copy", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(copyRequest);
             request.Content = content;
@@ -455,6 +438,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="copyRequest"> Copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="copyRequest"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceCopyCustomModelHeaders>> CopyCustomModelAsync(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
         {
             if (copyRequest == null)
@@ -478,6 +462,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="copyRequest"> Copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="copyRequest"/> is null. </exception>
         public ResponseWithHeaders<ServiceCopyCustomModelHeaders> CopyCustomModel(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
         {
             if (copyRequest == null)
@@ -510,6 +495,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/copyResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -527,14 +513,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         CopyOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
-                        }
+                        value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -556,14 +535,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         CopyOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
-                        }
+                        value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -581,6 +553,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/v2.0-preview", false);
             uri.AppendPath("/custom/models/copyAuthorization", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -597,14 +570,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         CopyAuthorizationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
-                        }
+                        value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -625,14 +591,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         CopyAuthorizationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
-                        }
+                        value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -655,6 +614,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -664,6 +624,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
@@ -688,6 +649,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
         public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
@@ -722,6 +684,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -778,6 +741,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/prebuilt/receipt/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -794,14 +758,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         AnalyzeOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        }
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -822,14 +779,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         AnalyzeOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        }
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -848,6 +798,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -856,6 +807,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
@@ -879,6 +831,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
         public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
@@ -909,6 +862,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -963,6 +917,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/layout/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -979,14 +934,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         AnalyzeOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        }
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1007,14 +955,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         AnalyzeOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        }
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1033,6 +974,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "full", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1048,14 +990,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Models.Models value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Models.DeserializeModels(document.RootElement);
-                        }
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1075,14 +1010,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Models.Models value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Models.DeserializeModels(document.RootElement);
-                        }
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1101,6 +1029,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "summary", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1116,14 +1045,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Models.Models value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Models.DeserializeModels(document.RootElement);
-                        }
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1143,14 +1065,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Models.Models value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Models.DeserializeModels(document.RootElement);
-                        }
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1168,12 +1083,14 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/v2.0-preview", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<Models.Models>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1189,14 +1106,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Models.Models value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Models.DeserializeModels(document.RootElement);
-                        }
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1207,6 +1117,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<Models.Models> ListCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1222,14 +1133,7 @@ namespace Azure.AI.FormRecognizer
                     {
                         Models.Models value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Models.Models.DeserializeModels(document.RootElement);
-                        }
+                        value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

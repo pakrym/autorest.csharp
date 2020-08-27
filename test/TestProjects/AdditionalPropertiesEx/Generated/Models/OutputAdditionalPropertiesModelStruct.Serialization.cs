@@ -17,7 +17,7 @@ namespace AdditionalPropertiesEx.Models
         {
             int id = default;
             IReadOnlyDictionary<string, string> additionalProperties = default;
-            Dictionary<string, string> additionalPropertiesDictionary = default;
+            Dictionary<string, string> additionalPropertiesDictionary = new Dictionary<string, string>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -25,15 +25,7 @@ namespace AdditionalPropertiesEx.Models
                     id = property.Value.GetInt32();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, string>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetString());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetString());
             }
             additionalProperties = additionalPropertiesDictionary;
             return new OutputAdditionalPropertiesModelStruct(id, additionalProperties);

@@ -43,12 +43,13 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/null", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null Int value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<int>> GetNullAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<int?>> GetNullAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -56,9 +57,16 @@ namespace body_integer
             {
                 case 200:
                     {
-                        int value = default;
+                        int? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetInt32();
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetInt32();
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -68,7 +76,7 @@ namespace body_integer
 
         /// <summary> Get null Int value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<int> GetNull(CancellationToken cancellationToken = default)
+        public Response<int?> GetNull(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullRequest();
             _pipeline.Send(message, cancellationToken);
@@ -76,9 +84,16 @@ namespace body_integer
             {
                 case 200:
                     {
-                        int value = default;
+                        int? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetInt32();
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetInt32();
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,6 +110,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/invalid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -147,6 +163,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/overflowint32", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -199,6 +216,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/underflowint32", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -251,6 +269,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/overflowint64", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -303,6 +322,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/underflowint64", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -356,6 +376,7 @@ namespace body_integer
             uri.AppendPath("/int/max/32", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(intBody);
             request.Content = content;
@@ -363,7 +384,7 @@ namespace body_integer
         }
 
         /// <summary> Put max int32 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutMax32Async(int intBody, CancellationToken cancellationToken = default)
         {
@@ -379,7 +400,7 @@ namespace body_integer
         }
 
         /// <summary> Put max int32 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutMax32(int intBody, CancellationToken cancellationToken = default)
         {
@@ -404,6 +425,7 @@ namespace body_integer
             uri.AppendPath("/int/max/64", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(intBody);
             request.Content = content;
@@ -411,7 +433,7 @@ namespace body_integer
         }
 
         /// <summary> Put max int64 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutMax64Async(long intBody, CancellationToken cancellationToken = default)
         {
@@ -427,7 +449,7 @@ namespace body_integer
         }
 
         /// <summary> Put max int64 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutMax64(long intBody, CancellationToken cancellationToken = default)
         {
@@ -452,6 +474,7 @@ namespace body_integer
             uri.AppendPath("/int/min/32", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(intBody);
             request.Content = content;
@@ -459,7 +482,7 @@ namespace body_integer
         }
 
         /// <summary> Put min int32 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutMin32Async(int intBody, CancellationToken cancellationToken = default)
         {
@@ -475,7 +498,7 @@ namespace body_integer
         }
 
         /// <summary> Put min int32 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutMin32(int intBody, CancellationToken cancellationToken = default)
         {
@@ -500,6 +523,7 @@ namespace body_integer
             uri.AppendPath("/int/min/64", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(intBody);
             request.Content = content;
@@ -507,7 +531,7 @@ namespace body_integer
         }
 
         /// <summary> Put min int64 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutMin64Async(long intBody, CancellationToken cancellationToken = default)
         {
@@ -523,7 +547,7 @@ namespace body_integer
         }
 
         /// <summary> Put min int64 value. </summary>
-        /// <param name="intBody"> The Integer to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutMin64(long intBody, CancellationToken cancellationToken = default)
         {
@@ -547,6 +571,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/unixtime", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -600,6 +625,7 @@ namespace body_integer
             uri.AppendPath("/int/unixtime", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteNumberValue(intBody, "U");
             request.Content = content;
@@ -607,7 +633,7 @@ namespace body_integer
         }
 
         /// <summary> Put datetime encoded as Unix time. </summary>
-        /// <param name="intBody"> The Unixtime to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> PutUnixTimeDateAsync(DateTimeOffset intBody, CancellationToken cancellationToken = default)
         {
@@ -623,7 +649,7 @@ namespace body_integer
         }
 
         /// <summary> Put datetime encoded as Unix time. </summary>
-        /// <param name="intBody"> The Unixtime to use. </param>
+        /// <param name="intBody"> int body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response PutUnixTimeDate(DateTimeOffset intBody, CancellationToken cancellationToken = default)
         {
@@ -647,6 +673,7 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/invalidunixtime", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -699,12 +726,13 @@ namespace body_integer
             uri.Reset(endpoint);
             uri.AppendPath("/int/nullunixtime", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get null Unix time value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DateTimeOffset>> GetNullUnixTimeAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DateTimeOffset?>> GetNullUnixTimeAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullUnixTimeRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -712,9 +740,16 @@ namespace body_integer
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetDateTimeOffset("U");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("U");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -724,7 +759,7 @@ namespace body_integer
 
         /// <summary> Get null Unix time value. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DateTimeOffset> GetNullUnixTime(CancellationToken cancellationToken = default)
+        public Response<DateTimeOffset?> GetNullUnixTime(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNullUnixTimeRequest();
             _pipeline.Send(message, cancellationToken);
@@ -732,9 +767,16 @@ namespace body_integer
             {
                 case 200:
                     {
-                        DateTimeOffset value = default;
+                        DateTimeOffset? value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetDateTimeOffset("U");
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = document.RootElement.GetDateTimeOffset("U");
+                        }
                         return Response.FromValue(value, message.Response);
                     }
                 default:

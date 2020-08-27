@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace CognitiveSearch.Models
 {
@@ -15,6 +16,7 @@ namespace CognitiveSearch.Models
     {
         /// <summary> Initializes a new instance of PatternAnalyzer. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PatternAnalyzer(string name) : base(name)
         {
             if (name == null)
@@ -22,6 +24,7 @@ namespace CognitiveSearch.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new ChangeTrackingList<string>();
             OdataType = "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
@@ -48,6 +51,6 @@ namespace CognitiveSearch.Models
         /// <summary> Regular expression flags. </summary>
         public RegexFlags? Flags { get; set; }
         /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; set; }
+        public IList<string> Stopwords { get; }
     }
 }

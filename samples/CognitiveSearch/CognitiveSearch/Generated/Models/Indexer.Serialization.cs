@@ -18,31 +18,31 @@ namespace CognitiveSearch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("dataSourceName");
             writer.WriteStringValue(DataSourceName);
-            if (SkillsetName != null)
+            if (Optional.IsDefined(SkillsetName))
             {
                 writer.WritePropertyName("skillsetName");
                 writer.WriteStringValue(SkillsetName);
             }
             writer.WritePropertyName("targetIndexName");
             writer.WriteStringValue(TargetIndexName);
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule");
                 writer.WriteObjectValue(Schedule);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
             }
-            if (FieldMappings != null)
+            if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings");
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace CognitiveSearch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputFieldMappings != null)
+            if (Optional.IsCollectionDefined(OutputFieldMappings))
             {
                 writer.WritePropertyName("outputFieldMappings");
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace CognitiveSearch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsDisabled != null)
+            if (Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("disabled");
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (ETag != null)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag");
                 writer.WriteStringValue(ETag);
@@ -78,16 +78,16 @@ namespace CognitiveSearch.Models
         internal static Indexer DeserializeIndexer(JsonElement element)
         {
             string name = default;
-            string description = default;
+            Optional<string> description = default;
             string dataSourceName = default;
-            string skillsetName = default;
+            Optional<string> skillsetName = default;
             string targetIndexName = default;
-            IndexingSchedule schedule = default;
-            IndexingParameters parameters = default;
-            IList<FieldMapping> fieldMappings = default;
-            IList<FieldMapping> outputFieldMappings = default;
-            bool? disabled = default;
-            string odataEtag = default;
+            Optional<IndexingSchedule> schedule = default;
+            Optional<IndexingParameters> parameters = default;
+            Optional<IList<FieldMapping>> fieldMappings = default;
+            Optional<IList<FieldMapping>> outputFieldMappings = default;
+            Optional<bool> disabled = default;
+            Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -97,10 +97,6 @@ namespace CognitiveSearch.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -111,10 +107,6 @@ namespace CognitiveSearch.Models
                 }
                 if (property.NameEquals("skillsetName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     skillsetName = property.Value.GetString();
                     continue;
                 }
@@ -125,84 +117,46 @@ namespace CognitiveSearch.Models
                 }
                 if (property.NameEquals("schedule"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parameters = IndexingParameters.DeserializeIndexingParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fieldMappings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FieldMapping> array = new List<FieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(FieldMapping.DeserializeFieldMapping(item));
-                        }
+                        array.Add(FieldMapping.DeserializeFieldMapping(item));
                     }
                     fieldMappings = array;
                     continue;
                 }
                 if (property.NameEquals("outputFieldMappings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FieldMapping> array = new List<FieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(FieldMapping.DeserializeFieldMapping(item));
-                        }
+                        array.Add(FieldMapping.DeserializeFieldMapping(item));
                     }
                     outputFieldMappings = array;
                     continue;
                 }
                 if (property.NameEquals("disabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     disabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new Indexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, disabled, odataEtag);
+            return new Indexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value);
         }
     }
 }

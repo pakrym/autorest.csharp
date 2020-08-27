@@ -16,9 +16,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal static TrainResult DeserializeTrainResult(JsonElement element)
         {
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
-            IReadOnlyList<FormFieldsReport> fields = default;
-            float? averageModelAccuracy = default;
-            IReadOnlyList<ErrorInformation> errors = default;
+            Optional<IReadOnlyList<FormFieldsReport>> fields = default;
+            Optional<float> averageModelAccuracy = default;
+            Optional<IReadOnlyList<ErrorInformation>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingDocuments"))
@@ -26,71 +26,38 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
-                        }
+                        array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
                     }
                     trainingDocuments = array;
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FormFieldsReport> array = new List<FormFieldsReport>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(FormFieldsReport.DeserializeFormFieldsReport(item));
-                        }
+                        array.Add(FormFieldsReport.DeserializeFormFieldsReport(item));
                     }
                     fields = array;
                     continue;
                 }
                 if (property.NameEquals("averageModelAccuracy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ErrorInformation> array = new List<ErrorInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ErrorInformation.DeserializeErrorInformation(item));
-                        }
+                        array.Add(ErrorInformation.DeserializeErrorInformation(item));
                     }
                     errors = array;
                     continue;
                 }
             }
-            return new TrainResult(trainingDocuments, fields, averageModelAccuracy, errors);
+            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToList(errors));
         }
     }
 }

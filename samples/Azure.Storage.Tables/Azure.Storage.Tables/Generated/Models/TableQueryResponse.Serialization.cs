@@ -15,42 +15,27 @@ namespace Azure.Storage.Tables.Models
     {
         internal static TableQueryResponse DeserializeTableQueryResponse(JsonElement element)
         {
-            string odataMetadata = default;
-            IReadOnlyList<TableResponseProperties> value = default;
+            Optional<string> odataMetadata = default;
+            Optional<IReadOnlyList<TableResponseProperties>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.metadata"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataMetadata = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TableResponseProperties> array = new List<TableResponseProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TableResponseProperties.DeserializeTableResponseProperties(item));
-                        }
+                        array.Add(TableResponseProperties.DeserializeTableResponseProperties(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new TableQueryResponse(odataMetadata, value);
+            return new TableQueryResponse(odataMetadata.Value, Optional.ToList(value));
         }
     }
 }

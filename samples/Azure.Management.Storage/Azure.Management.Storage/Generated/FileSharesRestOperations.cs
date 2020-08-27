@@ -30,7 +30,7 @@ namespace Azure.Management.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public FileSharesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
@@ -75,6 +75,7 @@ namespace Azure.Management.Storage
             }
             uri.AppendQuery("$expand", "deleted", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -84,6 +85,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response<FileShareItems>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -103,14 +105,7 @@ namespace Azure.Management.Storage
                     {
                         FileShareItems value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
-                        }
+                        value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -124,6 +119,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response<FileShareItems> List(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -143,14 +139,7 @@ namespace Azure.Management.Storage
                     {
                         FileShareItems value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
-                        }
+                        value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,6 +165,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(fileShare);
             request.Content = content;
@@ -188,6 +178,7 @@ namespace Azure.Management.Storage
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties of the file share to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
         public async Task<Response<FileShare>> CreateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -216,14 +207,7 @@ namespace Azure.Management.Storage
                     {
                         FileShare value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShare.DeserializeFileShare(document.RootElement);
-                        }
+                        value = FileShare.DeserializeFileShare(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -237,6 +221,7 @@ namespace Azure.Management.Storage
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties of the file share to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
         public Response<FileShare> Create(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -265,14 +250,7 @@ namespace Azure.Management.Storage
                     {
                         FileShare value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShare.DeserializeFileShare(document.RootElement);
-                        }
+                        value = FileShare.DeserializeFileShare(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -298,6 +276,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(fileShare);
             request.Content = content;
@@ -310,6 +289,7 @@ namespace Azure.Management.Storage
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties to update for the file share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
         public async Task<Response<FileShare>> UpdateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -337,14 +317,7 @@ namespace Azure.Management.Storage
                     {
                         FileShare value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShare.DeserializeFileShare(document.RootElement);
-                        }
+                        value = FileShare.DeserializeFileShare(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,6 +331,7 @@ namespace Azure.Management.Storage
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties to update for the file share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, or <paramref name="fileShare"/> is null. </exception>
         public Response<FileShare> Update(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -385,14 +359,7 @@ namespace Azure.Management.Storage
                     {
                         FileShare value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShare.DeserializeFileShare(document.RootElement);
-                        }
+                        value = FileShare.DeserializeFileShare(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,6 +385,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             uri.AppendQuery("$expand", "stats", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -426,6 +394,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
         public async Task<Response<FileShare>> GetAsync(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -449,14 +418,7 @@ namespace Azure.Management.Storage
                     {
                         FileShare value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShare.DeserializeFileShare(document.RootElement);
-                        }
+                        value = FileShare.DeserializeFileShare(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -469,6 +431,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
         public Response<FileShare> Get(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -492,14 +455,7 @@ namespace Azure.Management.Storage
                     {
                         FileShare value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShare.DeserializeFileShare(document.RootElement);
-                        }
+                        value = FileShare.DeserializeFileShare(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -524,6 +480,7 @@ namespace Azure.Management.Storage
             uri.AppendPath(shareName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -532,6 +489,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -564,6 +522,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="shareName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -610,6 +569,7 @@ namespace Azure.Management.Storage
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var model = new DeletedShare(deletedShareName, deletedShareVersion);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -624,6 +584,7 @@ namespace Azure.Management.Storage
         /// <param name="deletedShareName"> Required. Identify the name of the deleted share that will be restored. </param>
         /// <param name="deletedShareVersion"> Required. Identify the version of the deleted share that will be restored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, <paramref name="deletedShareName"/>, or <paramref name="deletedShareVersion"/> is null. </exception>
         public async Task<Response> RestoreAsync(string resourceGroupName, string accountName, string shareName, string deletedShareName, string deletedShareVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -665,6 +626,7 @@ namespace Azure.Management.Storage
         /// <param name="deletedShareName"> Required. Identify the name of the deleted share that will be restored. </param>
         /// <param name="deletedShareVersion"> Required. Identify the version of the deleted share that will be restored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/>, <paramref name="deletedShareName"/>, or <paramref name="deletedShareVersion"/> is null. </exception>
         public Response Restore(string resourceGroupName, string accountName, string shareName, string deletedShareName, string deletedShareVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -708,6 +670,7 @@ namespace Azure.Management.Storage
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -718,6 +681,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
         public async Task<Response<FileShareItems>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -741,14 +705,7 @@ namespace Azure.Management.Storage
                     {
                         FileShareItems value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
-                        }
+                        value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -763,6 +720,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional. Specified maximum number of shares that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only share names starting with the filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
         public Response<FileShareItems> ListNextPage(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -786,14 +744,7 @@ namespace Azure.Management.Storage
                     {
                         FileShareItems value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
-                        }
+                        value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

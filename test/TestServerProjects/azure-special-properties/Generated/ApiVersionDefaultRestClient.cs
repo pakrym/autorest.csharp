@@ -26,7 +26,7 @@ namespace azure_special_properties
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public ApiVersionDefaultRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2015-07-01-preview")
         {
             endpoint ??= new Uri("http://localhost:3000");
@@ -51,6 +51,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/apiVersion/method/string/none/query/global/2015-07-01-preview", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -94,6 +95,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/apiVersion/method/string/none/query/globalNotProvided/2015-07-01-preview", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -137,6 +139,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/apiVersion/path/string/none/query/global/2015-07-01-preview", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -180,6 +183,7 @@ namespace azure_special_properties
             uri.AppendPath("/azurespecials/apiVersion/swagger/string/none/query/global/2015-07-01-preview", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

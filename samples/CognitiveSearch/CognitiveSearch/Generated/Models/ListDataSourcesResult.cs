@@ -16,6 +16,7 @@ namespace CognitiveSearch.Models
     {
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
         internal ListDataSourcesResult(IEnumerable<DataSource> dataSources)
         {
             if (dataSources == null)
@@ -23,14 +24,14 @@ namespace CognitiveSearch.Models
                 throw new ArgumentNullException(nameof(dataSources));
             }
 
-            DataSources = dataSources.ToArray();
+            DataSources = dataSources.ToList();
         }
 
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
         internal ListDataSourcesResult(IReadOnlyList<DataSource> dataSources)
         {
-            DataSources = dataSources ?? new List<DataSource>();
+            DataSources = dataSources;
         }
 
         /// <summary> The datasources in the Search service. </summary>

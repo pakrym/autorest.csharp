@@ -64,8 +64,24 @@ namespace AutoRest.CSharp.V3.Input
 
     internal partial class DictionaryOfAny
     {
+        private static char[] _formatSplitChar = new[] {',', ' '};
+
         public string? Accessibility => TryGetValue("x-accessibility", out object? value) ? value?.ToString() : null;
         public string? Namespace => TryGetValue("x-namespace", out object? value) ? value?.ToString() : null;
+        public string? Usage => TryGetValue("x-csharp-usage", out object? value) ? value?.ToString() : null;
+
+        public string[] Formats
+        {
+            get
+            {
+                if (TryGetValue("x-csharp-formats", out object? value) && value?.ToString() is string s)
+                {
+                    return s.Split(_formatSplitChar, StringSplitOptions.RemoveEmptyEntries);
+                }
+
+                return Array.Empty<string>();
+            }
+        }
     }
 
     internal partial class ServiceResponse
@@ -87,6 +103,19 @@ namespace AutoRest.CSharp.V3.Input
         {
             Extensions = new DictionaryOfAny();
         }
+
+        public bool IsNullable => Nullable ?? false;
+        public bool IsRequired => Required ?? false;
+    }
+
+    internal partial class SchemaResponse
+    {
+        public bool IsNullable => Nullable ?? false;
+    }
+
+    internal partial class Property
+    {
+        public bool IsReadOnly => ReadOnly ?? false;
     }
 
     internal partial class ObjectSchema
@@ -96,30 +125,16 @@ namespace AutoRest.CSharp.V3.Input
             Parents = new Relations();
             Children = new Relations();
         }
-
-        public bool IsInput => Usage.Contains(SchemaContext.Input);
-        public bool IsOutput => Usage.Contains(SchemaContext.Output);
-        public bool IsException => Usage.Contains(SchemaContext.Exception);
-        public bool IsInputOnly => IsInput && !IsOutput && !IsException;
-        public bool IsOutputOnly => IsOutput && !IsInput && !IsException;
-        public bool IsExceptionOnly => IsException && !IsInput && !IsOutput;
     }
 
     // redefined manually to inherit from ObjectSchema
     internal partial class GroupSchema : ObjectSchema
     {
     }
-
     internal partial class RequestParameter
     {
         public bool SkipUrlEncoding => Extensions!.TryGetValue("x-ms-skip-url-encoding", out var value) && Convert.ToBoolean(value);
     }
-
-    // Workaround https://github.com/Azure/autorest.modelerfour/issues/255
-    internal partial class AnySchema : ComplexSchema
-    {
-    }
-
 
     internal partial class Schema
     {

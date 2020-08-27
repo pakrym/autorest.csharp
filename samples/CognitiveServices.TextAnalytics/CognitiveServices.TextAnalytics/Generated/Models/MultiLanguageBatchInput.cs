@@ -16,6 +16,7 @@ namespace CognitiveServices.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of MultiLanguageBatchInput. </summary>
         /// <param name="documents"> The set of documents to process as part of this batch. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public MultiLanguageBatchInput(IEnumerable<MultiLanguageInput> documents)
         {
             if (documents == null)
@@ -23,14 +24,7 @@ namespace CognitiveServices.TextAnalytics.Models
                 throw new ArgumentNullException(nameof(documents));
             }
 
-            Documents = documents.ToArray();
-        }
-
-        /// <summary> Initializes a new instance of MultiLanguageBatchInput. </summary>
-        /// <param name="documents"> The set of documents to process as part of this batch. </param>
-        internal MultiLanguageBatchInput(IList<MultiLanguageInput> documents)
-        {
-            Documents = documents ?? new List<MultiLanguageInput>();
+            Documents = documents.ToList();
         }
 
         /// <summary> The set of documents to process as part of this batch. </summary>

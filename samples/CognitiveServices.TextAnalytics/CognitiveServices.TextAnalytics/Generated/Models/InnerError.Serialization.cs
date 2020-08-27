@@ -17,9 +17,9 @@ namespace CognitiveServices.TextAnalytics.Models
         {
             InnerErrorCodeValue code = default;
             string message = default;
-            IReadOnlyDictionary<string, string> details = default;
-            string target = default;
-            InnerError innerError = default;
+            Optional<IReadOnlyDictionary<string, string>> details = default;
+            Optional<string> target = default;
+            Optional<InnerError> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -34,45 +34,26 @@ namespace CognitiveServices.TextAnalytics.Models
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     details = dictionary;
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("innerError"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     innerError = DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new InnerError(code, message, details, target, innerError);
+            return new InnerError(code, message, Optional.ToDictionary(details), target.Value, innerError.Value);
         }
     }
 }

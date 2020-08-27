@@ -17,6 +17,7 @@ namespace CognitiveServices.TextAnalytics.Models
         /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="keyPhrases"/> is null. </exception>
         internal DocumentKeyPhrases(string id, IEnumerable<string> keyPhrases)
         {
             if (id == null)
@@ -29,7 +30,7 @@ namespace CognitiveServices.TextAnalytics.Models
             }
 
             Id = id;
-            KeyPhrases = keyPhrases.ToArray();
+            KeyPhrases = keyPhrases.ToList();
         }
 
         /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
@@ -39,7 +40,7 @@ namespace CognitiveServices.TextAnalytics.Models
         internal DocumentKeyPhrases(string id, IReadOnlyList<string> keyPhrases, DocumentStatistics statistics)
         {
             Id = id;
-            KeyPhrases = keyPhrases ?? new List<string>();
+            KeyPhrases = keyPhrases;
             Statistics = statistics;
         }
 

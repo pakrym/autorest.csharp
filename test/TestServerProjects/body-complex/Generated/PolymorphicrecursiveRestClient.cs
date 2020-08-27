@@ -44,6 +44,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/polymorphicrecursive/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -59,14 +60,7 @@ namespace body_complex
                     {
                         Fish value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Fish.DeserializeFish(document.RootElement);
-                        }
+                        value = Fish.DeserializeFish(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,14 +80,7 @@ namespace body_complex
                     {
                         Fish value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Fish.DeserializeFish(document.RootElement);
-                        }
+                        value = Fish.DeserializeFish(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +98,7 @@ namespace body_complex
             uri.AppendPath("/complex/polymorphicrecursive/valid", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(complexBody);
             request.Content = content;
@@ -174,6 +162,7 @@ namespace body_complex
         /// }.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public async Task<Response> PutValidAsync(Fish complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)
@@ -249,6 +238,7 @@ namespace body_complex
         /// }.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="complexBody"/> is null. </exception>
         public Response PutValid(Fish complexBody, CancellationToken cancellationToken = default)
         {
             if (complexBody == null)

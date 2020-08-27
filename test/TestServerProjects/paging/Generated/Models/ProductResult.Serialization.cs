@@ -15,42 +15,27 @@ namespace paging.Models
     {
         internal static ProductResult DeserializeProductResult(JsonElement element)
         {
-            IReadOnlyList<Product> values = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Product>> values = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Product> array = new List<Product>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Product.DeserializeProduct(item));
-                        }
+                        array.Add(Product.DeserializeProduct(item));
                     }
                     values = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ProductResult(values, nextLink);
+            return new ProductResult(Optional.ToList(values), nextLink.Value);
         }
     }
 }

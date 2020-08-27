@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of TrainRequest. </summary>
         /// <param name="source"> Source path containing the training documents. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public TrainRequest(string source)
         {
             if (source == null)
@@ -22,17 +23,6 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Source = source;
-        }
-
-        /// <summary> Initializes a new instance of TrainRequest. </summary>
-        /// <param name="source"> Source path containing the training documents. </param>
-        /// <param name="sourceFilter"> Filter to apply to the documents in the source path for training. </param>
-        /// <param name="useLabelFile"> Use label file for training a model. </param>
-        internal TrainRequest(string source, TrainSourceFilter sourceFilter, bool? useLabelFile)
-        {
-            Source = source;
-            SourceFilter = sourceFilter;
-            UseLabelFile = useLabelFile;
         }
 
         /// <summary> Source path containing the training documents. </summary>

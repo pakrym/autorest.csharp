@@ -20,6 +20,7 @@ namespace CognitiveSearch.Models
         /// <param name="warnings"> The item-level indexing warnings. </param>
         /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="errors"/> or <paramref name="warnings"/> is null. </exception>
         internal IndexerExecutionResult(IndexerExecutionStatus status, IEnumerable<ItemError> errors, IEnumerable<ItemWarning> warnings, int itemCount, int failedItemCount)
         {
             if (errors == null)
@@ -32,8 +33,8 @@ namespace CognitiveSearch.Models
             }
 
             Status = status;
-            Errors = errors.ToArray();
-            Warnings = warnings.ToArray();
+            Errors = errors.ToList();
+            Warnings = warnings.ToList();
             ItemCount = itemCount;
             FailedItemCount = failedItemCount;
         }
@@ -55,8 +56,8 @@ namespace CognitiveSearch.Models
             ErrorMessage = errorMessage;
             StartTime = startTime;
             EndTime = endTime;
-            Errors = errors ?? new List<ItemError>();
-            Warnings = warnings ?? new List<ItemWarning>();
+            Errors = errors;
+            Warnings = warnings;
             ItemCount = itemCount;
             FailedItemCount = failedItemCount;
             InitialTrackingState = initialTrackingState;

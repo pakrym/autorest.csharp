@@ -17,9 +17,12 @@ namespace TypeSchemaMapping.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("StringProperty");
-            writer.WriteNumberValue(IntProperty);
-            if (DictionaryProperty != null)
+            if (Optional.IsDefined(IntProperty))
+            {
+                writer.WritePropertyName("StringProperty");
+                writer.WriteNumberValue(IntProperty);
+            }
+            if (Optional.IsCollectionDefined(DictionaryProperty))
             {
                 writer.WritePropertyName("DictionaryProperty");
                 writer.WriteStartObject();
@@ -30,7 +33,7 @@ namespace TypeSchemaMapping.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DaysOfWeek != null)
+            if (Optional.IsDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("DaysOfWeek");
                 writer.WriteStringValue(DaysOfWeek.Value.ToString());
@@ -40,9 +43,9 @@ namespace TypeSchemaMapping.Models
 
         internal static SecondModel DeserializeSecondModel(JsonElement element)
         {
-            int stringProperty = default;
-            IReadOnlyDictionary<string, string> dictionaryProperty = default;
-            CustomDaysOfWeek? daysOfWeek = default;
+            Optional<int> stringProperty = default;
+            Optional<IReadOnlyDictionary<string, string>> dictionaryProperty = default;
+            Optional<CustomDaysOfWeek> daysOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("StringProperty"))
@@ -52,36 +55,21 @@ namespace TypeSchemaMapping.Models
                 }
                 if (property.NameEquals("DictionaryProperty"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     dictionaryProperty = dictionary;
                     continue;
                 }
                 if (property.NameEquals("DaysOfWeek"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     daysOfWeek = new CustomDaysOfWeek(property.Value.GetString());
                     continue;
                 }
             }
-            return new SecondModel(stringProperty, dictionaryProperty, daysOfWeek);
+            return new SecondModel(stringProperty, Optional.ToDictionary(dictionaryProperty), Optional.ToNullable(daysOfWeek));
         }
     }
 }

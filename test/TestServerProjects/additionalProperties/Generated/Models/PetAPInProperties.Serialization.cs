@@ -18,17 +18,12 @@ namespace additionalProperties.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteNumberValue(Id);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Status != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteBooleanValue(Status.Value);
-            }
-            if (AdditionalProperties != null)
+            if (Optional.IsCollectionDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties");
                 writer.WriteStartObject();
@@ -45,9 +40,9 @@ namespace additionalProperties.Models
         internal static PetAPInProperties DeserializePetAPInProperties(JsonElement element)
         {
             int id = default;
-            string name = default;
-            bool? status = default;
-            IDictionary<string, float> additionalProperties = default;
+            Optional<string> name = default;
+            Optional<bool> status = default;
+            Optional<IDictionary<string, float>> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,28 +52,16 @@ namespace additionalProperties.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("additionalProperties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, float> dictionary = new Dictionary<string, float>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -88,7 +71,7 @@ namespace additionalProperties.Models
                     continue;
                 }
             }
-            return new PetAPInProperties(id, name, status, additionalProperties);
+            return new PetAPInProperties(id, name.Value, Optional.ToNullable(status), Optional.ToDictionary(additionalProperties));
         }
     }
 }

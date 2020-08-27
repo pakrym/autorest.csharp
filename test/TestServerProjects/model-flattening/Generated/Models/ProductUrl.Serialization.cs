@@ -5,55 +5,9 @@
 
 #nullable disable
 
-using System.Text.Json;
-using Azure.Core;
-
 namespace model_flattening.Models
 {
-    public partial class ProductUrl : IUtf8JsonSerializable
+    internal partial class ProductUrl
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (OdataValue != null)
-            {
-                writer.WritePropertyName("@odata.value");
-                writer.WriteStringValue(OdataValue);
-            }
-            if (GenericValue != null)
-            {
-                writer.WritePropertyName("generic_value");
-                writer.WriteStringValue(GenericValue);
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static ProductUrl DeserializeProductUrl(JsonElement element)
-        {
-            string odataValue = default;
-            string genericValue = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.value"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    odataValue = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("generic_value"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    genericValue = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new ProductUrl(genericValue, odataValue);
-        }
     }
 }

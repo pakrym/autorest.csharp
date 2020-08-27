@@ -44,6 +44,7 @@ namespace body_complex
             uri.Reset(endpoint);
             uri.AppendPath("/complex/flatten/valid", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -58,14 +59,7 @@ namespace body_complex
                     {
                         MyBaseType value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyBaseType.DeserializeMyBaseType(document.RootElement);
-                        }
+                        value = MyBaseType.DeserializeMyBaseType(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,14 +78,7 @@ namespace body_complex
                     {
                         MyBaseType value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = MyBaseType.DeserializeMyBaseType(document.RootElement);
-                        }
+                        value = MyBaseType.DeserializeMyBaseType(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

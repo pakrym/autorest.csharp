@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace required_optional.Models
 {
@@ -15,15 +16,9 @@ namespace required_optional.Models
         /// <summary> Initializes a new instance of ArrayOptionalWrapper. </summary>
         public ArrayOptionalWrapper()
         {
+            Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ArrayOptionalWrapper. </summary>
-        /// <param name="value"> . </param>
-        internal ArrayOptionalWrapper(IList<string> value)
-        {
-            Value = value;
-        }
-
-        public IList<string> Value { get; set; }
+        public IList<string> Value { get; }
     }
 }

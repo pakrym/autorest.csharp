@@ -28,10 +28,16 @@ namespace AutoRest.CSharp.V3.Output.Models
 
         protected Parameter BuildParameter(RequestParameter requestParameter)
         {
-            var type = _typeFactory.CreateType(requestParameter.Schema, requestParameter.IsNullable());
+            var type = _typeFactory.CreateType(requestParameter.Schema, requestParameter.IsNullable || !requestParameter.IsRequired);
 
             var isRequired = requestParameter.Required == true;
             var defaultValue = ParseConstant(requestParameter);
+
+            if (defaultValue != null && !TypeFactory.CanBeInitializedInline(type, defaultValue))
+            {
+                type = type.WithNullable(true);
+            }
+
             if (!isRequired && defaultValue == null)
             {
                 defaultValue = Constant.Default(type);
@@ -51,7 +57,7 @@ namespace AutoRest.CSharp.V3.Output.Models
         {
             if (parameter.ClientDefaultValue != null)
             {
-                CSharpType constantTypeReference = _context.TypeFactory.CreateType(parameter.Schema, parameter.IsNullable());
+                CSharpType constantTypeReference = _context.TypeFactory.CreateType(parameter.Schema, parameter.IsNullable);
                 return BuilderHelpers.ParseConstant(parameter.ClientDefaultValue, constantTypeReference);
             }
 

@@ -43,6 +43,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/300", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -89,6 +90,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/300", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -107,26 +109,12 @@ namespace httpInfrastructure
                     {
                         IReadOnlyList<string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -149,26 +137,12 @@ namespace httpInfrastructure
                     {
                         IReadOnlyList<string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        List<string> array = new List<string>();
+                        foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            value = null;
+                            array.Add(item.GetString());
                         }
-                        else
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in document.RootElement.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
-                            }
-                            value = array;
-                        }
+                        value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -185,6 +159,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/301", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -231,6 +206,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/301", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -278,6 +254,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/301", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -325,6 +302,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/302", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -371,6 +349,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/302", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -418,6 +397,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/302", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -466,6 +446,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/303", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -515,6 +496,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -561,6 +543,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -607,6 +590,7 @@ namespace httpInfrastructure
             uri.Reset(endpoint);
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -654,6 +638,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -704,6 +689,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -754,6 +740,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
@@ -804,6 +791,7 @@ namespace httpInfrastructure
             uri.AppendPath("/http/redirect/307", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteBooleanValue(true);
             request.Content = content;
