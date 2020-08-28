@@ -18,7 +18,6 @@ namespace AutoRest.CSharp.V3.Input.Source
         private readonly INamedTypeSymbol _schemaMemberNameAttribute;
         private readonly Dictionary<string, INamedTypeSymbol> _nameMap = new Dictionary<string, INamedTypeSymbol>(StringComparer.OrdinalIgnoreCase);
 
-
         public SourceInputModel(Compilation compilation)
         {
             _compilation = compilation;

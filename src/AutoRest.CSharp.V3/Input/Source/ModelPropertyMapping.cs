@@ -10,9 +10,6 @@ namespace AutoRest.CSharp.V3.Input.Source
     {
         public ModelPropertyMapping(string originalName, ISymbol existingMember): base(originalName, existingMember)
         {
-            OriginalName = originalName;
-            ExistingMember = existingMember;
         }
-
     }
 }
