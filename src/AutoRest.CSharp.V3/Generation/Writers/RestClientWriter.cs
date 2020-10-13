@@ -526,7 +526,14 @@ namespace AutoRest.CSharp.V3.Generation.Writers
 
                     foreach (var statusCode in statusCodes)
                     {
-                        writer.Line($"case {statusCode}:");
+                        if (statusCode.Code != null)
+                        {
+                            writer.Line($"case {statusCode.Code}:");
+                        }
+                        else
+                        {
+                            writer.Line($"case {statusCode.Family}:");
+                        }
                     }
 
                     using (responseBody != null ? writer.Scope() : default)
@@ -548,6 +555,10 @@ namespace AutoRest.CSharp.V3.Generation.Writers
                         {
                             writer.Line($"var {valueVariable:D} = {message}.ExtractResponseContent();");
                             value = new Reference(valueVariable.ActualName, responseBody.Type);
+                        }
+                        else if (responseBody is ConstantResponseBody _)
+                        {
+                            ./.
                         }
                         else if (returnType != null)
                         {

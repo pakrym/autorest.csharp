@@ -342,6 +342,16 @@ namespace AutoRest.CSharp.V3.Output.Models
 
             var responseType = ReduceResponses(clientResponse);
 
+            if (request.HttpMethod == "HEAD" && _context.Configuration.HeadAsBool)
+            {
+                clientResponse = new List<Response>()
+                {
+                    new Response(new ConstantResponseBody(true)), 2xx),
+                    new Response(new ConstantResponseBody(false), 4xx),
+                };
+            }
+
+
             return new RestClientMethod(
                 operationName,
                 BuilderHelpers.EscapeXmlDescription(operation.Language.Default.Description),
